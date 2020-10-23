@@ -15,12 +15,13 @@
         <!-- Icons-->
         <link href="{{ asset("admin/css/coreui-icons.min.css") }}" rel="stylesheet">
         <link href="{{ asset("admin/css/flag-icon.min.css") }}" rel="stylesheet">
-        <link href="{{ asset("admin/css/font-awesome.min.css") }}" rel="stylesheet">
+        <link href="{{ asset("admin/css/all.min.css") }}" rel="stylesheet">
         <link href="{{ asset("admin/css/simple-line-icons.css") }}" rel="stylesheet">
 
         <!-- Main styles for this application-->
         <link href="{{ asset("admin/css/style.css") }}" rel="stylesheet">
         <link href="{{ asset("admin/css/pace.min.css") }}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
         <link href="{{ asset("admin/css/myStyle.css") }}" rel="stylesheet">
 
     </head>
@@ -50,8 +51,9 @@
             {{-- SideBar --}}
             @include('core::layouts.sidebar')
 
+{{--            style="background-image: url('{{ asset("admin/images/ab.jpg") }}'); background-size:cover"--}}
             {{-- SubBar --}}
-            <main class="main" style="background-image: url('{{ asset("admin/images/ab.jpg") }}'); background-size:cover">
+            <main class="main">
 
                 <div class="container-fluid">
 
@@ -76,6 +78,7 @@
         <script src="{{ asset("admin/js/pace.min.js") }}"></script>
         <script src="{{ asset("admin/js/perfect-scrollbar.min.js") }}"></script>
         <script src="{{ asset("admin/js/coreui.min.js") }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
         <script src="{{ asset("admin/js/image-preview.js") }}"></script>
 
         <script>
@@ -95,6 +98,45 @@
 
                 $('p.alert').fadeIn().delay(1000).fadeOut();
 
+                $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+
+
+                $("#checkboxCreate[type=checkbox]").each(function() {
+
+                    $(this).change(function () {
+
+                        if($(this).is(":checked")) {
+                            $(this).prev("#textCheckbox").attr("value", "present");
+                        } else {
+                            $(this).prev("#textCheckbox").attr("value", "absent");
+                        }
+
+                    });
+
+                });
+
+                // Here.
+                $('.select').selectpicker();
+
+                $("#class_id_student").on('change', function(e) {
+
+                    let class_id = e.target.value;
+
+                    $.get('create/section?class_id=' + class_id , function(data) {
+
+                        $('#section_id_student').empty();
+
+                        $('#section_id_student').append(`<option disabled selected> -- Select Section -- </option><option value=""> No Selected </option>`);
+
+                        $.each(data, function(index, section) {
+
+                            $('#section_id_student').append('<option value="' + section.id + '">' + section.name + '</option>');
+
+                        });
+
+                    });
+
+                });
             });
 
         </script>

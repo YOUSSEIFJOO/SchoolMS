@@ -3,41 +3,31 @@
 namespace Modules\Teachers\Http\Controllers;
 
 // The Basics :-
-use Exception;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
+use Exception;
+
+// File :-
+use Illuminate\Support\Facades\File;
+
+// Class Helper :-
+use Modules\Core\Http\Helper\AppHelper;
+
+// Teacher Request :-
 use Modules\Teachers\Http\Requests\TeacherRequest;
 
-// Helpers :-
+// View :-
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 
-    // Global Helper :-
-    use Illuminate\View\View;
-    use Modules\Teachers\Entities\Teacher;
-    use Modules\Teachers\Http\Helpers\GlobalHelper\CheckFoundingId;
-    use Modules\Teachers\Http\Helpers\GlobalHelper\FoundWithId;
-    use Modules\Teachers\Http\Helpers\GlobalHelper\IfSuccessfully;
-    use Modules\Teachers\Http\Helpers\GlobalHelper\IfUnexpectedError;
+// Teacher Model :-
+use Modules\Teachers\Entities\Teacher;
 
-    // Index Method :-
-    use Modules\Teachers\Http\Helpers\IndexMethod\PaginationNumber;
-    use Modules\Teachers\Http\Helpers\IndexMethod\QuerySearch;
-
-    // Store Method :-
-    use Modules\Teachers\Http\Helpers\StoreMethod\StorePhotoIfFound;
-
-    // Update Method :-
-    use Modules\Teachers\Http\Helpers\UpdateMethod\DeleteStorePhotoIfFound;
-    use Modules\Teachers\Http\Helpers\UpdateMethod\IfTeacherNotFound;
 
 class TeachersController extends Controller
 {
-    use
-        CheckFoundingId, FoundWithId, IfSuccessfully, IfUnexpectedError, PaginationNumber,
-        QuerySearch, StorePhotoIfFound,DeleteStorePhotoIfFound, IfTeacherNotFound;
-
     /**
      * Display a listing of the resource.
      * @param Request $request
@@ -48,10 +38,10 @@ class TeachersController extends Controller
         try {
 
             // Get The Pagination Number.
-            $paginationNumber = $this->paginationNumber();
+            $paginationNumber = AppHelper::PAGINATE_NUMBER;
 
             // Make Query Search.
-            $teachers = $this->QuerySearch($request);
+            $teachers = AppHelper::QuerySearch($request, ["class", "section", "name", "designation"], "name", (new Teacher));
 
             // Redirect To Index View Of Teachers With Two Variables.
             return view('teachers::index', compact("teachers", "paginationNumber"));
@@ -59,7 +49,7 @@ class TeachersController extends Controller
         } catch (Exception $e) {
 
             // This Function For Handling If Unexpected Error Happened.
-            return $this->IfUnexpectedError();
+            return AppHelper::IfUnexpectedError("teachers.index");
 
         }
     }
@@ -78,7 +68,7 @@ class TeachersController extends Controller
         } catch(Exception $e) {
 
             // This Function For Handling If Unexpected Error Happened.
-            return $this->IfUnexpectedError();
+            return AppHelper::IfUnexpectedError("teachers.index");
 
         }
     }
@@ -93,18 +83,18 @@ class TeachersController extends Controller
         try{
 
             // Store Hash Name Of Photo If Found.
-            $data = $this->StorePhotoIfFound($request);
+            $data = AppHelper::StorePhotoIfFound($request, ["_token", "photo", "time"], "teachers");
 
             // Create New Teacher.
             Teacher::create($data);
 
             // This Function For Handling Redirecting To Index View If Teacher Has Been Created Successfully.
-            return $this->IfSuccessfully('Teacher Created Successfully');
+            return AppHelper::IfSuccessfully('Teacher Created Successfully', "teachers.index");
 
         } catch(Exception $e) {
 
             // This Function For Handling If Unexpected Error Happened.
-            return $this->IfUnexpectedError();
+            return AppHelper::IfUnexpectedError("teachers.index");
 
         }
     }
@@ -119,12 +109,21 @@ class TeachersController extends Controller
         try {
 
             // This Function For Handling return To Index Or Edit View Related To Founding $id.
-            return $this->CheckFoundingId($id, "show");
+            return AppHelper::CheckFoundingId(
+                (new Teacher),
+                $id,
+                "This Teacher Not Found",
+                "students.index",
+                "teachers",
+                "show",
+                "teacher",
+                '$teacher'
+            );
 
         } catch(Exception $e) {
 
             // This Function For Handling If Unexpected Error Happened.
-            return $this->IfUnexpectedError();
+            return AppHelper::IfUnexpectedError("teachers.index");
 
         }
     }
@@ -139,12 +138,21 @@ class TeachersController extends Controller
         try {
 
             // This Function For Handling return To Index Or Edit View Related To Founding $id.
-            return $this->CheckFoundingId($id, "edit");
+            return AppHelper::CheckFoundingId(
+                (new Teacher),
+                $id,
+                "This Teacher Not Found",
+                "students.index",
+                "teachers",
+                "edit",
+                "teacher",
+                '$teacher'
+            );
 
         } catch(Exception $e) {
 
             // This Function For Handling If Unexpected Error Happened.
-            return $this->IfUnexpectedError();
+            return AppHelper::IfUnexpectedError("teachers.index");
 
         }
     }
@@ -160,29 +168,29 @@ class TeachersController extends Controller
         try {
 
             // Find The Teacher With $id.
-            $teacher = $this->FoundWithId($id);
+            $teacher = AppHelper::FoundWithId($id, (new Teacher));
 
             // If $id Not Found.
             if (!$teacher) {
 
                 // This Function For Handling Redirecting If Teacher Not Found.
-                return $this->IfTeacherNotFound();
+                return AppHelper::FoundWithId($id, (new Teacher));
 
             }
 
             // Handel Delete Old Photo And Store New Photo.
-            $data = $this->DeleteStorePhotoIfFound($request, $id);
+            $data = AppHelper::DeleteStorePhotoIfFound((new Teacher), $id, $request, ["_token", "photo", "time"], "teachers");
 
             // Update Data Of This Teacher.
             $teacher->update($data);
 
             // This Function For Handling Redirecting To Index View If Teacher Has Been Updated Successfully.
-            return $this->IfSuccessfully('The Data Of Teacher Updated Successfully');
+            return AppHelper::IfSuccessfully('The Data Of Teacher Updated Successfully', "teachers.index");
 
         } catch(Exception $e) {
 
             // This Function For Handling If Unexpected Error Happened.
-            return $this->IfUnexpectedError();
+            return AppHelper::IfUnexpectedError("teachers.index");
 
         }
     }
@@ -197,32 +205,32 @@ class TeachersController extends Controller
         try {
 
             // Find The Teacher With $id.
-            $teacher = $this->FoundWithId($id);
+            $teacher = AppHelper::FoundWithId($id, (new Teacher));
 
             // If $id Not Found.
             if (!$teacher) {
 
                 // This Function For Handling Redirecting If Teacher Not Found.
-                return $this->IfTeacherNotFound();
+                return AppHelper::IfNotFound('This Teacher Not Found', "teachers.index");
 
             }
 
             // Get The Path Photo Of This Teacher.
-            $file = public_path() . "\images\\teachers\\" . $teacher->photo;
+            $file = public_path() . "\images\\teachers\\" . $teacher->time;
 
-            // Delete The Photo For This Teacher.
-            unlink($file);
+            // Delete The Folder Of Photo For This Teacher.
+            File::deleteDirectory($file);
 
             // Delete This Teacher.
             $teacher->delete();
 
             // This Function For Handling Redirecting To Index View If Teacher Has Been Deleted Successfully.
-            return $this->IfSuccessfully('The Teacher Deleted Successfully');
+            return AppHelper::IfSuccessfully('The Teacher Deleted Successfully', "teachers.index");
 
         } catch(Exception $e) {
 
             // This Function For Handling If Unexpected Error Happened.
-            return $this->IfUnexpectedError();
+            return AppHelper::IfUnexpectedError("teachers.index");
 
         }
     }

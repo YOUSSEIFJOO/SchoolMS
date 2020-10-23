@@ -21,9 +21,27 @@
 
     </ol>
 
+    @if(session('noCapacity'))
+
+        <div class="alert alert-danger alert-dismissible font-lg p-2 mb-1" style="margin-top: -20px;margin-bottom: 20px" role="alert">
+
+            <strong>Oops :-</strong> {{ session('noCapacity') }}
+
+            <button type="button" class="close p-2" data-dismiss="alert" aria-label="Close">
+
+                <span aria-hidden="true">&times;</span>
+
+            </button>
+
+        </div>
+
+    @endif
+
     <form class="mb-5" action="{{ route('students.store') }}" enctype="multipart/form-data" method="post">
 
         @csrf
+
+        <input type="hidden" name="time" />
 
         <h3 class="text-info">Student Info :- </h3>
 
@@ -46,6 +64,7 @@
                             placeholder="Write Your Name Only For Ex :- Yousseif"
                             autocomplete="off"
                             autofocus
+
                         />
                         @error('name')
                             <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
@@ -67,6 +86,7 @@
                             name="birthday"
                             value="{{ old('birthday') }}"
                             id="birthday"
+
                         />
 
                         @error('birthday')
@@ -87,7 +107,7 @@
 
                         <label for="gender" class="font-2xl"> Gender :- </label>
 
-                        <select class="form-control" name="gender" id="gender">
+                        <select class="form-control" name="gender" id="gender" >
 
                             <option disabled selected> -- Select Your Gender -- </option>
 
@@ -121,7 +141,7 @@
 
                         <label for="religion" class="font-2xl"> Religion :- </label>
 
-                        <select class="form-control" name="religion" id="religion">
+                        <select class="form-control" name="religion" id="religion" >
 
                             <option disabled selected> -- Select Your Religion -- </option>
 
@@ -173,6 +193,7 @@
                             id="address"
                             placeholder="Type Your Address"
                             autocomplete="off"
+
                         />
 
                         @error('address')
@@ -197,6 +218,7 @@
                             id="email"
                             placeholder="Type Your Email"
                             autocomplete="off"
+
                         />
 
                         @error('email')
@@ -235,6 +257,7 @@
                             class="form-control p-1"
                             name="photo"
                             id="photo"
+
                         />
 
                         @error('photo')
@@ -259,6 +282,7 @@
                             id="phone-number"
                             placeholder="Type Your Phone Number"
                             autocomplete="off"
+
                         />
 
                         @error('phoneNumber')
@@ -293,6 +317,7 @@
                             id="father-name"
                             placeholder="Father Name For Ex :- Yousseif Ahmed"
                             autocomplete="off"
+
                         />
 
                         @error('fatherName')
@@ -317,6 +342,7 @@
                             id="phone-number-father"
                             placeholder="Type Your Father Phone Number"
                             autocomplete="off"
+
                         />
 
                         @error('phoneNumberFather')
@@ -345,6 +371,7 @@
                             id="mother-name"
                             placeholder="Mother Name For Ex :- Maha Mohamed"
                             autocomplete="off"
+
                         />
 
                         @error('motherName')
@@ -369,6 +396,7 @@
                             id="phone-number-mother"
                             placeholder="Type Your Mother Phone Number"
                             autocomplete="off"
+
                         />
 
                         @error('phoneNumberMother')
@@ -393,54 +421,28 @@
 
                     <div class="form-group">
 
-                        <label for="class" class="font-2xl"> Class :- </label>
+                        <label for="class_id_student" class="font-2xl"> Class :- </label>
 
-                        <select
-                            class="form-control"
-                            name="class"
-                            id="class"
-                        >
+                        <select id="class_id_student" name="class_id" class="form-control d-none d-sm-block">
+
                             <option disabled selected> -- Select Class -- </option>
-                            <option
-                                value="First"
-                                @if(old('class') == "First")
-                                    selected
-                                @endif
-                            > First </option>
-                            <option
-                                value="Second"
-                                @if(old('class') == "Second")
-                                    selected
-                                @endif
-                            > Second </option>
-                            <option
-                                value="Third"
-                                @if(old('class') == "Third")
-                                    selected
-                                @endif
-                            > Third </option>
-                            <option
-                                value="Fourth"
-                                @if(old('class') == "Fourth")
-                                    selected
-                                @endif
-                            > Fourth </option>
-                            <option
-                                value="Fifth"
-                                @if(old('class') == "Fifth")
-                                    selected
-                                @endif
-                            > Fifth </option>
-                            <option
-                                value="Sixth"
-                                @if(old('class') == "Sixth")
-                                    selected
-                                @endif
-                            > Sixth </option>
+
+                            <option value=""> No Selected </option>
+
+                            @foreach($classes as $class)
+
+                                <option
+
+                                    value="{{ $class->id }}"
+
+                                > {{ $class->name }} </option>
+
+                            @endforeach
+
                         </select>
 
-                        @error('class')
-                            <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @error('class_id')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                         @enderror
 
                     </div>
@@ -451,36 +453,40 @@
 
                     <div class="form-group">
 
-                        <label for="section" class="font-2xl"> Section :- </label>
+                        <label for="section_id_student" class="font-2xl"> Section :- </label>
 
-                        <select
-                            class="form-control"
-                            name="section"
-                            id="section"
-                        >
+                        <select id="section_id_student" name="section_id" class="form-control d-none d-sm-block">
+
                             <option disabled selected> -- Select Section -- </option>
-                            <option
-                                value="A"
-                                @if(old('section') == 'A')
-                                    selected
-                                @endif
-                            > A </option>
-                            <option
-                                value="B"
-                                @if(old('section') == 'B')
-                                    selected
-                                @endif
-                            > B </option>
-                            <option
-                                value="C"
-                                @if(old('section') == 'C')
-                                    selected
-                                @endif
-                            > C </option>
+
+                            <option value=""> No Selected </option>
+
+{{--                            @foreach($sections as $section)--}}
+
+{{--                                <option--}}
+
+{{--                                    @if(count($checkCapacity) > 0)--}}
+
+{{--                                        @foreach($checkCapacity as $checkCapacities)--}}
+
+{{--                                            @if($section->id === $checkCapacities) disabled @endif--}}
+
+{{--                                        @endforeach--}}
+
+{{--                                    @endif--}}
+
+{{--                                >--}}
+
+{{--                                    {{ $section->name }}--}}
+
+{{--                                </option>--}}
+
+{{--                            @endforeach--}}
+
                         </select>
 
-                        @error('section')
-                            <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @error('section_id')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                         @enderror
 
                     </div>
@@ -501,6 +507,7 @@
                             class="form-control"
                             name="shift"
                             id="shift"
+
                         >
                             <option disabled selected> -- Select Shift -- </option>
                             <option
@@ -535,6 +542,7 @@
                             class="form-control"
                             name="notificationSms"
                             id="notification-sms"
+
                         >
                             <option disabled selected> -- Select Notification SMS Number -- </option>
                             <option

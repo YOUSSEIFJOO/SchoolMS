@@ -2,5 +2,13 @@
     "Managment": true,
     "Students": true,
     "Core": true,
-    "Teachers": true
+    "Teachers": true,
+    "StudentAttendance": true,
+    "StudentsAttendance": true,
+    "Employees": true,
+    "TeachersAttendance": true,
+    "EmployeesAttendance": true,
+    "ClassAcademic": true,
+    "SectionAcademic": true,
+    "SubjectAcademic": true
 }

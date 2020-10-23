@@ -43,9 +43,9 @@ class StudentRequest extends FormRequest
 
             "phoneNumberMother"     => "required | regex:/(01)[0-9]{9}/ | unique:students,phoneNumberMother,$id | different:phoneNumber",
 
-            "class"                 => "required",
+            "class_id"              => "required",
 
-            "section"               => "required",
+            "section_id"            => "required",
 
             "shift"                 => "required",
 

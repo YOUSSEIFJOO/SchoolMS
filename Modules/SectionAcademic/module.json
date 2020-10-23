@@ -1,0 +1,13 @@
+{
+    "name": "SectionAcademic",
+    "alias": "sectionacademic",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\SectionAcademic\\Providers\\SectionAcademicServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -37,6 +37,39 @@
 
             </li>
 
+            {{-- Employees --}}
+            <li class="nav-item">
+
+                <a class="nav-link" href="{{ route('employees.index') }}">
+
+                    <i class="nav-icon fas fa-people-carry"></i>Employees
+
+                </a>
+
+            </li>
+
+            {{-- All Attendance --}}
+            <li class="nav-item">
+
+                <a class="nav-link" href="{{ route('attendance.index') }}">
+
+                    <i class="nav-icon fas fa-clipboard"></i> Attendance
+
+                </a>
+
+            </li>
+
+            {{-- All Attendance --}}
+            <li class="nav-item">
+
+                <a class="nav-link" href="{{ route('academic.index') }}">
+
+                    <i class="nav-icon fas fa-school"></i> Academic
+
+                </a>
+
+            </li>
+
         </ul>
 
     </nav>

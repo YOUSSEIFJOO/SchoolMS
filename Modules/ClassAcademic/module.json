@@ -1,0 +1,13 @@
+{
+    "name": "ClassAcademic",
+    "alias": "classacademic",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\ClassAcademic\\Providers\\ClassAcademicServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

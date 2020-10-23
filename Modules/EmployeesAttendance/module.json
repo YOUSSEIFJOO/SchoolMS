@@ -1,0 +1,13 @@
+{
+    "name": "EmployeesAttendance",
+    "alias": "employeesattendance",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\EmployeesAttendance\\Providers\\EmployeesAttendanceServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

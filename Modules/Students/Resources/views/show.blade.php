@@ -81,7 +81,7 @@
                         <div class="image w-50 mx-auto mb-2">
 
                             <img
-                                src="{{ asset('images\students\\' . $student->photo) }}"
+                                src="{{ asset('images\students\\' . $student->time . '\\' . $student->photo) }}"
                                 class="w-100 img-thumbnail rounded-circle"
                             />
 
@@ -95,7 +95,7 @@
 
                         <div class="class">
 
-                            <p class="m-0">{{ $student->class }}</p>
+                            <p class="m-0">{{ \Modules\Core\Http\Helper\AppHelper::ClassName((new Modules\Students\Entities\Student()), $student->id, "class", "name") }}</p>
 
                         </div>
 
@@ -435,7 +435,7 @@
 
                                             <div class="col-sm-8 p-0">
 
-                                                <p class="m-0"> : {{ $student->class }}</p>
+                                                <p class="m-0"> : {{ \Modules\Core\Http\Helper\AppHelper::ClassName((new Modules\Students\Entities\Student()), $student->id, "class", "name") }} </p>
 
                                             </div>
 
@@ -455,7 +455,7 @@
 
                                             <div class="col-sm-7 p-0">
 
-                                                <p class="m-0"> : {{ $student->section }}</p>
+                                                <p class="m-0"> : {{ \Modules\Core\Http\Helper\AppHelper::ClassName((new Modules\Students\Entities\Student()), $student->id, "section", "name") }} </p>
 
                                             </div>
 

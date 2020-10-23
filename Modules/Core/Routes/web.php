@@ -11,6 +11,7 @@
 |
 */
 
-Route::prefix('core')->group(function() {
-    Route::get('/', 'CoreController@index');
-});
+
+Route::get('dashboard/attendance', 'CoreController@attendance')->name("attendance.index");
+
+Route::get('dashboard/academic', 'CoreController@academic')->name("academic.index");

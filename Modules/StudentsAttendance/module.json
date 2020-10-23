@@ -1,0 +1,13 @@
+{
+    "name": "StudentsAttendance",
+    "alias": "studentsattendance",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\StudentsAttendance\\Providers\\StudentsAttendanceServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

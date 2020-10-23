@@ -4,49 +4,35 @@ namespace Modules\Students\Http\Controllers;
 
 // The Basics :-
 use Exception;
+use Facade\FlareClient\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 
-// Redirect Of Response.
+// Redirect Of Response :-
 use Illuminate\Http\RedirectResponse;
 
-// View Helper Function.
+// View Helper Function :-
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Contracts\View\Factory;
 
-// Model Of Student.
+// Model Of Student :-
+use Modules\ClassAcademic\Entities\ClassAcademic;
+use Modules\SectionAcademic\Entities\SectionAcademic;
 use Modules\Students\Entities\Student;
 
 // Requests :-
 use Modules\Students\Http\Requests\StudentRequest;
 
-// Helpers :-
-
-    // Global Helper :-
-    use Modules\Students\Http\Helpers\GlobalHelper\CheckFoundingId;
-    use Modules\Students\Http\Helpers\GlobalHelper\FoundWithId;
-    use Modules\Students\Http\Helpers\GlobalHelper\IfSuccessfully;
-    use Modules\Students\Http\Helpers\GlobalHelper\IfUnexpectedError;
-
-    // Index Method :-
-    use Modules\Students\Http\Helpers\IndexMethod\PaginationNumber;
-    use Modules\Students\Http\Helpers\IndexMethod\QuerySearch;
-
-    // Store Method :-
-    use Modules\Students\Http\Helpers\StoreMethod\StorePhotoIfFound;
-
-    // Update Method :-
-    use Modules\Students\Http\Helpers\UpdateMethod\DeleteStorePhotoIfFound;
-    use Modules\Students\Http\Helpers\UpdateMethod\IfStudentNotFound;
+// Class Helper :-
+use Modules\Core\Http\Helper\AppHelper;
+use Symfony\Component\Console\Input\Input;
 
 class StudentsController extends Controller
 {
-
-    use
-        CheckFoundingId, FoundWithId, IfSuccessfully, IfUnexpectedError, PaginationNumber,
-        QuerySearch, StorePhotoIfFound,DeleteStorePhotoIfFound, IfStudentNotFound;
 
     /**
      * Display a listing of the resource.
@@ -58,20 +44,37 @@ class StudentsController extends Controller
         try {
 
             // Get The Pagination Number.
-            $paginationNumber = $this->paginationNumber();
+            $paginationNumber = AppHelper::PAGINATE_NUMBER;
 
             // Make Query Search.
-            $students = $this->QuerySearch($request);
+            $students = AppHelper::QuerySearch($request, ["class_id", "section_id", "name"], "class_id", (new Student));
+
+            // Select Name Of Class Academic.
+            $classes = AppHelper::selectProperty((new ClassAcademic()),  ["id", "name"]);
+
+            // Select Name Of Class Academic.
+            $sections = AppHelper::selectProperty((new SectionAcademic()),  ["id", "name"]);
 
             // Redirect To Index View Of Students With Two Variables.
-            return view('students::index', compact("students", "paginationNumber"));
+            return view('students::index', compact("students", "paginationNumber", "classes", "sections"));
 
         } catch (Exception $e) {
 
             // This Function For Handling If Unexpected Error Happened.
-            return $this->IfUnexpectedError();
+            return AppHelper::IfUnexpectedError("students.index");
 
         }
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function selectSection(Request $request){
+
+        return json_decode(SectionAcademic::where("class_id", $request->class_id)->get());
+
     }
 
     /**
@@ -82,13 +85,44 @@ class StudentsController extends Controller
     {
         try {
 
+            // Select Name Of Class Academic.
+            $classes = AppHelper::selectProperty((new ClassAcademic()),  ["id", "name"]);
+
+            // Select Name Of Section Academic.
+            $sections = AppHelper::selectProperty((new SectionAcademic()),  "id");
+
+            /** Start Check Capacity **/
+
+                // Capacity Of Students.
+                $capacity = AppHelper::capacityClass((new SectionAcademic()), "id", "capacity_students");
+
+                // Count Of Students
+                $count = AppHelper::countColumnOfProperty($capacity, (new Student()), "section_id", "section_id");
+
+                // Check Capacity
+                $checkCapacity = AppHelper::checkCapacity($capacity, $count);
+
+                foreach($sections as $section) {
+
+                    if($section->id === $checkCapacity) {
+
+                        dd($section->id);
+
+                    }
+
+                }
+
+            /** End Check Capacity **/
+
             // Redirect To Create View Of Students.
-            return view('students::create');
+            return view('students::create', compact("classes","sections", "checkCapacity"));
 
         } catch(Exception $e) {
 
+            return $e;
+
             // This Function For Handling If Unexpected Error Happened.
-            return $this->IfUnexpectedError();
+            return AppHelper::IfUnexpectedError("students.index");
 
         }
     }
@@ -102,19 +136,35 @@ class StudentsController extends Controller
     {
         try{
 
-            // Store Hash Name Of Photo If Found.
-            $data = $this->StorePhotoIfFound($request);
+            // Count Of Column Students Of Student Table.
+            $countOfStudents = AppHelper::countColumn((new Student()), "section_id", $request, "section_id");
 
-            // Create New Student.
-            Student::create($data);
+            // Value Of Capacity Sections Row.
+            $capacityOfSections = AppHelper::valueRow((new SectionAcademic()), "capacity_students", "id", $request, "section_id");
 
-            // This Function For Handling Redirecting To Index View If Student Has Been Created Successfully.
-            return $this->IfSuccessfully('Student Created Successfully');
+            if($countOfStudents < $capacityOfSections) {
+
+                // Store Hash Name Of Photo If Found.
+                $data = AppHelper::StorePhotoIfFound($request, ["_token", "photo", "time"], "students");
+
+                // Create New Student.
+                Student::create($data);
+
+                // This Function For Handling Redirecting To Index View If Student Has Been Created Successfully.
+                return AppHelper::IfSuccessfully('Student Created Successfully', "students.index");
+
+            } else {
+
+                // Return Back If Condition Not Valid.
+                return Redirect::back()->with("noCapacity", "Sorry You Can't Add Student To This Section.");
+
+
+            }
 
         } catch(Exception $e) {
 
             // This Function For Handling If Unexpected Error Happened.
-            return $this->IfUnexpectedError();
+            return AppHelper::IfUnexpectedError("students.index");
 
         }
     }
@@ -129,12 +179,21 @@ class StudentsController extends Controller
         try {
 
             // This Function For Handling return To Index Or Edit View Related To Founding $id.
-            return $this->CheckFoundingId($id, "show");
+            return AppHelper::CheckFoundingId(
+                (new Student),
+                $id,
+                "This Student Not Found",
+                "students.index",
+                "students",
+                "show",
+                "student",
+                '$student'
+            );
 
         } catch(Exception $e) {
 
             // This Function For Handling If Unexpected Error Happened.
-            return $this->IfUnexpectedError();
+            return AppHelper::IfUnexpectedError("students.index");
 
         }
     }
@@ -148,13 +207,46 @@ class StudentsController extends Controller
     {
         try {
 
+            // Select Name Of Class Academic.
+            $classes = AppHelper::selectProperty((new ClassAcademic()),  ["id", "name"]);
+
+            // Select Name Of Section Academic.
+            $sections = AppHelper::selectProperty((new SectionAcademic()),  ["id", "name"]);
+
+            /** Start Check Capacity **/
+
+                // Capacity Of Students.
+                $capacity = AppHelper::capacityClass((new SectionAcademic()), "id", "capacity_students");
+
+                // Count Of Students
+                $count = AppHelper::countColumnOfProperty($capacity, (new Student()), "section_id", "section_id");
+
+                // Check Capacity
+                $checkCapacity = AppHelper::checkCapacity($capacity, $count);
+
+            /** End Check Capacity **/
+
+//            compact("classes", "sections", "checkCapacity")
+
             // This Function For Handling return To Index Or Edit View Related To Founding $id.
-            return $this->CheckFoundingId($id, "edit");
+            return AppHelper::CheckFoundingId(
+                (new Student),
+                $id,
+                "This Student Not Found",
+                "students.index",
+                "students",
+                "edit",
+                "student",
+                '$student',
+                $classes,
+                $checkCapacity,
+                $sections
+            );
 
         } catch(Exception $e) {
 
             // This Function For Handling If Unexpected Error Happened.
-            return $this->IfUnexpectedError();
+            return AppHelper::IfUnexpectedError("students.index");
 
         }
     }
@@ -170,29 +262,29 @@ class StudentsController extends Controller
         try {
 
             // Find The Student With $id.
-            $student = $this->FoundWithId($id);
+            $student = AppHelper::FoundWithId($id, (new Student));
 
             // If $id Not Found.
             if (!$student) {
 
                 // This Function For Handling Redirecting If Student Not Found.
-                return $this->IfStudentNotFound();
+                return AppHelper::IfNotFound('This Student Not Found', "students.index");
 
             }
 
             // Handel Delete Old Photo And Store New Photo.
-            $data = $this->DeleteStorePhotoIfFound($request, $id);
+            $data = AppHelper::DeleteStorePhotoIfFound((new Student), $id, $request, ["_token", "photo", "time"], "students");
 
             // Update Data Of This Student.
             $student->update($data);
 
             // This Function For Handling Redirecting To Index View If Student Has Been Updated Successfully.
-            return $this->IfSuccessfully('The Data Of Student Updated Successfully');
+            return AppHelper::IfSuccessfully('The Data Of Student Updated Successfully', "students.index");
 
         } catch(Exception $e) {
 
             // This Function For Handling If Unexpected Error Happened.
-            return $this->IfUnexpectedError();
+            return AppHelper::IfUnexpectedError("students.index");
 
         }
     }
@@ -207,32 +299,32 @@ class StudentsController extends Controller
         try {
 
             // Find The Student With $id.
-            $student = $this->FoundWithId($id);
+            $student = AppHelper::FoundWithId($id, (new Student));
 
             // If $id Not Found.
             if (!$student) {
 
                 // This Function For Handling Redirecting If Student Not Found.
-                return $this->IfStudentNotFound();
+                return AppHelper::IfNotFound('This Student Not Found', "students.index");
 
             }
 
-            // Get The Path Photo Of This Student.
-            $file = public_path() . "\images\students\\" . $student->photo;
+            // Get The Path Folder Of Photo Of This Student.
+            $file = public_path() . "\images\students\\" . $student->time;
 
-            // Delete The Photo For This Student.
-            unlink($file);
+            // Delete The Folder Of Photo For This Student.
+            File::deleteDirectory($file);
 
             // Delete This Student.
             $student->delete();
 
             // This Function For Handling Redirecting To Index View If Student Has Been Deleted Successfully.
-            return $this->IfSuccessfully('The Student Deleted Successfully');
+            return AppHelper::IfSuccessfully('The Student Deleted Successfully', "students.index");
 
         } catch(Exception $e) {
 
             // This Function For Handling If Unexpected Error Happened.
-            return $this->IfUnexpectedError();
+            return AppHelper::IfUnexpectedError("students.index");
 
         }
     }

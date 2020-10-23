@@ -25,6 +25,8 @@
 
         @csrf
 
+        <input type="hidden" name="time" />
+
         <div class="row">
 
             <div class="col-md-6">
@@ -42,6 +44,7 @@
                         placeholder="Write Full Name Ex :- Yousseif Ahmed Mohammed"
                         autocomplete="off"
                         autofocus
+                        required
                     />
                     @error('name')
                         <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
@@ -63,6 +66,7 @@
                         name="birthday"
                         value="{{ old('birthday') }}"
                         id="birthday"
+                        required
                     />
 
                     @error('birthday')
@@ -83,7 +87,7 @@
 
                     <label for="gender" class="font-2xl"> Gender :- </label>
 
-                    <select class="form-control" name="gender" id="gender">
+                    <select class="form-control" name="gender" id="gender" required>
 
                         <option disabled selected> -- Select Your Gender -- </option>
 
@@ -117,7 +121,7 @@
 
                     <label for="religion" class="font-2xl"> Religion :- </label>
 
-                    <select class="form-control" name="religion" id="religion">
+                    <select class="form-control" name="religion" id="religion" required>
 
                         <option disabled selected> -- Select Your Religion -- </option>
 
@@ -169,6 +173,7 @@
                         id="address"
                         placeholder="Type Your Address"
                         autocomplete="off"
+                        required
                     />
 
                     @error('address')
@@ -193,6 +198,7 @@
                         id="email"
                         placeholder="Type Your Email"
                         autocomplete="off"
+                        required
                     />
 
                     @error('email')
@@ -231,6 +237,7 @@
                         class="form-control p-1"
                         name="photo"
                         id="photo"
+                        required
                     />
 
                     @error('photo')
@@ -255,6 +262,7 @@
                         id="phoneNumber"
                         placeholder="Type Your Phone Number"
                         autocomplete="off"
+                        required
                     />
 
                     @error('phoneNumber')
@@ -283,6 +291,7 @@
                         id="qualification"
                         placeholder="Type Your Qualification"
                         autocomplete="off"
+                        required
                     />
 
                     @error('qualification')
@@ -307,6 +316,7 @@
                         id="designation"
                         placeholder="Type Your Designation"
                         autocomplete="off"
+                        required
                     />
 
                     @error('qualification')
@@ -333,6 +343,7 @@
                         name="joinDate"
                         value="{{ old('joinDate') }}"
                         id="joinDate"
+                        required
                     />
 
                     @error('joinDate')
@@ -357,6 +368,7 @@
                         id="subjects"
                         placeholder="Type Your Designation"
                         autocomplete="off"
+                        required
                     />
 
                     @error('subjects')
@@ -381,6 +393,7 @@
                         class="form-control"
                         name="class"
                         id="class"
+                        required
                     >
                         <option disabled selected> -- Select Class -- </option>
                         <option
@@ -439,6 +452,7 @@
                         class="form-control"
                         name="section"
                         id="section"
+                        required
                     >
                         <option disabled selected> -- Select Section -- </option>
                         <option

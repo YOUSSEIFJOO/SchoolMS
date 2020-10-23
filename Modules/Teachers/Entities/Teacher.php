@@ -18,7 +18,7 @@ class Teacher extends Model
      * var array
      */
     protected $fillable = [
-        "id", "name", "birthday", "gender", "religion", "address", "email", "photo", "phoneNumber",
+        "id", "time", "name", "birthday", "gender", "religion", "address", "email", "photo", "phoneNumber",
         "qualification", "designation", "joinDate", "subjects", "class", "section"
     ];
 

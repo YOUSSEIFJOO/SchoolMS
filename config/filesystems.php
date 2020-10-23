@@ -57,14 +57,21 @@ return [
 
         'students' => [
             'driver' => 'local',
-            'root' => public_path('images'),
+            'root' => public_path('images/students'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
 
         'teachers' => [
             'driver' => 'local',
-            'root' => public_path('images'),
+            'root' => public_path('images/teachers'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
+        'employees' => [
+            'driver' => 'local',
+            'root' => public_path('images/employees'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],

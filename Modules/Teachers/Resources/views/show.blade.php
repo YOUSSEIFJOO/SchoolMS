@@ -81,7 +81,7 @@
                         <div class="image w-50 mx-auto mb-2">
 
                             <img
-                                src="{{ asset('images\teachers\\' . $teacher->photo) }}"
+                                src="{{ asset('images\teachers\\' . $teacher->time . '\\' . $teacher->photo) }}"
                                 class="w-100 img-thumbnail rounded-circle"
                             />
 

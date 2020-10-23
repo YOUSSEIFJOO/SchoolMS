@@ -17,6 +17,8 @@ Route::prefix('dashboard/students')->group(function() {
 
     Route::get('create', 'StudentsController@create')->name("students.create");
 
+    Route::get('create/section', 'StudentsController@selectSection')->name("students.select_section");
+
     Route::post('store', 'StudentsController@store')->name("students.store");
 
     Route::get('show/{id}', 'StudentsController@show')->name("students.show");

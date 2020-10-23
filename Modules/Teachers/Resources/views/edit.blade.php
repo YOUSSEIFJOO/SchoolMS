@@ -44,6 +44,7 @@
                         placeholder="Write Full Name Ex :- Yousseif Ahmed Mohammed"
                         autocomplete="off"
                         autofocus
+                        required
                     />
                     @error('name')
                     <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
@@ -65,6 +66,7 @@
                         name="birthday"
                         value="{{ $teacher->birthday }}"
                         id="birthday"
+                        required
                     />
 
                     @error('birthday')
@@ -85,7 +87,7 @@
 
                     <label for="gender" class="font-2xl"> Gender :- </label>
 
-                    <select class="form-control" name="gender" id="gender">
+                    <select class="form-control" name="gender" id="gender" required>
 
                         <option disabled selected> -- Select Your Gender -- </option>
 
@@ -119,7 +121,7 @@
 
                     <label for="religion" class="font-2xl"> Religion :- </label>
 
-                    <select class="form-control" name="religion" id="religion">
+                    <select class="form-control" name="religion" id="religion" required>
 
                         <option disabled selected> -- Select Your Religion -- </option>
 
@@ -171,6 +173,7 @@
                         id="address"
                         placeholder="Type Your Address"
                         autocomplete="off"
+                        required
                     />
 
                     @error('address')
@@ -195,6 +198,7 @@
                         id="email"
                         placeholder="Type Your Email"
                         autocomplete="off"
+                        required
                     />
 
                     @error('email')
@@ -212,7 +216,7 @@
             <img
                 id="photo-preview"
                 class="rounded"
-                src="{{ asset('images\teachers\\' . $teacher->photo) }}"
+                src="{{ asset('images\teachers\\' . $teacher->time . '\\' . $teacher->photo) }}"
                 alt="This Photo For Student"
                 height="400"
                 width="100%"
@@ -257,6 +261,7 @@
                         id="phoneNumber"
                         placeholder="Type Your Phone Number"
                         autocomplete="off"
+                        required
                     />
 
                     @error('phoneNumber')
@@ -285,6 +290,7 @@
                         id="qualification"
                         placeholder="Type Your Qualification"
                         autocomplete="off"
+                        required
                     />
 
                     @error('qualification')
@@ -309,6 +315,7 @@
                         id="designation"
                         placeholder="Type Your Designation"
                         autocomplete="off"
+                        required
                     />
 
                     @error('qualification')
@@ -335,6 +342,7 @@
                         name="joinDate"
                         value="{{ $teacher->joinDate }}"
                         id="joinDate"
+                        required
                     />
 
                     @error('joinDate')
@@ -359,6 +367,7 @@
                         id="subjects"
                         placeholder="Type Your Designation"
                         autocomplete="off"
+                        required
                     />
 
                     @error('subjects')
@@ -383,6 +392,7 @@
                         class="form-control"
                         name="class"
                         id="class"
+                        required
                     >
                         <option disabled selected> -- Select Class -- </option>
                         <option
@@ -441,6 +451,7 @@
                         class="form-control"
                         name="section"
                         id="section"
+                        required
                     >
                         <option disabled selected> -- Select Section -- </option>
                         <option
@@ -474,7 +485,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary font-xl">
-            <i class="fa fa-plus mr-1"></i> Add New Teacher
+            <i class="fa fa-edit mr-1"></i> Add New Teacher
         </button>
 
     </form>
