@@ -17,6 +17,9 @@ Route::prefix('dashboard/studentsAttendance')->group(function() {
 
     Route::get('create', 'StudentsAttendanceController@create')->name("studentsAttendance.create");
 
+    /** This Route For Get Related Sections When I Press A Class In Select Box In Create View **/
+    Route::get('create/section_attendance', 'StudentsAttendanceController@selectSection');
+
     Route::post('store', 'StudentsAttendanceController@store')->name("studentsAttendance.store");
 
 });

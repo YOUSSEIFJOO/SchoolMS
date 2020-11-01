@@ -115,7 +115,7 @@
 
                                 <td> {{ $index }} </td>
 
-                                <td> {{ $class->name }} </td>
+                                <td> {{ \Modules\Core\Http\Helper\AppHelper::upperWords($class->name) }} </td>
 
                                 <td> {{ $class->capacity_sections }} </td>
 

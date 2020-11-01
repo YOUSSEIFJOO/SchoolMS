@@ -1,263 +1,543 @@
 <?php
 
-namespace Modules\SubjectAcademic\Http\Controllers;
 
-// The Basics :-
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controller;
-use Illuminate\Http\Request;
-use Exception;
+/** Start The NameSpace Of This Controller **/
 
-// View :-
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+    namespace Modules\SubjectAcademic\Http\Controllers;
 
-// Subject Academic Request :-
-use Modules\SubjectAcademic\Http\Requests\SubjectAcademicRequest;
+/** End The NameSpace Of This Controller **/
 
-// Class Academic Request :-
-use Modules\ClassAcademic\Entities\ClassAcademic;
 
-// Subject Academic Model :-
-use Modules\SubjectAcademic\Entities\SubjectAcademic;
+/** Start Basic Declaration **/
 
-// Class Helper :-
-use Modules\Core\Http\Helper\AppHelper;
+    use Illuminate\Contracts\Foundation\Application;
+    use Illuminate\Routing\Controller;
+    use Illuminate\Http\Request;
+    use Exception;
 
-class SubjectAcademicController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     * @param Request $request
-     * @return Application|Factory|RedirectResponse|View
-     */
-    public function index(Request $request)
+/** End Basic Declaration **/
+
+
+/** Start Redirect Of Response Declaration **/
+
+    use Illuminate\Http\RedirectResponse;
+
+/** End Redirect Of Response Declaration **/
+
+
+/** Start View Helper Declaration **/
+
+    use Illuminate\Support\Facades\Redirect;
+    use Illuminate\Contracts\View\Factory;
+    use Illuminate\View\View;
+
+/** End View Helper Declaration **/
+
+
+/** Start Model Of Subject Academic Declaration **/
+
+    use Modules\SubjectAcademic\Entities\SubjectAcademic;
+
+/** End Model Of Subject Academic Declaration **/
+
+
+/** Start Model Of ClassAcademic Declaration **/
+
+    use Modules\ClassAcademic\Entities\ClassAcademic;
+
+/** End Model Of ClassAcademic Declaration **/
+
+
+/** Start Subject Academic Request Declaration **/
+
+    use Modules\SubjectAcademic\Http\Requests\SubjectAcademicRequest;
+
+/** End Subject Academic Request Declaration **/
+
+
+/** Start App Helper Class Declaration **/
+
+    use Modules\Core\Http\Helper\AppHelper;
+
+/** End App Helper Class Declaration **/
+
+
+                        /******************************************************************************/
+
+
+/** Start The SubjectAcademicController **/
+
+    class SubjectAcademicController extends Controller
     {
-        try {
 
-            // Get The Pagination Number.
-            $paginationNumber = AppHelper::PAGINATE_NUMBER;
+        /** Start Declaration Properties Of This Controller **/
 
-            // Select Name Of Class Academic.
-            $classes = AppHelper::selectProperty((new ClassAcademic()),  ["id", "name"]);
+            /** For Declaring Instance Of SubjectAcademic Model. **/
+            private $subjectAcademic;
 
-            // Make Query Search.
-            $subjects = AppHelper::QuerySearch(
-                $request,
-                ["name", "code", "class_id"],
-                "code",
-                (new SubjectAcademic())
-            );
+            /** For Declaring Instance Of ClassAcademic Model. **/
+            private $classAcademic;
 
-            // Redirect To Index View Of Subjects Academic With Two Variables.
-            return view('subjectacademic::index', compact("subjects", "paginationNumber", "classes"));
+            /** For Declaring Some Properties Will Selected From Class Academic **/
+            private $selectProperties;
 
-        } catch (Exception $e) {
+            /** For Declaring Query Of Class Academic. **/
+            private $classes;
 
-            // This Function For Handling If Unexpected Error Happened.
-            return AppHelper::IfUnexpectedError("subjectAcademic.index");
+        /** End Declaration Properties Of This Controller **/
 
-        }
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Application|Factory|RedirectResponse|View
-     */
-    public function create()
-    {
-        try {
+                        /******************************************************************************/
 
-            // Random Number For Code Column.
-            $randomNum = AppHelper::randNumber();
 
-            // Select Name Of Class Academic.
-            $classes = AppHelper::selectProperty((new ClassAcademic()),  ["id", "name"]);
+        /** Start The Construct Method **/
 
-            /** Start Check Capacity **/
+            public function __construct()
+            {
 
-                // Capacity Of Class.
-                $capacity = AppHelper::capacityClass((new ClassAcademic()), "id", "capacity_subjects");
+                /** For Declaring Instance Of Subject Model. **/
+                $this->subjectAcademic = new SubjectAcademic;
 
-                // Count Of Subjects
-                $count = AppHelper::countColumnOfProperty($capacity, (new SubjectAcademic()), "class_id");
+                /** For Declaring Instance Of ClassAcademic Model. **/
+                $this->classAcademic = new ClassAcademic;
 
-                // Check Capacity
-                $checkCapacity = AppHelper::checkCapacity($capacity, $count);
+                /** This Array To Put In It The Properties That You Want To Select It For Show All Classes. **/
+                $this->selectProperties = ["id", "name"];
 
-                // Return With CheckCapacity Variable If Found Class Has Full From Subjects.
-                return view("subjectacademic::create", compact("classes", "randomNum", "checkCapacity"));
-
-            /** End Check Capacity **/
-
-        } catch(Exception $e) {
-
-            // This Function For Handling If Unexpected Error Happened.
-            return AppHelper::IfUnexpectedError("subjectAcademic.index");
-
-        }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param SubjectAcademicRequest $request
-     * @return RedirectResponse
-     */
-    public function store(SubjectAcademicRequest $request)
-    {
-        try{
-
-            // Count Of Column Subjects Of Subject Academic Table.
-            $countOfSubjects = AppHelper::countColumn((new SubjectAcademic()), "class_id", $request, "class_ic");
-
-            // Value Of Capacity Subjects Row.
-            $capacityOfSubjects = AppHelper::valueRow((new classAcademic()), "capacity_subjects", "id", $request, "class_id");
-
-            if($countOfSubjects < $capacityOfSubjects) {
-
-                // Get All Requests Except _token.
-                $data = $request->except("_token");
-
-                // Create New Subject.
-                SubjectAcademic::create($data);
-
-                // This Function For Handling Redirecting To Index View If Subjects Academic Has Been Created Successfully.
-                return AppHelper::IfSuccessfully("Subject Created Successfully", "subjectAcademic.index");
-
-            } else {
-
-                // Return Back If Condition Not Valid.
-                return Redirect::back()->with("noCapacity", "Sorry You Can't Add Subjects To THis Class.");
-
+                /** Select Some Properties From ClassAcademic Table **/
+                $this->classes = AppHelper::selectProperty($this->classAcademic, $this->selectProperties);
             }
 
-        } catch(Exception $e) {
+        /** End The Construct Method **/
 
-            // This Function For Handling If Unexpected Error Happened.
-            return AppHelper::IfUnexpectedError("subjectAcademic.index");
 
-        }
-    }
+                        /******************************************************************************/
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param $id
-     * @return RedirectResponse
-     */
-    public function edit($id)
-    {
-        try {
 
-            /** Start Check Capacity **/
 
-                // Capacity Of Class.
-                $capacity = AppHelper::capacityClass((new ClassAcademic()), "id", "capacity_subjects");
+        /** Start index Method **/
 
-                // Count Of Subjects
-                $count = AppHelper::countColumnOfProperty($capacity, (new SubjectAcademic()), "class_id");
+            /**
+             * Display a listing of the resource.
+             * @param Request $request
+             * @return Application|Factory|RedirectResponse|View
+             */
+            public function index(Request $request)
+            {
+                try {
 
-                // Check Capacity
-                $checkCapacity = AppHelper::checkCapacity($capacity, $count);
+                    /** Start Pagination Number **/
 
-            /** End Check Capacity **/
+                        /**
+                         ** Get The Pagination Number.
+                         ** Passing Pagination Number To Index View For Showing This Number Under Showing Data.
+                         **/
+                        $paginationNumber = AppHelper::PAGINATE_NUMBER;
 
-            // Select Name Of Class Academic.
-            $classes = AppHelper::selectProperty((new ClassAcademic()),  ["id", "name"]);
+                    /** End Pagination Number **/
 
-            // This Function For Handling return To Index Or Edit View Related To Founding $id.
-            return AppHelper::CheckFoundingId(
-                (new SubjectAcademic),
-                $id,
-                "This Subject Not Found",
-                "subjectAcademic.index",
-                "subjectacademic",
-                "edit",
-                "subject",
-                '$subject',
-                $classes,
-                $checkCapacity
-            );
 
-        } catch(Exception $e) {
+                    /** Start $classes Variable **/
 
-            // This Function For Handling If Unexpected Error Happened.
-            return AppHelper::IfUnexpectedError("subjectAcademic.index");
+                        /** Select Some Properties From ClassAcademic Table **/
+                        $classes = $this->classes;
 
-        }
-    }
+                    /** End $classes Variable **/
 
-    /**
-     * Update the specified resource in storage.
-     * @param SubjectAcademicRequest $request
-     * @param $id
-     * @return RedirectResponse
-     */
-    public function update(SubjectAcademicRequest $request, $id)
-    {
-        try {
 
-            // Find The Subject With $id.
-            $subject = AppHelper::FoundWithId($id, (new SubjectAcademic));
+                    /** Start $sections Variable **/
 
-            // If $id Not Found.
-            if (!$subject) {
+                        /** This Array To Put In It The Properties That You Want To Select It For Index View. **/
+                        $selectProperties = ["id", "name", "code", "class_id"];
 
-                // This Function For Handling Redirecting If Subject Not Found.
-                return AppHelper::IfNotFound('This Subject Not Found', "subjectAcademic.index");
+                        /** This Array To Put In It The Properties That Are Use In Check The Value Of Inputs Are Like The Values In DB. **/
+                        $whereProperties = ["name", "code", "class_id"];
 
+                        /**
+                         ** Select Properties From Model ($selectProperties).
+                         ** Ordering Data By Column You Select It And Type Of Ordering.
+                         ** Search What Values Of Inputs In Index View Like Values In DB.
+                         ** Return With Pagination Number.
+                         **/
+                        $subjects = AppHelper::QuerySearch($this->subjectAcademic, $selectProperties, "class_id", "desc", $request, $whereProperties);
+
+                    /** End $sections Variable **/
+
+
+                    /** Start Return To Index View **/
+
+                        /** Redirect To Index View Of Subject Academic With Variables **/
+                        return view('subjectacademic::index', compact("subjects", "paginationNumber", "classes"))->with("instanceClass", $this->classAcademic);
+
+                    /** End Return To Index View **/
+
+                } catch (Exception $e) {
+
+                    /**
+                     ** This Function For Handling If Unexpected Error Happened.
+                     ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                     ** This Function Return To View Index Of Subject Academic And Appear The Nice Message.
+                     **/
+                    return AppHelper::IfUnexpectedError("subjectAcademic.index");
+
+                }
             }
 
-            $data = $request->except("_token");
+        /** End index Method **/
 
-            // Update Data Of This Employee.
-            $subject->update($data);
 
-            // This Function For Handling Redirecting To Index View If Employee Has Been Updated Successfully.
-            return AppHelper::IfSuccessfully('The Data Of Subject Updated Successfully', "subjectAcademic.index");
+                        /******************************************************************************/
 
-        } catch(Exception $e) {
 
-            // This Function For Handling If Unexpected Error Happened.
-            return AppHelper::IfUnexpectedError("subjectAcademic.index");
+        /** Start create Method **/
 
-        }
-    }
+            /**
+             * Show the form for creating a new resource.
+             * @return Application|Factory|RedirectResponse|View
+             */
+            public function create()
+            {
+                try {
 
-    /**
-     * Remove the specified resource from storage.
-     * @param $id
-     * @return RedirectResponse
-     */
-    public function destroy($id)
-    {
-        try {
+                    /** Start $classes Variable **/
 
-            // Find The Class With $id.
-            $subject = AppHelper::FoundWithId($id, (new SubjectAcademic));
+                        /** Select Some Properties From ClassAcademic Table **/
+                        $classes = $this->classes;
 
-            // If $id Not Found.
-            if (!$subject) {
+                    /** End $classes Variable **/
 
-                // This Function For Handling Redirecting If Subject Not Found.
-                return AppHelper::IfNotFound('This Subject Not Found', "subjectAcademic.index");
 
+                    /** Start Return To Create View **/
+
+                        /** Redirect To Create View Of Subject Academic With Variables **/
+                        return view('subjectacademic::create', compact("classes"));
+
+                    /** End Return To Create View **/
+
+                } catch(Exception $e) {
+
+                    /**
+                     ** This Function For Handling If Unexpected Error Happened.
+                     ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                     ** This Function Return To View Index Of Subject Academic And Appear The Nice Message.
+                     **/
+                    return AppHelper::IfUnexpectedError("subjectAcademic.index");
+
+                }
             }
 
-            // Delete This Subject.
-            $subject->delete();
+        /** End create Method **/
 
-            // This Function For Handling Redirecting To Index View If Subjects Academic Has Been Deleted Successfully.
-            return AppHelper::IfSuccessfully('The Subject Deleted Successfully', "subjectAcademic.index");
 
-        } catch(Exception $e) {
+                        /******************************************************************************/
 
-            // This Function For Handling If Unexpected Error Happened.
-            return AppHelper::IfUnexpectedError("subjectAcademic.index");
 
+        /** Start store Method **/
+
+            /**
+             * Store a newly created resource in storage.
+             * @param SubjectAcademicRequest $request
+             * @return RedirectResponse
+             */
+            public function store(SubjectAcademicRequest $request)
+            {
+                try{
+
+                    /** Start $className Variable **/
+
+                        /** Get THe Class Name For Display It When Error Happen If The Class Selected Are Not Available. **/
+                        $className = AppHelper::selectPropertyWithWhere($this->classAcademic, "name", "id", $request->class_id);
+
+                    /** End $className Variable **/
+
+
+                    /** Start $capacitySections Variable **/
+
+                        /** Get The Capacity Subjects For Check With Count Of Subjects From Subject Academic. **/
+                        $capacitySubjects = AppHelper::selectPropertyWithWhere($this->classAcademic,"capacity_subjects","id", $request->class_id);
+
+                    /** End $capacitySections Variable **/
+
+
+                    /** Start $countOfSections Variable **/
+
+                        /** Count Rows From Subject Table Where section_id === $request->class_id **/
+                        $countSubjects = AppHelper::countRow($this->subjectAcademic, "class_id", $request->class_id);
+
+                    /** End $countOfSections Variable **/
+
+
+                    /** Start If State For Check Capacity **/
+
+                    if($countSubjects >= $capacitySubjects) {
+
+                        /** If True Not Store This Subject But Redirect Back With Nice Message Disappear The Error. **/
+                        return Redirect::back()->with("noCapacity", "Sorry You Can't Add $request->name Section To $className Class. Try To Change The Class");
+
+                    } else {
+
+                        /** Start $data Variable **/
+
+                            /** This Function For Handel All Requests Except _token. **/
+                            $data = $request->except("_token");
+
+                        /** End $data Variable **/
+
+
+                        /** Start Create The Data Of New Subject Academic **/
+
+                            /** Create New Subject Academic. **/
+                            SubjectAcademic::create($data);
+
+                        /** End Create The Data Of New Subject Academic **/
+
+
+                        /** Start Return To Index View **/
+
+                            /** Redirect To Index View If Subject Academic Has Been Created Successfully **/
+                            return AppHelper::IfSuccessfully('Subject Created Successfully', "subjectAcademic.index");
+
+                        /** End Return To Index View **/
+
+                    }
+
+                } catch(Exception $e) {
+
+                    /**
+                     ** This Function For Handling If Unexpected Error Happened.
+                     ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                     ** This Function Return To View Index Of Subject Academic And Appear The Nice Message.
+                     **/
+                    return AppHelper::IfUnexpectedError("subjectAcademic.index");
+
+                }
+            }
+
+        /** End store Method **/
+
+
+                        /******************************************************************************/
+
+
+        /** Start edit Method **/
+
+            /**
+             * Show the form for editing the specified resource.
+             * @param $id
+             * @return RedirectResponse
+             */
+            public function edit($id)
+            {
+                try {
+
+                    /** Start $classes Variable **/
+
+                        /** Select Some Properties From ClassAcademic Table **/
+                        $classes = $this->classes;
+
+                    /** End $classes Variable **/
+
+
+                    /** Check Founding Id For Edit Data Of A Subject  **/
+                    return AppHelper::CheckFoundingId(
+                        $this->subjectAcademic,
+                        $id,
+                        "This Subject Is Not Found",
+                        "subjectAcademic.index",
+                        "subjectacademic::edit",
+                        "subject",
+                        null,
+                        null,
+                        null,
+                        $classes
+                    );
+
+                } catch(Exception $e) {
+
+                    /**
+                     ** This Function For Handling If Unexpected Error Happened.
+                     ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                     ** This Function Return To View Index Of Subject Academic And Appear The Nice Message.
+                     **/
+                    return AppHelper::IfUnexpectedError("subjectAcademic.index");
+
+                }
+            }
+
+        /** End edit Method **/
+
+
+                        /******************************************************************************/
+
+
+        /** Start update Method **/
+
+            /**
+             * Update the specified resource in storage.
+             * @param SubjectAcademicRequest $request
+             * @param $id
+             * @return RedirectResponse
+             */
+            public function update(SubjectAcademicRequest $request, $id)
+            {
+                try {
+
+                    /** Start $className Variable **/
+
+                        /** Get THe Class Name For Display It When Error Happen If The Class Selected Are Not Available. **/
+                        $className = AppHelper::selectPropertyWithWhere($this->classAcademic, "name", "id", $request->class_id);
+
+                    /** End $className Variable **/
+
+
+                    /** Start $subject Variable **/
+
+                        /** Find The Subject Academic With $id. **/
+                        $subject = AppHelper::FoundWithId($this->subjectAcademic, $id);
+
+                    /** End $subject Variable **/
+
+                    /** Check If $id Not Found. **/
+                    if (!$subject) {
+
+                        /** If True ($id Not Found) **/
+
+                        /** Redirect To View Index With Error Message **/
+                        return AppHelper::IfNotFound('This Subject Not Found', "subjectAcademic.index");
+
+                    }
+
+                    /** If False ($id Founded) **/
+
+
+                    /** Start $capacitySections Variable **/
+
+                        /** Get The Capacity Subjects For Check With Count Of Subjects From Subject Academic. **/
+                        $capacitySubjects = AppHelper::selectPropertyWithWhere($this->classAcademic,"capacity_subjects","id", $request->class_id);
+
+                    /** End $capacitySections Variable **/
+
+
+                    /** Start $countOfSections Variable **/
+
+                        /** Count Rows From Subject Table Where section_id === $request->class_id **/
+                        $countSubjects = AppHelper::countRow($this->subjectAcademic, "class_id", $request->class_id);
+
+                    /** End $countOfSections Variable **/
+
+
+                    /** Start If State For Check Capacity **/
+
+                    if($countSubjects >= $capacitySubjects) {
+
+                        /** If True Not Store This Subject But Redirect Back With Nice Message Disappear The Error. **/
+                        return Redirect::back()->with("noCapacity", "Sorry You Can't Add $request->name Section To $className Class. Try To Change The Class");
+
+                    } else {
+
+                        /** Start $data Variable **/
+
+                            /** This Function For Handel All Requests Except _token. **/
+                            $data = $request->except("_token");
+
+                        /** End $data Variable **/
+
+
+                        /** Start Update The Data Of The Subject Academic **/
+
+                            /** Update Data Of The If $data Ready To Update In DB. **/
+                            $subject->update($data);
+
+                        /** End Update The Data Of The Subject Academic **/
+
+
+                        /** Start Return To Index View **/
+
+                            /** Redirect To Index View If Section Academic Has Been Updated Successfully **/
+                            return AppHelper::IfSuccessfully('The Data Of Subject Updated Successfully', "subjectAcademic.index");
+
+                        /** End Return To Index View **/
+
+                    }
+
+                } catch(Exception $e) {
+
+                    /**
+                     ** This Function For Handling If Unexpected Error Happened.
+                     ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                     ** This Function Return To View Index Of Subject Academic And Appear The Nice Message.
+                     **/
+                    return AppHelper::IfUnexpectedError("subjectAcademic.index");
+
+                }
+            }
+
+        /** End update Method **/
+
+
+                        /******************************************************************************/
+
+
+        /** Start destroy Method **/
+
+            /**
+             * Remove the specified resource from storage.
+             * @param $id
+             * @return RedirectResponse
+             */
+            public function destroy($id)
+        {
+            try {
+
+                /** Start $subject Variable **/
+
+                    /** Find The Subject Academic With $id. **/
+                    $subject = AppHelper::FoundWithId($this->subjectAcademic, $id);
+
+                /** End $subject Variable **/
+
+                /** Check If $id Not Found. **/
+                if (!$subject) {
+
+                    /** If True ($id Not Found) **/
+
+                    /** Redirect To View Index With Error Message **/
+                    return AppHelper::IfNotFound('This Subject Not Found', "subjectAcademic.index");
+
+                }
+
+                /** If False ($id Founded) **/
+
+
+                /** Start Delete The Data Of Subject **/
+
+                    /** Delete Subject Academic. **/
+                    $subject->delete();
+
+                /** End Delete The Data Of Subject **/
+
+
+                /** Start Return To Index View **/
+
+                    /** Redirect To Index View If Subject Academic Has Been Deleted Successfully **/
+                    return AppHelper::IfSuccessfully('The Subject Deleted Successfully', "subjectAcademic.index");
+
+                /** End Return To Index View **/
+
+            } catch(Exception $e) {
+
+                /**
+                 ** This Function For Handling If Unexpected Error Happened.
+                 ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                 ** This Function Return To View Index Of Subject Academic And Appear The Nice Message.
+                 **/
+                return AppHelper::IfUnexpectedError("subjectAcademic.index");
+
+            }
         }
+
+        /** End destroy Method **/
+
     }
 
-}
+/** End The SubjectAcademicController **/

@@ -14,15 +14,20 @@ class CreateSubjectAcademicTable extends Migration
     public function up()
     {
         Schema::create('subjectAcademic', function (Blueprint $table) {
-            $table->bigIncrements("id");
 
+            $table->bigIncrements("id");
             $table->string('name');
             $table->Integer('code');
-            $table->unsignedBigInteger('class_id');
+
+            /** Start Relationships **/
+                $table->unsignedBigInteger('class_id');
+            /** End Relationships **/
 
             $table->timestamps();
 
-            $table->foreign('class_id')->references('id')->on('classAcademic');
+            /** Start Foreign Keys **/
+                $table->foreign('class_id')->references('id')->on('classAcademic')->onUpdate("cascade");
+            /** End Foreign Keys **/
         });
     }
 
@@ -33,6 +38,15 @@ class CreateSubjectAcademicTable extends Migration
      */
     public function down()
     {
+
+        /** For Skip Foreign Key In Update Or Delete For Solve Error (Cannot delete or update a parent row a foreign key constraint fails) **/
+        Schema::disableForeignKeyConstraints();
+        Schema::table('subjectAcademic', function(Blueprint $table){
+            $table->dropForeign(['class_id']);
+        });
+
         Schema::dropIfExists('subjectAcademic');
+        Schema::enableForeignKeyConstraints();
+
     }
 }

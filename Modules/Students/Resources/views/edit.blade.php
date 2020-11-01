@@ -89,7 +89,7 @@
                             required
                         />
 
-                        @error('date')
+                        @error('birthday')
                             <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                         @enderror
 
@@ -229,7 +229,7 @@
                 <img
                     id="photo-preview"
                     class="rounded"
-                    src="{{ asset('images\students\\' . $student->time . '\\' . $student->photo) }}"
+                    src="{{ asset('images\students\\' . $student->photo) }}"
                     alt="This Photo For Student"
                     height="400"
                     width="100%"
@@ -413,9 +413,9 @@
 
                     <div class="form-group">
 
-                        <label for="class_id" class="font-2xl"> Class :- </label>
+                        <label for="class_id_students" class="font-2xl"> Class :- </label>
 
-                        <select id="class_id" name="class_id" class="form-control d-none d-sm-block">
+                        <select id="class_id_students" name="class_id_students" class="form-control d-none d-sm-block" required>
 
                             <option disabled selected> -- Select Class -- </option>
 
@@ -427,7 +427,7 @@
 
                                     value="{{ $class->id }}"
 
-                                    @if($student->class_id == $class->id) selected @endif
+                                    @if($student->class_id_students == $class->id) selected @endif
 
                                 > {{ $class->name }} </option>
 
@@ -435,7 +435,7 @@
 
                         </select>
 
-                        @error('class_id')
+                        @error('class_id_students')
                         <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                         @enderror
 
@@ -447,13 +447,11 @@
 
                     <div class="form-group">
 
-                        <label for="section_id" class="font-2xl"> Section :- </label>
+                        <label for="section_id_students" class="font-2xl"> Section :- </label>
 
-                        <select id="section_id" name="section_id" class="form-control d-none d-sm-block">
+                        <select id="section_id_students" name="section_id_students" class="form-control d-none d-sm-block" required>
 
                             <option disabled selected> -- Select Section -- </option>
-
-                            <option value=""> No Selected </option>
 
                             @foreach($sections as $section)
 
@@ -461,17 +459,7 @@
 
                                     value="{{ $section->id }}"
 
-                                    @if($student->section_id == $section->id) selected @endif
-
-                                    @if(count($checkCapacity) > 0)
-
-                                        @foreach($checkCapacity as $checkCapacities)
-
-                                            @if($section->id === $checkCapacities && $student->section_id !== $section->id) disabled @endif
-
-                                        @endforeach
-
-                                    @endif
+                                    @if($section->id === $student->section_id_students) selected @endif
 
                                 >
                                     {{ $section->name }}
@@ -482,7 +470,7 @@
 
                         </select>
 
-                        @error('section_id')
+                        @error('section_id_students')
                         <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                         @enderror
 

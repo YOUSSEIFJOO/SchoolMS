@@ -1,261 +1,548 @@
 <?php
 
-namespace Modules\SectionAcademic\Http\Controllers;
 
-// The Basics :-
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controller;
-use Illuminate\Http\Request;
-use Exception;
+/** Start The NameSpace Of This Controller **/
 
-// View :-
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+    namespace Modules\SectionAcademic\Http\Controllers;
 
-// Subject Academic Request :-
-use Modules\SectionAcademic\Http\Requests\SectionAcademicRequest;
+/** End The NameSpace Of This Controller **/
 
-// Class Academic Request :-
-use Modules\ClassAcademic\Entities\ClassAcademic;
 
-// Subject Academic Model :-
-use Modules\SectionAcademic\Entities\SectionAcademic;
+/** Start Basic Declaration **/
 
-// Class Helper :-
-use Modules\Core\Http\Helper\AppHelper;
+    use Illuminate\Contracts\Foundation\Application;
+    use Illuminate\Routing\Controller;
+    use Illuminate\Http\Request;
+    use Exception;
 
-class SectionAcademicController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     * @param Request $request
-     * @return Application|Factory|RedirectResponse|View
-     */
-    public function index(Request $request)
+/** End Basic Declaration **/
+
+
+/** Start Redirect Of Response Declaration **/
+
+    use Illuminate\Http\RedirectResponse;
+
+/** End Redirect Of Response Declaration **/
+
+
+/** Start View Helper Declaration **/
+
+    use Illuminate\Support\Facades\Redirect;
+    use Illuminate\Contracts\View\Factory;
+    use Illuminate\Support\Str;
+    use Illuminate\View\View;
+
+/** End View Helper Declaration **/
+
+
+/** Start Model Of Section Academic Declaration **/
+
+    use Modules\SectionAcademic\Entities\SectionAcademic;
+
+/** End Model Of Section Academic Declaration **/
+
+
+/** Start Model Of ClassAcademic Declaration **/
+
+    use Modules\ClassAcademic\Entities\ClassAcademic;
+
+/** End Model Of ClassAcademic Declaration **/
+
+
+/** Start Section Academic Request Declaration **/
+
+    use Modules\SectionAcademic\Http\Requests\SectionAcademicRequest;
+
+/** End Section Academic Request Declaration **/
+
+
+/** Start App Helper Class Declaration **/
+
+    use Modules\Core\Http\Helper\AppHelper;
+
+/** End App Helper Class Declaration **/
+
+
+                        /******************************************************************************/
+
+
+/** Start The SectionAcademicController **/
+
+    class SectionAcademicController extends Controller
     {
-        try {
 
-            // Get The Pagination Number.
-            $paginationNumber = AppHelper::PAGINATE_NUMBER;
+        /** Start Declaration Properties Of This Controller **/
 
-            // Select Name Of Class Academic.
-            $classes = AppHelper::selectProperty((new ClassAcademic()),  ["id", "name"]);
+            /** For Declaring Instance Of SectionAcademic Model. **/
+            private $sectionAcademic;
 
-            // Make Query Search.
-            $sections = AppHelper::QuerySearch(
-                $request,
-                ["name", "class_id"],
-                "class_id",
-                (new SectionAcademic())
-            );
+            /** For Declaring Instance Of ClassAcademic Model. **/
+            private $classAcademic;
 
-            // Redirect To Index View Of Sections Academic With Two Variables.
-            return view('sectionacademic::index', compact("sections", "paginationNumber", "classes"));
+            /** For Declaring Some Properties Will Selected From Class Academic **/
+            private $selectProperties;
 
-        } catch (Exception $e) {
+            /** For Declaring Query Of Class Academic. **/
+            private $classes;
 
-            // This Function For Handling If Unexpected Error Happened.
-            return AppHelper::IfUnexpectedError("sectionAcademic.index");
+        /** End Declaration Properties Of This Controller **/
 
-        }
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Application|Factory|RedirectResponse|View
-     */
-    public function create()
-    {
-        try {
+                        /******************************************************************************/
 
-            // Random Number For Code Column.
-            $randomNum = AppHelper::randNumber();
 
-            // Select Name Of Class Academic.
-            $classes = AppHelper::selectProperty((new ClassAcademic()),  ["id", "name"]);
+        /** Start The Construct Method **/
 
-            /** Start Check Capacity **/
+            public function __construct()
+            {
 
-                // Capacity Of Class.
-                $capacity = AppHelper::capacityClass((new ClassAcademic()), "id", "capacity_sections");
+                /** For Declaring Instance Of Section Model. **/
+                $this->sectionAcademic = new SectionAcademic;
 
-                // Count Of Sections
-                $count = AppHelper::countColumnOfProperty($capacity, (new SectionAcademic()), "name", "class_id");
+                /** For Declaring Instance Of ClassAcademic Model. **/
+                $this->classAcademic = new ClassAcademic;
 
-                // Check Capacity
-                $checkCapacity = AppHelper::checkCapacity($capacity, $count);
+                /** This Array To Put In It The Properties That You Want To Select It For Show All Classes. **/
+                $this->selectProperties = ["id", "name"];
 
-            /** End Check Capacity **/
-
-            // Return With CheckCapacity Variable If Found Class Has Full From Sections.
-            return view("sectionacademic::create", compact("classes", "randomNum", "checkCapacity"));
-
-        } catch(Exception $e) {
-
-            // This Function For Handling If Unexpected Error Happened.
-            return AppHelper::IfUnexpectedError("sectionAcademic.index");
-
-        }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param SectionAcademicRequest $request
-     * @return RedirectResponse
-     */
-    public function store(SectionAcademicRequest $request)
-    {
-        try{
-
-            // Count Of Column Subjects Of Section Academic Table.
-            $countOfSections = AppHelper::countColumn((new SectionAcademic()), "class_id", $request, "class_id");
-
-            // Value Of Capacity Sections Row.
-            $capacityOfSections = AppHelper::valueRow((new classAcademic()), "capacity_sections", "id", $request, "class_id");
-
-            if($countOfSections < $capacityOfSections) {
-
-                // Get All Requests Except _token.
-                $data = $request->except("_token");
-
-                // Create New Section.
-                SectionAcademic::create($data);
-
-                // This Function For Handling Redirecting To Index View If Section Academic Has Been Created Successfully.
-                return AppHelper::IfSuccessfully("Section Created Successfully", "sectionAcademic.index");
-
-            } else {
-
-                // Return Back If Condition Not Valid.
-                return Redirect::back()->with("noCapacity", "Sorry You Can't Add Section To THis Class.");
-
+                /** Select Some Properties From ClassAcademic Table **/
+                $this->classes = AppHelper::selectProperty($this->classAcademic, $this->selectProperties);
             }
 
-        } catch(Exception $e) {
+        /** End The Construct Method **/
 
-            // This Function For Handling If Unexpected Error Happened.
-            return AppHelper::IfUnexpectedError("sectionAcademic.index");
 
-        }
-    }
+                        /******************************************************************************/
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param $id
-     * @return RedirectResponse
-     */
-    public function edit($id)
-    {
-        try {
 
-            /** Start Check Capacity **/
+        /** Start Index Method **/
 
-                // Capacity Of Class.
-                $capacity = AppHelper::capacityClass((new ClassAcademic()), "id", "capacity_subjects");
+            /**
+             * Display a listing of the resource.
+             * @param Request $request
+             * @return Application|Factory|RedirectResponse|View
+             */
+            public function index(Request $request)
+            {
+                try {
 
-                // Count Of Sections.
-                $count = AppHelper::countColumnOfProperty($capacity, (new SectionAcademic()), "name", "class_id");
+                    /** Start Pagination Number **/
 
-                // Check Capacity
-                $checkCapacity = AppHelper::checkCapacity($capacity, $count);
+                        /**
+                         ** Get The Pagination Number.
+                         ** Passing Pagination Number To Index View For Showing This Number Under Showing Data.
+                         **/
+                        $paginationNumber = AppHelper::PAGINATE_NUMBER;
 
-            /** End Check Capacity **/
+                    /** End Pagination Number **/
 
-            // Select Name Of Class Academic.
-            $classes = AppHelper::selectProperty((new ClassAcademic()),  ["id", "name"]);
 
-            // This Function For Handling return To Index Or Edit View Related To Founding $id.
-            return AppHelper::CheckFoundingId(
-                (new SectionAcademic),
-                $id,
-                "This Section Not Found",
-                "sectionAcademic.index",
-                "sectionacademic",
-                "edit",
-                "section",
-                '$section',
-                $classes,
-                $checkCapacity
-            );
+                    /** Start $classes Variable **/
 
-        } catch(Exception $e) {
+                        /** Select Some Properties From ClassAcademic Table **/
+                        $classes = $this->classes;
 
-            // This Function For Handling If Unexpected Error Happened.
-            return AppHelper::IfUnexpectedError("sectionAcademic.index");
+                    /** End $classes Variable **/
 
-        }
-    }
 
-    /**
-     * Update the specified resource in storage.
-     * @param SectionAcademicRequest $request
-     * @param $id
-     * @return RedirectResponse
-     */
-    public function update(SectionAcademicRequest $request, $id)
-    {
-        try {
+                    /** Start $sections Variable **/
 
-            // Find The Section With $id.
-            $section = AppHelper::FoundWithId($id, (new SectionAcademic));
+                        /** This Array To Put In It The Properties That You Want To Select It For Index View. **/
+                        $selectProperties = ["id", "name", "capacity_students", "class_id"];
 
-            // If $id Not Found.
-            if (!$section) {
+                        /** This Array To Put In It The Properties That Are Use In Check The Value Of Inputs Are Like The Values In DB. **/
+                        $whereProperties = ["name", "class_id"];
 
-                // This Function For Handling Redirecting If Section Not Found.
-                return AppHelper::IfNotFound('This Section Not Found', "sectionAcademic.index");
+                        /**
+                         ** Select Properties From Model ($selectProperties).
+                         ** Ordering Data By Column You Select It And Type Of Ordering.
+                         ** Search What Values Of Inputs In Index View Like Values In DB.
+                         ** Return With Pagination Number.
+                         **/
+                        $sections = AppHelper::QuerySearch($this->sectionAcademic, $selectProperties, "class_id", "desc", $request, $whereProperties);
 
+                    /** End $sections Variable **/
+
+
+                    /** Start Return To Index View **/
+
+                        /** Redirect To Index View Of Class Academic With Variables **/
+                        return view('sectionacademic::index', compact("classes", "sections", "paginationNumber"))->with("instanceClass", $this->classAcademic);
+
+                    /** End Return To Index View **/
+
+                } catch (Exception $e) {
+
+                    /**
+                     ** This Function For Handling If Unexpected Error Happened.
+                     ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                     ** This Function Return To View Index Of Section Academic And Appear The Nice Message.
+                     **/
+                    return AppHelper::IfUnexpectedError("sectionAcademic.index");
+
+                }
             }
 
-            $data = $request->except("_token");
+        /** End Index Method **/
 
-            // Update Data Of This Section.
-            $section->update($data);
 
-            // This Function For Handling Redirecting To Index View If Section Academic Has Been Updated Successfully.
-            return AppHelper::IfSuccessfully('The Data Of Section Updated Successfully', "sectionAcademic.index");
+                        /******************************************************************************/
 
-        } catch(Exception $e) {
 
-            // This Function For Handling If Unexpected Error Happened.
-            return AppHelper::IfUnexpectedError("sectionAcademic.index");
+        /** Start create Method **/
 
-        }
-    }
+            /**
+             * Show the form for creating a new resource.
+             * @return Application|Factory|RedirectResponse|View
+             */
+            public function create()
+            {
+                try {
 
-    /**
-     * Remove the specified resource from storage.
-     * @param $id
-     * @return RedirectResponse
-     */
-    public function destroy($id)
-    {
-        try {
+                    /** Start $classes Variable **/
 
-            // Find The Class With $id.
-            $section = AppHelper::FoundWithId($id, (new SectionAcademic));
+                        /** Select Some Properties From ClassAcademic Table **/
+                        $classes = $this->classes;
 
-            // If $id Not Found.
-            if (!$section) {
+                    /** End $classes Variable **/
 
-                // This Function For Handling Redirecting If Section Not Found.
-                return AppHelper::IfNotFound('This Section Not Found', "sectionAcademic.index");
 
+                    /** Start Return To Create View **/
+
+                        /** Redirect To Create View Of Section Academic With Variables **/
+                        return view('sectionacademic::create', compact("classes"));
+
+                    /** End Return To Create View **/
+
+                } catch(Exception $e) {
+
+                    /**
+                     ** This Function For Handling If Unexpected Error Happened.
+                     ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                     ** This Function Return To View Index Of Section Academic And Appear The Nice Message.
+                     **/
+                    return AppHelper::IfUnexpectedError("sectionAcademic.index");
+
+                }
             }
 
-            // Delete This Subject.
-            $section->delete();
+        /** End create Method **/
 
-            // This Function For Handling Redirecting To Index View If Sections Academic Has Been Deleted Successfully.
-            return AppHelper::IfSuccessfully('The Section Deleted Successfully', "sectionAcademic.index");
 
-        } catch(Exception $e) {
+                        /******************************************************************************/
 
-            // This Function For Handling If Unexpected Error Happened.
-            return AppHelper::IfUnexpectedError("sectionAcademic.index");
 
+        /** Start store Method **/
+
+            /**
+             * Store a newly created resource in storage.
+             * @param SectionAcademicRequest $request
+             * @return RedirectResponse
+             */
+            public function store(SectionAcademicRequest $request)
+            {
+                try{
+
+                    /** Start $className Variable **/
+
+                        /** Get THe Class Name For Display It When Error Happen If The Class Selected Are Not Available. **/
+                        $className = AppHelper::selectPropertyWithWhere($this->classAcademic, "name", "id", $request->class_id);
+
+                    /** End $className Variable **/
+
+
+                    /** Start $countOfSections Variable **/
+
+                        /** Count Rows From Student Table Where section_id === $request->section_id **/
+                        $countSections = AppHelper::countRow($this->sectionAcademic, "class_id", $request->class_id);
+
+                    /** End $countOfSections Variable **/
+
+
+                    /** Start $capacitySections Variable **/
+
+                        /** Get The Capacity Students For Check With Count Of Students From Section Academic. **/
+                        $capacitySections = AppHelper::selectPropertyWithWhere($this->classAcademic,"capacity_sections","id", $request->class_id);
+
+                    /** End $capacitySections Variable **/
+
+
+                    /** Start If State For Check Capacity **/
+
+                        if($countSections >= $capacitySections) {
+
+                            /** If True Not Store This Section But Redirect Back With Nice Message Disappear The Error. **/
+                            return Redirect::back()->with("noCapacity", "Sorry You Can't Add $request->name Section To $className Class. Try To Change The Class");
+
+                        } else {
+
+                            /** Start $data Variable **/
+
+                                /** This Function For Handel All Requests Except _token. **/
+                                $data = $request->except("_token");
+
+                            /** End $data Variable **/
+
+
+                            /** Start Create The Data Of New Section Academic **/
+
+                                /** Create New Section Academic. **/
+                                SectionAcademic::create($data);
+
+                            /** End Create The Data Of New Section Academic **/
+
+
+                            /** Start Return To Index View **/
+
+                                /** Redirect To Index View If Section Academic Has Been Created Successfully **/
+                                return AppHelper::IfSuccessfully('Section Created Successfully', "sectionAcademic.index");
+
+                            /** End Return To Index View **/
+
+                        }
+
+                    /** End If State For Check Capacity **/
+
+                } catch(Exception $e) {
+
+                    /**
+                     ** This Function For Handling If Unexpected Error Happened.
+                     ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                     ** This Function Return To View Index Of Section Academic And Appear The Nice Message.
+                     **/
+                    return AppHelper::IfUnexpectedError("sectionAcademic.index");
+
+                }
+            }
+
+        /** End store Method **/
+
+
+                        /******************************************************************************/
+
+
+        /** Start edit Method **/
+
+            /**
+             * Show the form for editing the specified resource.
+             * @param $id
+             * @return RedirectResponse
+             */
+            public function edit($id)
+            {
+                try {
+
+                    /** Start $classes Variable **/
+
+                        /** Select Some Properties From ClassAcademic Table **/
+                        $classes = $this->classes;
+
+                    /** End $classes Variable **/
+
+
+                    /** Check Founding Id For Edit Data Of A Class  **/
+                    return AppHelper::CheckFoundingId(
+                        $this->sectionAcademic,
+                        $id,
+                        "This Section Is Not Found",
+                        "sectionAcademic.index",
+                        "sectionacademic::edit",
+                        "section",
+                        null,
+                        null,
+                        null,
+                        $classes
+                    );
+
+                } catch(Exception $e) {
+
+                    /**
+                     ** This Function For Handling If Unexpected Error Happened.
+                     ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                     ** This Function Return To View Index Of Section Academic And Appear The Nice Message.
+                     **/
+                    return AppHelper::IfUnexpectedError("sectionAcademic.index");
+
+                }
+            }
+
+        /** End edit Method **/
+
+
+                        /******************************************************************************/
+
+
+        /** Start update Method **/
+
+            /**
+             * Update the specified resource in storage.
+             * @param SectionAcademicRequest $request
+             * @param $id
+             * @return RedirectResponse
+             */
+            public function update(SectionAcademicRequest $request, $id)
+        {
+            try {
+
+                /** Start $className Variable **/
+
+                    /** Get THe Class Name For Display It When Error Happen If The Class Selected Are Not Available. **/
+                    $className = AppHelper::selectPropertyWithWhere($this->classAcademic, "name", "id", $request->class_id);
+
+                /** End $className Variable **/
+
+
+                /** Start $section Variable **/
+
+                    /** Find The Class Academic With $id. **/
+                    $section = AppHelper::FoundWithId($this->sectionAcademic, $id);
+
+                /** End $section Variable **/
+
+
+                /** Check If $id Not Found. **/
+                if (!$section) {
+
+                    /** If True ($id Not Found) **/
+
+                    /** Redirect To View Index With Error Message **/
+                    return AppHelper::IfNotFound('This Section Not Found', "sectionAcademic.index");
+
+                }
+
+                /** If False ($id Founded) **/
+
+
+                /** Start $countOfSections Variable **/
+
+                    /** Count Rows From Student Table Where section_id === $request->section_id **/
+                    $countSections = AppHelper::countRow($this->sectionAcademic, "class_id", $request->class_id);
+
+                /** End $countOfSections Variable **/
+
+
+                /** Start $capacitySections Variable **/
+
+                    /** Get The Capacity Students For Check With Count Of Students From Section Academic. **/
+                    $capacitySections = AppHelper::selectPropertyWithWhere($this->classAcademic,"capacity_sections","id", $request->class_id);
+
+                /** End $capacitySections Variable **/
+
+
+                /** Start If State For Check Capacity **/
+
+                if($countSections >= $capacitySections) {
+
+                    /** If True Not Store This Section But Redirect Back With Nice Message Disappear The Error. **/
+                    return Redirect::back()->with("noCapacity", "Sorry You Can't Add $request->name Section To $className Class. Try To Change The Class");
+
+                } else {
+
+                    /** Start $data Variable **/
+
+                        /** This Function For Handel All Requests Except _token. **/
+                        $data = $request->except("_token");
+
+                    /** End $data Variable **/
+
+
+                    /** Start Update The Data Of The Section Academic **/
+
+                        /** Update Data Of The If $data Ready To Update In DB. **/
+                        $section->update($data);
+
+                    /** End Update The Data Of The Section Academic **/
+
+
+                    /** Start Return To Index View **/
+
+                        /** Redirect To Index View If Section Academic Has Been Updated Successfully **/
+                        return AppHelper::IfSuccessfully('The Data Of Section Updated Successfully', "sectionAcademic.index");
+
+                    /** End Return To Index View **/
+
+                }
+
+
+            } catch(Exception $e) {
+
+                /**
+                 ** This Function For Handling If Unexpected Error Happened.
+                 ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                 ** This Function Return To View Index Of Section Academic And Appear The Nice Message.
+                 **/
+                return AppHelper::IfUnexpectedError("sectionAcademic.index");
+
+            }
         }
+
+        /** End update Method **/
+
+
+                        /******************************************************************************/
+
+
+        /** Start destroy Method **/
+
+            /**
+             * Remove the specified resource from storage.
+             * @param $id
+             * @return RedirectResponse
+             */
+            public function destroy($id)
+        {
+            try {
+
+                /** Start $section Variable **/
+
+                    /** Find The Class Academic With $id. **/
+                    $section = AppHelper::FoundWithId($this->sectionAcademic, $id);
+
+                /** End $section Variable **/
+
+
+                /** Check If $id Not Found. **/
+                if (!$section) {
+
+                    /** If True ($id Not Found) **/
+
+                    /** Redirect To View Index With Error Message **/
+                    return AppHelper::IfNotFound('This Section Not Found', "sectionAcademic.index");
+
+                }
+
+                /** If False ($id Founded) **/
+
+
+                /** Start Delete The Data Of Section **/
+
+                    /** Delete Section Academic. **/
+                    $section->delete();
+
+                /** End Delete The Data Of Class **/
+
+
+                /** Start Return To Index View **/
+
+                    /** Redirect To Index View If Section Academic Has Been Deleted Successfully **/
+                    return AppHelper::IfSuccessfully('The Section Deleted Successfully', "sectionAcademic.index");
+
+                /** End Return To Index View **/
+
+            } catch(Exception $e) {
+
+                /**
+                 ** This Function For Handling If Unexpected Error Happened.
+                 ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                 ** This Function Return To View Index Of Section Academic And Appear The Nice Message.
+                 **/
+                return AppHelper::IfUnexpectedError("sectionAcademic.index");
+
+            }
+        }
+
+        /** End destroy Method **/
+
     }
-}
+
+/** End The SectionAcademicController **/

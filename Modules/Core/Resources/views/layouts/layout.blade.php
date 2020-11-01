@@ -51,7 +51,6 @@
             {{-- SideBar --}}
             @include('core::layouts.sidebar')
 
-{{--            style="background-image: url('{{ asset("admin/images/ab.jpg") }}'); background-size:cover"--}}
             {{-- SubBar --}}
             <main class="main">
 
@@ -81,6 +80,22 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
         <script src="{{ asset("admin/js/image-preview.js") }}"></script>
 
+
+        {{--    Custome Js Files That Have Code I Made It   --}}
+
+        <script src="{{ asset("admin/js/custom/SectionsStudentCreate.js") }}"></script>
+        <script src="{{ asset("admin/js/custom/SectionsStudentEdit.js") }}"></script>
+
+        <script src="{{ asset("admin/js/custom/SectionsStudentsAttendanceCreate.js") }}"></script>
+
+        <script src="{{ asset("admin/js/custom/SectionsTeacherCreate.js") }}"></script>
+        <script src="{{ asset("admin/js/custom/SubjectsTeacherCreate.js") }}"></script>
+
+        <script src="{{ asset("admin/js/custom/SectionsTeacherEdit.js") }}"></script>
+        <script src="{{ asset("admin/js/custom/SubjectsTeacherEdit.js") }}"></script>
+
+        <script src="{{ asset("admin/js/custom/CheckAttendance.js") }}"></script>
+
         <script>
 
             window.dataLayer = window.dataLayer || [];
@@ -94,50 +109,8 @@
             // Bootstrap ID
             gtag('config', 'UA-118965717-5');
 
-            $(document).ready(function(){
-
-                $('p.alert').fadeIn().delay(1000).fadeOut();
-
-                $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
-
-
-                $("#checkboxCreate[type=checkbox]").each(function() {
-
-                    $(this).change(function () {
-
-                        if($(this).is(":checked")) {
-                            $(this).prev("#textCheckbox").attr("value", "present");
-                        } else {
-                            $(this).prev("#textCheckbox").attr("value", "absent");
-                        }
-
-                    });
-
-                });
-
-                // Here.
-                $('.select').selectpicker();
-
-                $("#class_id_student").on('change', function(e) {
-
-                    let class_id = e.target.value;
-
-                    $.get('create/section?class_id=' + class_id , function(data) {
-
-                        $('#section_id_student').empty();
-
-                        $('#section_id_student').append(`<option disabled selected> -- Select Section -- </option><option value=""> No Selected </option>`);
-
-                        $.each(data, function(index, section) {
-
-                            $('#section_id_student').append('<option value="' + section.id + '">' + section.name + '</option>');
-
-                        });
-
-                    });
-
-                });
-            });
+            /** This If For Select Box Query **/
+            $('select').selectpicker();
 
         </script>
 

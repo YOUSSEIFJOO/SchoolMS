@@ -21,6 +21,22 @@
 
     </ol>
 
+    @if(session('noCapacity'))
+
+        <div class="alert alert-danger alert-dismissible font-lg p-2 mb-1" role="alert">
+
+            <strong>Oops :-</strong> {{ session('noCapacity') }}
+
+            <button type="button" class="close p-2" data-dismiss="alert" aria-label="Close">
+
+                <span aria-hidden="true">&times;</span>
+
+            </button>
+
+        </div>
+
+    @endif
+
     <form class="mb-5" action="{{ route('teachers.update', $teacher->id) }}" enctype="multipart/form-data" method="post">
 
         @csrf
@@ -216,7 +232,7 @@
             <img
                 id="photo-preview"
                 class="rounded"
-                src="{{ asset('images\teachers\\' . $teacher->time . '\\' . $teacher->photo) }}"
+                src="{{ asset('images\teachers\\' . $teacher->photo) }}"
                 alt="This Photo For Student"
                 height="400"
                 width="100%"
@@ -334,6 +350,121 @@
 
                 <div class="form-group">
 
+                    <label for="class_id_teachers" class="font-2xl"> Class :- </label>
+
+                    <select
+                        class="form-control"
+                        name="class_id_teachers"
+                        id="class_id_teachers"
+                        required
+                    >
+                        <option disabled selected> -- Select Class -- </option>
+
+                        @foreach($classes as $class)
+
+                            <option
+
+                                value="{{ $class->id }}"
+
+                                @if($teacher->class_id_teachers == $class->id) selected @endif
+
+                            > {{ $class->name }} </option>
+
+                        @endforeach
+
+                    </select>
+
+                    @error('class_id_teachers')
+                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                    @enderror
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="form-group">
+
+                    <label for="section_id_teachers" class="font-2xl"> Section :- </label>
+
+                    <select
+                        class="form-control"
+                        name="section_id_teachers"
+                        id="section_id_teachers"
+                        required
+                    >
+                        <option disabled selected> -- Select Section -- </option>
+
+                        @foreach($sections as $section)
+
+                            <option
+
+                                value="{{ $section->id }}"
+
+                                @if($teacher->section_id_teachers == $section->id) selected @endif
+
+                            >
+                                {{ $section->name }}
+
+                            </option>
+
+                        @endforeach
+                    </select>
+
+                    @error('section_id_teachers')
+                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                    @enderror
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="form-group">
+
+                    <label for="subject_id_teachers" class="font-2xl"> Subjects :- </label>
+
+                    <select
+                        class="form-control"
+                        name="subject_id_teachers"
+                        id="subject_id_teachers"
+                        required
+                    >
+
+                        <option disabled selected> -- Select Subject -- </option>
+
+                        @foreach($subjects as $subject)
+
+                            <option
+
+                                value="{{ $subject->id }}"
+
+                                @if($teacher->subject_id_teachers == $subject->id) selected @endif
+
+                            > {{ $subject->name }} </option>
+
+                        @endforeach
+
+                    </select>
+
+                    @error('subject_id_teachers')
+                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                    @enderror
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="form-group">
+
                     <label for="joinDate" class="font-2xl"> Join Date :- </label>
 
                     <input
@@ -353,139 +484,10 @@
 
             </div>
 
-            <div class="col-md-6">
-
-                <div class="form-group">
-
-                    <label for="subjects" class="font-2xl"> Subjects :- </label>
-
-                    <input
-                        type="text"
-                        class="form-control"
-                        name="subjects"
-                        value="{{ $teacher->subjects }}"
-                        id="subjects"
-                        placeholder="Type Your Designation"
-                        autocomplete="off"
-                        required
-                    />
-
-                    @error('subjects')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="row">
-
-            <div class="col-md-6">
-
-                <div class="form-group">
-
-                    <label for="class" class="font-2xl"> Class :- </label>
-
-                    <select
-                        class="form-control"
-                        name="class"
-                        id="class"
-                        required
-                    >
-                        <option disabled selected> -- Select Class -- </option>
-                        <option
-                            value="First"
-                            @if($teacher->class == "First")
-                            selected
-                            @endif
-                        > First </option>
-                        <option
-                            value="Second"
-                            @if($teacher->class == "Second")
-                            selected
-                            @endif
-                        > Second </option>
-                        <option
-                            value="Third"
-                            @if($teacher->class == "Third")
-                            selected
-                            @endif
-                        > Third </option>
-                        <option
-                            value="Fourth"
-                            @if($teacher->class == "Fourth")
-                            selected
-                            @endif
-                        > Fourth </option>
-                        <option
-                            value="Fifth"
-                            @if($teacher->class == "Fifth")
-                            selected
-                            @endif
-                        > Fifth </option>
-                        <option
-                            value="Sixth"
-                            @if($teacher->class == "Sixth")
-                            selected
-                            @endif
-                        > Sixth </option>
-                    </select>
-
-                    @error('class')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
-
-                </div>
-
-            </div>
-
-            <div class="col-md-6">
-
-                <div class="form-group">
-
-                    <label for="section" class="font-2xl"> Section :- </label>
-
-                    <select
-                        class="form-control"
-                        name="section"
-                        id="section"
-                        required
-                    >
-                        <option disabled selected> -- Select Section -- </option>
-                        <option
-                            value="A"
-                            @if($teacher->section == 'A')
-                            selected
-                            @endif
-                        > A </option>
-                        <option
-                            value="B"
-                            @if($teacher->section == 'B')
-                            selected
-                            @endif
-                        > B </option>
-                        <option
-                            value="C"
-                            @if($teacher->section == 'C')
-                            selected
-                            @endif
-                        > C </option>
-                    </select>
-
-                    @error('section')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
-
-                </div>
-
-            </div>
-
         </div>
 
         <button type="submit" class="btn btn-primary font-xl">
-            <i class="fa fa-edit mr-1"></i> Add New Teacher
+            <i class="fa fa-edit mr-1"></i> Update Data
         </button>
 
     </form>

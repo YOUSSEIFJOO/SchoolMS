@@ -6,54 +6,55 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClassAcademic extends Model
 {
-    /**
-     * Handel The Name Of Table Related With This Model.
-     * var String
-     */
-    protected $table = "classacademic";
 
-    /**
-     * Get The Subjects For The Class.
-     */
-    public function subjects()
-    {
-        return $this->hasMany('Modules\SubjectAcademic\Entities\SubjectAcademic');
-    }
+    /** Start $table Variable **/
 
-    /**
-     * Get The students For The Class.
-     */
-    public function students()
-    {
-        return $this->hasMany('Modules\Students\Entities\Student');
-    }
+        /** Handel The Name Of Table Related With This Model. **/
+        protected $table = "classacademic";
 
-    /**
-     * Get The Sections For The Class.
-     */
-    public function sections()
-    {
-        return $this->hasMany('Modules\SectionAcademic\Entities\SectionAcademic');
-    }
+    /** End $table Variable **/
 
-    /**
-     * The attributes that are mass assignable.
-     * var array
-     */
-    protected $fillable = ["id", "name", "capacity_sections", "capacity_subjects"];
 
-    /**
-     * Query String For Select Some Fields From Main Categories Table.
-     */
-    public function scopeSelection($query)
-    {
-        return $query->select("id", "name", "capacity_sections", "capacity_subjects");
-    }
+    /******************************************************************************************************************/
 
-    /**
-     * Get Upper Case Of First Letter Of Name.
-     */
-    public function getNameAttribute($val) {
-        return ucwords($val);
-    }
+
+    /** Start $fillable Variable **/
+
+        /** The attributes that are mass assignable. **/
+        protected $fillable = ["id", "name", "capacity_sections", "capacity_subjects"];
+
+    /** End $fillable Variable **/
+
+
+    /******************************************************************************************************************/
+
+
+    /** Start Relationships **/
+
+        /** Start Relationship With Student Attendance **/
+
+            /** Get Sections For The Class. **/
+            public function sections()
+            {
+                return $this->hasMany('Modules\SectionAcademic\Entities\SectionAcademic');
+            }
+
+        /** End Relationship With Student Attendance **/
+
+
+                            /***************************************************/
+
+
+        /** Start Relationship With Student Attendance **/
+
+            /** Get Subjects For The Class. **/
+            public function subjects()
+            {
+                return $this->hasMany('Modules\SubjectAcademic\Entities\SubjectAcademic');
+            }
+
+        /** End Relationship With Student Attendance **/
+
+    /** End Relationships **/
+
 }

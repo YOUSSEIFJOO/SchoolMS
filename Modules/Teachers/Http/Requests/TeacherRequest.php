@@ -39,11 +39,11 @@ class TeacherRequest extends FormRequest
 
             "joinDate"              => "required | date",
 
-            "subjects"              => "required | regex:/^[\pL\s\-]+$/u | min:3 | max:70",
+            "class_id_teachers"     => "required",
 
-            "class"                 => "required",
+            "section_id_teachers"   => "required",
 
-            "section"               => "required",
+            "subject_id_teachers"   => "required"
         ];
 
         if($id) {

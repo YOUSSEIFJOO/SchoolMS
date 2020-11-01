@@ -32,41 +32,23 @@
 
                         <div class="col-md-2 p-0 pr-2">
 
-                            <select name="class" class="form-control d-none d-sm-block">
+                            <select name="class_id_students" class="form-control d-none d-sm-block">
 
                                 <option disabled selected> -- Class -- </option>
 
                                 <option value=""> No Selected </option>
 
-                                <option
-                                    value="First"
-                                    @if(request()->class == "First") selected @endif
-                                > First </option>
+                                @foreach($classes as $class)
 
-                                <option
-                                    value="Second"
-                                    @if(request()->class == "Second") selected @endif
-                                > Second </option>
+                                    <option
 
-                                <option
-                                    value="Third"
-                                    @if(request()->class == "Third") selected @endif
-                                > Third </option>
+                                        value="{{ $class->id }}"
 
-                                <option
-                                    value="Fourth"
-                                    @if(request()->class == "Fourth") selected @endif
-                                > Fourth </option>
+                                        @if(request()->class_id_students == $class->id) selected @endif
 
-                                <option
-                                    value="Fifth"
-                                    @if(request()->class == "Fifth") selected @endif
-                                > Fifth </option>
+                                    > {{ $class->name }} </option>
 
-                                <option
-                                    value="Sixth"
-                                    @if(request()->class == "Sixth") selected @endif
-                                > Sixth </option>
+                                @endforeach
 
                             </select>
 
@@ -74,26 +56,23 @@
 
                         <div class="col-md-2 p-0 pr-2">
 
-                            <select name="section" class="form-control d-none d-sm-block">
+                            <select name="section_id" class="form-control d-none d-sm-block">
 
                                 <option disabled selected> -- Section -- </option>
 
                                 <option value=""> No Selected </option>
 
-                                <option
-                                    value="A"
-                                    @if(request()->section == "A") selected @endif
-                                > A </option>
+                                @foreach($sections as $section)
 
-                                <option
-                                    value="B"
-                                    @if(request()->section == "B") selected @endif
-                                > B </option>
+                                    <option
 
-                                <option
-                                    value="C"
-                                    @if(request()->section == "C") selected @endif
-                                > C </option>
+                                        value="{{ $section->id }}"
+
+                                        @if(request()->section_id == $section->id) selected @endif
+
+                                    > {{ $section->name }} </option>
+
+                                @endforeach
 
                             </select>
 
@@ -156,11 +135,11 @@
 
     @foreach (['danger', 'success'] as $msg)
 
-        @if(Session::has($msg))
+        @if(session()->has($msg))
 
             <p
                 class="alert alert-{{ $msg }} m-0 mt-2 text-center font-xl pt-2 pr-0 pb-2 pl-0"
-            > ..... {{ Session::get($msg) }} ..... </p>
+            > ..... {{ session()->get($msg) }} ..... </p>
 
         @endif
 
@@ -199,18 +178,32 @@
 
                             <td> {{ $studentAttendance->name }} </td>
 
-                            <td> {{ $studentAttendance->class }} </td>
+                            <td>
 
-                            <td> {{ $studentAttendance->section }} </td>
+                                {{ \Modules\Core\Http\Helper\AppHelper::selectPropertyWithWhere($instanceClass, "name", "id", $studentAttendance->class_id_students) }}
+
+                            </td>
+
+                            <td>
+
+                                {{ \Modules\Core\Http\Helper\AppHelper::selectPropertyWithWhere($instanceSection, "name", "id", $studentAttendance->section_id_students) }}
+
+                            </td>
 
                             <td> {{ $studentAttendance->date }} </td>
 
                             <td>
+
                                 @if($studentAttendance->status == "present")
+
                                     <span class="badge badge-success" style="font-size: 14px">{{ ucfirst($studentAttendance->status) }}</span>
+
                                 @else
+
                                     <span class="badge badge-danger" style="font-size: 15px">{{ ucfirst($studentAttendance->status) }}</span>
+
                                 @endif
+
                             </td>
 
                         </tr>

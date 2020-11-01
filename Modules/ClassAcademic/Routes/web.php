@@ -12,6 +12,7 @@
 */
 
 Route::prefix('dashboard/classAcademic')->group(function() {
+
     Route::get('/', 'ClassAcademicController@index')->name("classAcademic.index");
 
     Route::get('create', 'ClassAcademicController@create')->name("classAcademic.create");

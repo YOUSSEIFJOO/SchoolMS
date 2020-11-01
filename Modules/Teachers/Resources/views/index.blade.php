@@ -16,84 +16,63 @@
 
     <div class="classification">
 
-        <div class="row m-0">
+        <div class="row">
 
-            <div class="col-md-9 p-0">
+            <div class="col-md-9">
 
                 <form action="{{ route('teachers.index') }}" method="get">
 
                     <div class="row m-0">
 
-                        <div class="col-md-2 p-0 pr-2">
+                        <div class="col-md-2">
 
-                            <select name="class" class="form-control d-none d-sm-block">
+                            <select name="class_id_teachers" class="form-control d-none d-sm-block">
 
                                 <option disabled selected> -- Class -- </option>
 
                                 <option value=""> No Selected </option>
 
-                                <option
-                                    value="First"
-                                    @if(request()->class == "First") selected @endif
-                                > First </option>
+                                @foreach($classes as $class)
 
-                                <option
-                                    value="Second"
-                                    @if(request()->class == "Second") selected @endif
-                                > Second </option>
+                                    <option
 
-                                <option
-                                    value="Third"
-                                    @if(request()->class == "Third") selected @endif
-                                > Third </option>
+                                        value="{{ $class->id }}"
 
-                                <option
-                                    value="Fourth"
-                                    @if(request()->class == "Fourth") selected @endif
-                                > Fourth </option>
+                                        @if(request()->class_id_teachers == $class->id) selected @endif
 
-                                <option
-                                    value="Fifth"
-                                    @if(request()->class == "Fifth") selected @endif
-                                > Fifth </option>
+                                    > {{ $class->name }} </option>
 
-                                <option
-                                    value="Sixth"
-                                    @if(request()->class == "Sixth") selected @endif
-                                > Sixth </option>
+                                @endforeach
 
                             </select>
 
                         </div>
 
-                        <div class="col-md-2 p-0 pr-2">
+                        <div class="col-md-2">
 
-                            <select name="section" class="form-control d-none d-sm-block">
+                            <select name="section_id_teachers" class="form-control d-none d-sm-block">
 
                                 <option disabled selected> -- Section -- </option>
 
                                 <option value=""> No Selected </option>
 
-                                <option
-                                    value="A"
-                                    @if(request()->section == "A") selected @endif
-                                > A </option>
+                                @foreach($sections as $section)
 
-                                <option
-                                    value="B"
-                                    @if(request()->section == "B") selected @endif
-                                > B </option>
+                                    <option
 
-                                <option
-                                        value="C"
-                                        @if(request()->section == "C") selected @endif
-                                > C </option>
+                                        value="{{ $section->id }}"
+
+                                        @if(request()->section_id_teachers == $section->id) selected @endif
+
+                                    > {{ $section->name }} </option>
+
+                                @endforeach
 
                             </select>
 
                         </div>
 
-                        <div class="col-md-4 p-0 pr-2">
+                        <div class="col-md-3">
 
                             <input
                                 class="form-control"
@@ -106,7 +85,7 @@
 
                         </div>
 
-                        <div class="col-md-3 p-0 pr-2">
+                        <div class="col-md-3">
 
                             <input
                                 class="form-control"
@@ -119,9 +98,13 @@
 
                         </div>
 
-                        <div class="col-md-1 col-sm-12 p-0 pr-2">
+                        <div class="col-md-2 col-sm-12">
 
-                            <button class="btn btn-behance d-none d-sm-block">Search</button>
+                            <button class="btn btn-behance d-none d-sm-block w-100">
+
+                                <i class="fas fa-search mr-1"></i> Search
+
+                            </button>
 
                         </div>
 
@@ -131,7 +114,7 @@
 
             </div>
 
-            <div class="col-md-3 p-0 pl-2">
+            <div class="col-md-3">
 
                 <a href="{{ route('teachers.create') }}" class="text-decoration-none">
 
@@ -192,11 +175,19 @@
 
                                 <td> {{ $index }} </td>
 
-                                <td> {{ $teacher->name }} </td>
+                                <td> {{ \Modules\Core\Http\Helper\AppHelper::upperWords($teacher->name) }} </td>
 
-                                <td> {{ $teacher->class }} </td>
+                                <td>
 
-                                <td> {{ $teacher->section }} </td>
+                                    {{ \Modules\Core\Http\Helper\AppHelper::selectPropertyWithWhere($instanceClass, "name", "id", $teacher->class_id_teachers) }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ \Modules\Core\Http\Helper\AppHelper::selectPropertyWithWhere($instanceSection, "name", "id", $teacher->section_id_teachers) }}
+
+                                </td>
 
                                 <td> {{ $teacher->designation }} </td>
 

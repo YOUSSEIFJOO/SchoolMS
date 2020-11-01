@@ -6,25 +6,41 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentAttendance extends Model
 {
-    /**
-     * Handel The Name Of Table Related With This Model.
-     * var String
-     */
-    protected $table = "studentsattendance";
 
-    /**
-     * The attributes that are mass assignable.
-     * var array
-     */
-    protected $fillable = ["id", "name", "class", "section", "date", "status"];
+    /** Start $table Variable **/
 
-    /**
-     * Query String For Select Some Fields From Main Student Attendance Table.
-     * @param $query
-     * @return query
-     */
-    public function scopeSelection($query)
-    {
-        return $query->select("id", "name", "class", "section", "date", "status");
-    }
+        /** Handel The Name Of Table Related With This Model. **/
+        protected $table = "studentsattendance";
+
+    /** End $table Variable **/
+
+
+    /******************************************************************************************************************/
+
+
+    /** Start $fillable Variable **/
+
+        /** The attributes that are mass assignable. **/
+        protected $fillable = ["id", "name", "class_id_students", "section_id_students", "student_id", "date", "status"];
+
+    /** End $fillable Variable **/
+
+
+    /******************************************************************************************************************/
+
+
+    /** Start Relationships **/
+
+        /** Start Relationship With Student. **/
+
+            /** Get the students that owns the Student Attendance. **/
+            public function student()
+            {
+                return $this->belongsTo('Modules\Students\Entities\Student');
+            }
+
+        /** End Relationship With Student. **/
+
+    /** End Relationships **/
+
 }

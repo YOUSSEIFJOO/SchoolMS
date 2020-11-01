@@ -64,6 +64,7 @@
                         placeholder="Write Name Ex :- Math, Arabic"
                         autocomplete="off"
                         autofocus
+                        required
                     />
                     @error('name')
                         <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
@@ -86,6 +87,7 @@
                         placeholder="Enter Unique Code EX :- 0005"
                         value="{{ old('code') }}"
                         id="code"
+                        required
                     />
 
                     @error('code')
@@ -106,7 +108,7 @@
 
                     <label for="class_id" class="font-2xl"> Available Classes :- </label>
 
-                    <select id="class_id" name="class_id" class="form-control d-none d-sm-block">
+                    <select id="class_id" name="class_id" class="form-control d-none d-sm-block" required>
 
                         <option disabled selected> -- Select Class -- </option>
 
@@ -119,16 +121,6 @@
                                 value="{{ $class->id }}"
 
                                 @if(old("class_id") == $class->id) selected @endif
-
-                                @if(count($checkCapacity) > 0)
-
-                                    @foreach($checkCapacity as $checkCapacities)
-
-                                        @if($class->id === $checkCapacities) disabled @endif
-
-                                    @endforeach
-
-                                @endif
 
                             > {{ $class->name }} </option>
 

@@ -216,7 +216,7 @@
             <img
                 id="photo-preview"
                 class="rounded"
-                src="{{ asset('images\employees\\' . $employee->time . '\\' . $employee->photo) }}"
+                src="{{ asset('images\employees\\' . $employee->photo) }}"
                 alt="This Photo For Student"
                 height="400"
                 width="100%"
@@ -356,7 +356,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary font-xl">
-            <i class="fa fa-edit mr-1"></i> Add New Employee
+            <i class="fa fa-edit mr-1"></i> Update Data
         </button>
 
     </form>

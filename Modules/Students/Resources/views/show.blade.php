@@ -4,11 +4,11 @@
 
     <div class="header-items pt-4 pb-4" style="height: 84px; line-height: 10px">
 
-        <div class="row m-0">
+        <div class="row">
 
-            <div class="col-md-9 p-0">
+            <div class="col-md-10">
 
-                <ol class="breadcrumb sub-bar pr-0 pl-0">
+                <ol class="breadcrumb sub-bar">
 
                     <li class="breadcrumb-item">
 
@@ -28,37 +28,19 @@
 
             </div>
 
-            <div class="col-md-3 p-0">
+            <div class="col-md-2">
 
                 <div class="button-groups">
 
-                    <div class="row m-0">
+                    <a class="text-decoration-none text-white" href="{{ route('students.edit', $student->id) }}">
 
-                        <div class="col-sm-6 p-0 pr-2">
+                        <button class="btn btn-danger w-100 text-light">
 
-                            <button class="btn btn-danger w-100">
+                                <i class="fa fa-edit text-light"></i> Edit
 
-                                <i class="fa fa-print text-light"></i> Print
+                        </button>
 
-                            </button>
-
-                        </div>
-
-                        <div class="col-sm-6 p-0">
-
-                            <button class="btn btn-danger w-100 text-light">
-
-                                <a class="text-decoration-none text-white" href="{{ route('students.edit', $student->id) }}">
-
-                                    <i class="fa fa-edit text-light"></i> Edit
-
-                                </a>
-
-                            </button>
-
-                        </div>
-
-                    </div>
+                    </a>
 
                 </div>
 
@@ -81,7 +63,7 @@
                         <div class="image w-50 mx-auto mb-2">
 
                             <img
-                                src="{{ asset('images\students\\' . $student->time . '\\' . $student->photo) }}"
+                                src="{{ asset('images\students\\' . $student->photo) }}"
                                 class="w-100 img-thumbnail rounded-circle"
                             />
 
@@ -89,13 +71,24 @@
 
                         <div class="name font-xl">
 
-                            <p class="m-0">{{ $student->name }} {{ $student->fatherName }}</p>
+                            <p class="m-0">
+
+                                {{ \Modules\Core\Http\Helper\AppHelper::upperWords($student->name) }}
+
+                                {{ \Modules\Core\Http\Helper\AppHelper::upperWords($student->fatherName) }}
+
+
+                            </p>
 
                         </div>
 
                         <div class="class">
 
-                            <p class="m-0">{{ \Modules\Core\Http\Helper\AppHelper::ClassName((new Modules\Students\Entities\Student()), $student->id, "class", "name") }}</p>
+                            <p class="m-0">
+
+                                {{ \Modules\Core\Http\Helper\AppHelper::selectPropertyWithWhere($instanceClass, "name", "id", $student->class_id_students) }}
+
+                            </p>
 
                         </div>
 
@@ -435,7 +428,11 @@
 
                                             <div class="col-sm-8 p-0">
 
-                                                <p class="m-0"> : {{ \Modules\Core\Http\Helper\AppHelper::ClassName((new Modules\Students\Entities\Student()), $student->id, "class", "name") }} </p>
+                                                <p class="m-0">
+
+                                                     : {{ \Modules\Core\Http\Helper\AppHelper::selectPropertyWithWhere($instanceClass, "name", "id", $student->class_id_students) }}
+
+                                                </p>
 
                                             </div>
 
@@ -455,7 +452,11 @@
 
                                             <div class="col-sm-7 p-0">
 
-                                                <p class="m-0"> : {{ \Modules\Core\Http\Helper\AppHelper::ClassName((new Modules\Students\Entities\Student()), $student->id, "section", "name") }} </p>
+                                                <p class="m-0">
+
+                                                     : {{ \Modules\Core\Http\Helper\AppHelper::selectPropertyWithWhere($instanceSection, "name", "id", $student->section_id_students) }}
+
+                                                </p>
 
                                             </div>
 

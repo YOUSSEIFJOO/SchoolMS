@@ -6,33 +6,44 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    /**
-     * Handel The Name Of Table Related With This Model.
-     * var String
-     */
-    protected $table = "employees";
 
-    /**
-     * The attributes that are mass assignable.
-     * var array
-     */
-    protected $fillable = [
-        "id", "time", "name", "birthday", "gender", "religion", "address", "email", "photo", "phoneNumber",
-        "qualification", "designation", "joinDate"
-    ];
+    /** Start $table Variable **/
 
-    /**
-     * Query String For Select Some Fields From Main Categories Table.
-     */
-    public function scopeSelection($query)
-    {
-        return $query->select("id", "name", "designation");
-    }
+        /** Handel The Name Of Table Related With This Model. **/
+        protected $table = "employees";
 
-    /**
-     * Get Upper Case Of First Letter Of Name.
-     */
-    public function getNameAttribute($val) {
-        return ucwords($val);
-    }
+    /** End $table Variable **/
+
+
+    /******************************************************************************************************************/
+
+
+    /** Start $fillable Variable **/
+
+        /** The attributes that are mass assignable. **/
+        protected $fillable = [
+            "id", "time", "name", "birthday", "gender", "religion", "address", "email", "photo", "phoneNumber",
+            "qualification", "designation", "joinDate"
+        ];
+
+    /** End $fillable Variable **/
+
+
+    /******************************************************************************************************************/
+
+
+    /** Start Relationships **/
+
+        /** Start Relationship With Student Attendance **/
+
+            /** Get The Employee Attendance For The Employee. **/
+            public function employeeAttendances()
+            {
+                return $this->hasMany('Modules\EmployeesAttendance\Entities\EmployeeAttendance');
+            }
+
+        /** End Relationship With Student Attendance **/
+
+    /** End Relationships **/
+
 }

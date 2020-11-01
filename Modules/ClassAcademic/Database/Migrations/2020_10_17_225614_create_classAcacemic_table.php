@@ -14,8 +14,8 @@ class CreateClassAcacemicTable extends Migration
     public function up()
     {
         Schema::create('classacademic', function (Blueprint $table) {
-            $table->bigIncrements("id");
 
+            $table->bigIncrements("id");
             $table->string('name');
             $table->smallInteger('capacity_sections');
             $table->smallInteger('capacity_subjects');

@@ -25,8 +25,6 @@
 
         @csrf
 
-        <input type="hidden" name="time" />
-
         <div class="row">
 
             <div class="col-md-6">

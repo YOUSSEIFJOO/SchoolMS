@@ -158,7 +158,7 @@
 
                                 <td>
 
-                                    {{ \Modules\Core\Http\Helper\AppHelper::ClassName((new Modules\SubjectAcademic\Entities\SubjectAcademic()), $subject->id, "class", "name") }}
+                                    {{ \Modules\Core\Http\Helper\AppHelper::selectPropertyWithWhere($instanceClass, "name", "id", $subject->class_id) }}
 
                                 </td>
 

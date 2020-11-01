@@ -2,8 +2,8 @@
 
 namespace Modules\TeachersAttendance\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\ServiceProvider;
 
 class TeachersAttendanceServiceProvider extends ServiceProvider
 {
@@ -19,7 +19,6 @@ class TeachersAttendanceServiceProvider extends ServiceProvider
 
     /**
      * Boot the application events.
-     *
      * @return void
      */
     public function boot()

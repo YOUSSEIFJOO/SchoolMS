@@ -41,41 +41,21 @@
 
                         <div class="col-md-3 p-0 pr-2">
 
-                            <select name="class" class="form-control d-none d-sm-block">
+                            <select id="class_id_attendance" name="class_id_students" class="form-control d-none d-sm-block">
 
                                 <option disabled selected> -- Select Class -- </option>
 
                                 <option value=""> No Selected </option>
 
-                                <option
-                                    value="First"
-                                    @if(request()->class == "First") selected @endif
-                                > First </option>
+                                @foreach($classes as $class)
 
                                 <option
-                                    value="Second"
-                                    @if(request()->class == "Second") selected @endif
-                                > Second </option>
 
-                                <option
-                                    value="Third"
-                                    @if(request()->class == "Third") selected @endif
-                                > Third </option>
+                                    value="{{ $class->id }}"
 
-                                <option
-                                    value="Fourth"
-                                    @if(request()->class == "Fourth") selected @endif
-                                > Fourth </option>
+                                > {{ $class->name }} </option>
 
-                                <option
-                                    value="Fifth"
-                                    @if(request()->class == "Fifth") selected @endif
-                                > Fifth </option>
-
-                                <option
-                                    value="Sixth"
-                                    @if(request()->class == "Sixth") selected @endif
-                                > Sixth </option>
+                                @endforeach
 
                             </select>
 
@@ -83,26 +63,11 @@
 
                         <div class="col-md-3 p-0 pr-2">
 
-                            <select name="section" class="form-control d-none d-sm-block">
+                            <select id="section_id_attendance" name="section_id_students" class="form-control d-none d-sm-block">
 
                                 <option disabled selected> -- Select Section -- </option>
 
                                 <option value=""> No Selected </option>
-
-                                <option
-                                    value="A"
-                                    @if(request()->section == "A") selected @endif
-                                > A </option>
-
-                                <option
-                                    value="B"
-                                    @if(request()->section == "B") selected @endif
-                                > B </option>
-
-                                <option
-                                    value="C"
-                                    @if(request()->section == "C") selected @endif
-                                > C </option>
 
                             </select>
 
@@ -173,7 +138,7 @@
 
                     <tbody class="text-center">
 
-                    @if(request()->class && request()->section)
+                    @if(request()->class_id_students && request()->section_id_students)
 
                         @if($checkAttendance !== NULL)
 
@@ -199,9 +164,11 @@
 
                                 @foreach($students as $index => $student)
 
-                                    <input type="hidden" name="class[]" value="{{ $student->class }}" />
+                                    <input type="hidden" name="class_id_students[]" value="{{ $student->class_id_students }}" />
 
-                                    <input type="hidden" name="section[]" value="{{ $student->section }}" />
+                                    <input type="hidden" name="section_id_students[]" value="{{ $student->section_id_students }}" />
+
+                                    <input type="hidden" name="student_id_students[]" value="{{ $student->id }}" />
 
                                     <tr>
 

@@ -41,8 +41,6 @@
 
         @csrf
 
-        <input type="hidden" name="time" />
-
         <h3 class="text-info">Student Info :- </h3>
 
         <div class="container">
@@ -64,7 +62,7 @@
                             placeholder="Write Your Name Only For Ex :- Yousseif"
                             autocomplete="off"
                             autofocus
-
+                            required
                         />
                         @error('name')
                             <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
@@ -86,7 +84,7 @@
                             name="birthday"
                             value="{{ old('birthday') }}"
                             id="birthday"
-
+                            required
                         />
 
                         @error('birthday')
@@ -107,7 +105,7 @@
 
                         <label for="gender" class="font-2xl"> Gender :- </label>
 
-                        <select class="form-control" name="gender" id="gender" >
+                        <select class="form-control" name="gender" id="gender" required>
 
                             <option disabled selected> -- Select Your Gender -- </option>
 
@@ -141,7 +139,7 @@
 
                         <label for="religion" class="font-2xl"> Religion :- </label>
 
-                        <select class="form-control" name="religion" id="religion" >
+                        <select class="form-control" name="religion" id="religion" required>
 
                             <option disabled selected> -- Select Your Religion -- </option>
 
@@ -193,7 +191,7 @@
                             id="address"
                             placeholder="Type Your Address"
                             autocomplete="off"
-
+                            required
                         />
 
                         @error('address')
@@ -218,7 +216,7 @@
                             id="email"
                             placeholder="Type Your Email"
                             autocomplete="off"
-
+                            required
                         />
 
                         @error('email')
@@ -257,7 +255,7 @@
                             class="form-control p-1"
                             name="photo"
                             id="photo"
-
+                            required
                         />
 
                         @error('photo')
@@ -282,7 +280,7 @@
                             id="phone-number"
                             placeholder="Type Your Phone Number"
                             autocomplete="off"
-
+                            required
                         />
 
                         @error('phoneNumber')
@@ -317,7 +315,7 @@
                             id="father-name"
                             placeholder="Father Name For Ex :- Yousseif Ahmed"
                             autocomplete="off"
-
+                            required
                         />
 
                         @error('fatherName')
@@ -342,7 +340,7 @@
                             id="phone-number-father"
                             placeholder="Type Your Father Phone Number"
                             autocomplete="off"
-
+                            required
                         />
 
                         @error('phoneNumberFather')
@@ -371,7 +369,7 @@
                             id="mother-name"
                             placeholder="Mother Name For Ex :- Maha Mohamed"
                             autocomplete="off"
-
+                            required
                         />
 
                         @error('motherName')
@@ -396,7 +394,7 @@
                             id="phone-number-mother"
                             placeholder="Type Your Mother Phone Number"
                             autocomplete="off"
-
+                            required
                         />
 
                         @error('phoneNumberMother')
@@ -421,13 +419,11 @@
 
                     <div class="form-group">
 
-                        <label for="class_id_student" class="font-2xl"> Class :- </label>
+                        <label for="class_id_students" class="font-2xl"> Class :- </label>
 
-                        <select id="class_id_student" name="class_id" class="form-control d-none d-sm-block">
+                        <select id="class_id_students" name="class_id_students" class="form-control d-none d-sm-block" required>
 
                             <option disabled selected> -- Select Class -- </option>
-
-                            <option value=""> No Selected </option>
 
                             @foreach($classes as $class)
 
@@ -441,7 +437,7 @@
 
                         </select>
 
-                        @error('class_id')
+                        @error('class_id_students')
                         <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                         @enderror
 
@@ -453,39 +449,15 @@
 
                     <div class="form-group">
 
-                        <label for="section_id_student" class="font-2xl"> Section :- </label>
+                        <label for="section_id_students" class="font-2xl"> Section :- </label>
 
-                        <select id="section_id_student" name="section_id" class="form-control d-none d-sm-block">
+                        <select id="section_id_students" name="section_id_students" class="form-control d-none d-sm-block" required>
 
                             <option disabled selected> -- Select Section -- </option>
 
-                            <option value=""> No Selected </option>
-
-{{--                            @foreach($sections as $section)--}}
-
-{{--                                <option--}}
-
-{{--                                    @if(count($checkCapacity) > 0)--}}
-
-{{--                                        @foreach($checkCapacity as $checkCapacities)--}}
-
-{{--                                            @if($section->id === $checkCapacities) disabled @endif--}}
-
-{{--                                        @endforeach--}}
-
-{{--                                    @endif--}}
-
-{{--                                >--}}
-
-{{--                                    {{ $section->name }}--}}
-
-{{--                                </option>--}}
-
-{{--                            @endforeach--}}
-
                         </select>
 
-                        @error('section_id')
+                        @error('section_id_students')
                         <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                         @enderror
 
@@ -507,7 +479,7 @@
                             class="form-control"
                             name="shift"
                             id="shift"
-
+                            required
                         >
                             <option disabled selected> -- Select Shift -- </option>
                             <option
@@ -542,7 +514,7 @@
                             class="form-control"
                             name="notificationSms"
                             id="notification-sms"
-
+                            required
                         >
                             <option disabled selected> -- Select Notification SMS Number -- </option>
                             <option

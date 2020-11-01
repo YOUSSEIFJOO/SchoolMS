@@ -6,46 +6,69 @@ use Illuminate\Database\Eloquent\Model;
 
 class SectionAcademic extends Model
 {
-    /**
-     * Handel The Name Of Table Related With This Model.
-     * var String
-     */
-    protected $table = "sectionacademic";
 
-    /**
-     * The attributes that are mass assignable.
-     * var array
-     */
-    protected $fillable = ["id", "name", "capacity_students", "class_id"];
+    /** Start $table Variable **/
 
-    /**
-     * Get The Class That Owns The Section.
-     */
-    public function class()
-    {
-        return $this->belongsTo('Modules\ClassAcademic\Entities\ClassAcademic');
-    }
+        /** Handel The Name Of Table Related With This Model. **/
+        protected $table = "sectionacademic";
 
-    /**
-     * Get The students For The Section.
-     */
-    public function students()
-    {
-        return $this->hasMany('Modules\Students\Entities\Student');
-    }
+    /** End $table Variable **/
 
-    /**
-     * Query String For Select Some Fields From Main Categories Table.
-     */
-    public function scopeSelection($query)
-    {
-        return $query->select("id", "name", "capacity_students", "class_id");
-    }
 
-    /**
-     * Get Upper Case Of First Letter Of Name.
-     */
-    public function getNameAttribute($val) {
-        return ucwords($val);
-    }
+    /******************************************************************************************************************/
+
+
+    /** Start $fillable Variable **/
+
+        /** The attributes that are mass assignable. **/
+        protected $fillable = ["id", "name", "capacity_students", "class_id"];
+
+    /** End $fillable Variable **/
+
+
+    /******************************************************************************************************************/
+
+
+    /** Start Relationships **/
+
+        /** Start Relationship With Student **/
+
+            /** Get The Student For The Section. **/
+            public function students()
+            {
+                return $this->hasMany('Modules\Students\Entities\Student');
+            }
+
+        /** End Relationship With Student **/
+
+
+                            /***********************************************/
+
+
+        /** Start Relationship With Teachers **/
+
+            /** Get Teachers That Belong To The Subject. **/
+            public function teachers()
+            {
+                return $this->hasMany('Modules\Teachers\Entities\Teacher');
+            }
+
+        /** End Relationship With Teachers **/
+
+
+                        /***********************************************/
+
+
+        /** Start Relationship With Class Academic **/
+
+            /** Get The Class That Owns The Section. **/
+            public function class()
+            {
+                return $this->belongsTo('Modules\ClassAcademic\Entities\ClassAcademic');
+            }
+
+        /** Start Relationship With Class Academic **/
+
+    /** End Relationships **/
+
 }

@@ -48,6 +48,7 @@
                         placeholder="Write Name Ex :- First, Second"
                         autocomplete="off"
                         autofocus
+                        required
                     />
                     @error('name')
                         <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
@@ -70,6 +71,7 @@
                         placeholder="Enter The Capacity Of This Class"
                         value="{{ old('capacity_sections') }}"
                         id="capacity_sections"
+                        required
                     />
 
                     @error('capacity_sections')
@@ -97,6 +99,7 @@
                         placeholder="Enter The Capacity Of This Subjects"
                         value="{{ old('capacity_subjects') }}"
                         id="capacity_subjects"
+                        required
                     />
 
                     @error('capacity_subjects')

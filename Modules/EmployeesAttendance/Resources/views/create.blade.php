@@ -45,11 +45,11 @@
 
                                 <option value="" disabled selected>--- No Selected ---</option>
 
-                                @foreach($employeesNames as $employeeName)
+                                @foreach($employeesNameSearch as $employee)
 
-                                    <option value="{{ $employeeName->name }}">
+                                    <option value="{{ $employee->name }}">
 
-                                        {{ $employeeName->name }}
+                                        {{ $employee->name }}
 
                                     </option>
 
@@ -146,51 +146,57 @@
 
                             @else
 
-                                @if($employee)
+                                @if($employees->count() > 0)
 
-                                    <input type="hidden" name="designation" value="{{ $employee->designation }}" />
+                                    @foreach($employees as $index => $employee)
 
-                                    <tr>
+                                        <input type="hidden" name="designation" value="{{ $employee->designation }}" />
 
-                                        <td> 0 </td>
+                                        <input type="hidden" name="employee_id" value="{{ $employee->id }}" />
 
-                                        <td>
+                                        <tr>
 
-                                            <input type="hidden" name="name" value="{{ $employee->name }}" />
+                                            <td> {{ $index }} </td>
 
-                                            {{ $employee->name }}
+                                            <td>
 
-                                        </td>
+                                                <input type="hidden" name="name" value="{{ $employee->name }}" />
 
-                                        <td>
+                                                {{ $employee->name }}
 
-                                            <input type="hidden" name="date" value="{{ now() }}" />
+                                            </td>
 
-                                            {{ date("y-m-d") }}
+                                            <td>
 
-                                        </td>
+                                                <input type="hidden" name="date" value="{{ now() }}" />
 
-                                        <td style="line-height: 0px">
+                                                {{ date("y-m-d") }}
+
+                                            </td>
+
+                                            <td style="line-height: 0px">
 
 
-                                            <input
-                                                type="text"
-                                                id="textCheckbox"
-                                                class="d-none"
-                                                name="status"
-                                                value="present"
-                                            />
+                                                <input
+                                                    type="text"
+                                                    id="textCheckbox"
+                                                    class="d-none"
+                                                    name="status"
+                                                    value="present"
+                                                />
 
-                                            <input
-                                                type="checkbox"
-                                                style="height: 20px;width: 20px"
-                                                id="checkboxCreate"
-                                                checked="checked"
-                                            />
+                                                <input
+                                                    type="checkbox"
+                                                    style="height: 20px;width: 20px"
+                                                    id="checkboxCreate"
+                                                    checked="checked"
+                                                />
 
-                                        </td>
+                                            </td>
 
-                                    </tr>
+                                        </tr>
+
+                                    @endforeach
 
                                 @else
 

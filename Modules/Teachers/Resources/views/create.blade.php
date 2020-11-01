@@ -21,11 +21,25 @@
 
     </ol>
 
+    @if(session('noCapacity'))
+
+        <div class="alert alert-danger alert-dismissible font-lg p-2 mb-1" role="alert">
+
+            <strong>Oops :-</strong> {{ session('noCapacity') }}
+
+            <button type="button" class="close p-2" data-dismiss="alert" aria-label="Close">
+
+                <span aria-hidden="true">&times;</span>
+
+            </button>
+
+        </div>
+
+    @endif
+
     <form class="mb-5" action="{{ route('teachers.store') }}" enctype="multipart/form-data" method="post">
 
         @csrf
-
-        <input type="hidden" name="time" />
 
         <div class="row">
 
@@ -87,7 +101,7 @@
 
                     <label for="gender" class="font-2xl"> Gender :- </label>
 
-                    <select class="form-control" name="gender" id="gender" required>
+                    <select class="form-control" name="gender" id="gender" >
 
                         <option disabled selected> -- Select Your Gender -- </option>
 
@@ -121,7 +135,7 @@
 
                     <label for="religion" class="font-2xl"> Religion :- </label>
 
-                    <select class="form-control" name="religion" id="religion" required>
+                    <select class="form-control" name="religion" id="religion" >
 
                         <option disabled selected> -- Select Your Religion -- </option>
 
@@ -335,18 +349,29 @@
 
                 <div class="form-group">
 
-                    <label for="joinDate" class="font-2xl"> Join Date :- </label>
+                    <label for="class_id_teachers" class="font-2xl"> Class :- </label>
 
-                    <input
+                    <select
                         class="form-control"
-                        type="date"
-                        name="joinDate"
-                        value="{{ old('joinDate') }}"
-                        id="joinDate"
+                        name="class_id_teachers"
+                        id="class_id_teachers"
                         required
-                    />
+                    >
+                        <option disabled selected> -- Select Class -- </option>
 
-                    @error('joinDate')
+                        @foreach($classes as $class)
+
+                            <option
+
+                                value="{{ $class->id }}"
+
+                            > {{ $class->name }} </option>
+
+                        @endforeach
+
+                    </select>
+
+                    @error('class_id_teachers')
                     <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                     @enderror
 
@@ -358,20 +383,19 @@
 
                 <div class="form-group">
 
-                    <label for="subjects" class="font-2xl"> Subjects :- </label>
+                    <label for="section_id_teachers" class="font-2xl"> Section :- </label>
 
-                    <input
-                        type="text"
+                    <select
                         class="form-control"
-                        name="subjects"
-                        value="{{ old('subjects') }}"
-                        id="subjects"
-                        placeholder="Type Your Designation"
-                        autocomplete="off"
+                        name="section_id_teachers"
+                        id="section_id_teachers"
                         required
-                    />
+                    >
+                        <option disabled selected> -- Select Section -- </option>
 
-                    @error('subjects')
+                    </select>
+
+                    @error('section_id_teachers')
                     <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                     @enderror
 
@@ -387,54 +411,20 @@
 
                 <div class="form-group">
 
-                    <label for="class" class="font-2xl"> Class :- </label>
+                    <label for="subject_id_teachers" class="font-2xl"> Subject :- </label>
 
                     <select
                         class="form-control"
-                        name="class"
-                        id="class"
+                        name="subject_id_teachers"
+                        id="subject_id_teachers"
                         required
                     >
-                        <option disabled selected> -- Select Class -- </option>
-                        <option
-                            value="First"
-                            @if(old('class') == "First")
-                            selected
-                            @endif
-                        > First </option>
-                        <option
-                            value="Second"
-                            @if(old('class') == "Second")
-                            selected
-                            @endif
-                        > Second </option>
-                        <option
-                            value="Third"
-                            @if(old('class') == "Third")
-                            selected
-                            @endif
-                        > Third </option>
-                        <option
-                            value="Fourth"
-                            @if(old('class') == "Fourth")
-                            selected
-                            @endif
-                        > Fourth </option>
-                        <option
-                            value="Fifth"
-                            @if(old('class') == "Fifth")
-                            selected
-                            @endif
-                        > Fifth </option>
-                        <option
-                            value="Sixth"
-                            @if(old('class') == "Sixth")
-                            selected
-                            @endif
-                        > Sixth </option>
+
+                        <option disabled selected> -- Select Subject -- </option>
+
                     </select>
 
-                    @error('class')
+                    @error('subject_id_teachers')
                     <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                     @enderror
 
@@ -446,36 +436,18 @@
 
                 <div class="form-group">
 
-                    <label for="section" class="font-2xl"> Section :- </label>
+                    <label for="joinDate" class="font-2xl"> Join Date :- </label>
 
-                    <select
+                    <input
                         class="form-control"
-                        name="section"
-                        id="section"
+                        type="date"
+                        name="joinDate"
+                        value="{{ old('joinDate') }}"
+                        id="joinDate"
                         required
-                    >
-                        <option disabled selected> -- Select Section -- </option>
-                        <option
-                            value="A"
-                            @if(old('section') == 'A')
-                            selected
-                            @endif
-                        > A </option>
-                        <option
-                            value="B"
-                            @if(old('section') == 'B')
-                            selected
-                            @endif
-                        > B </option>
-                        <option
-                            value="C"
-                            @if(old('section') == 'C')
-                            selected
-                            @endif
-                        > C </option>
-                    </select>
+                    />
 
-                    @error('section')
+                    @error('joinDate')
                     <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                     @enderror
 

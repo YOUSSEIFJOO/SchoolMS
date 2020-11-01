@@ -16,17 +16,17 @@
 
     <div class="classification">
 
-        <div class="row m-0">
+        <div class="row">
 
-            <div class="col-md-9 p-0">
+            <div class="col-md-9">
 
                 <form action="{{ route('students.index') }}" method="get">
 
-                    <div class="row m-0">
+                    <div class="row">
 
-                        <div class="col-md-3 p-0 pr-2">
+                        <div class="col-md-3 col-sm-6">
 
-                            <select name="class_id" class="form-control d-none d-sm-block">
+                            <select name="class_id_students" class="form-control d-none d-sm-block">
 
                                 <option disabled selected> -- Select Class -- </option>
 
@@ -38,7 +38,7 @@
 
                                         value="{{ $class->id }}"
 
-                                        @if(request()->class_id == $class->id) selected @endif
+                                        @if(request()->class_id_students == $class->id) selected @endif
 
                                     > {{ $class->name }} </option>
 
@@ -48,9 +48,9 @@
 
                         </div>
 
-                        <div class="col-md-3 p-0 pr-2">
+                        <div class="col-md-3 col-sm-6">
 
-                            <select name="section_id" class="form-control d-none d-sm-block">
+                            <select name="section_id_students" class="form-control d-none d-sm-block">
 
                                 <option disabled selected> -- Select Section -- </option>
 
@@ -62,7 +62,7 @@
 
                                         value="{{ $section->id }}"
 
-                                        @if(request()->section_id == $section->id) selected @endif
+                                        @if(request()->section_id_students == $section->id) selected @endif
 
                                     > {{ $section->name }} </option>
 
@@ -72,7 +72,7 @@
 
                         </div>
 
-                        <div class="col-md-5 p-0 pr-2">
+                        <div class="col-md-4 col-sm-8">
 
                             <input
                                 class="form-control"
@@ -85,9 +85,13 @@
 
                         </div>
 
-                        <div class="col-md-1 col-sm-12 p-0 pr-2">
+                        <div class="col-md-2 col-sm-4">
 
-                            <button class="btn btn-behance d-none d-sm-block">Search</button>
+                            <button class="btn btn-behance d-none d-sm-block w-100">
+
+                                <i class="fas fa-search mr-1"></i> Search
+
+                            </button>
 
                         </div>
 
@@ -97,7 +101,7 @@
 
             </div>
 
-            <div class="col-md-3 p-0 pl-2">
+            <div class="col-md-3">
 
                 <a href="{{ route('students.create') }}" class="text-decoration-none">
 
@@ -117,11 +121,11 @@
 
     @foreach (['danger', 'success'] as $msg)
 
-        @if(Session::has($msg))
+        @if(session()->has($msg))
 
             <p
                 class="alert alert-{{ $msg }} m-0 mt-2 text-center font-xl pt-2 pr-0 pb-2 pl-0"
-            > ..... {{ Session::get($msg) }} ..... </p>
+            > ..... {{ session()->get($msg) }} ..... </p>
 
         @endif
 
@@ -157,17 +161,25 @@
 
                             <td> {{ $index }} </td>
 
-                            <td> {{ $student->name . " " . $student->fatherName }} </td>
-
                             <td>
 
-                                {{ \Modules\Core\Http\Helper\AppHelper::ClassName((new Modules\Students\Entities\Student()), $student->id, "class", "name") }}
+                                {{ \Modules\Core\Http\Helper\AppHelper::upperWords($student->name) }}
+
+                                {{ \Modules\Core\Http\Helper\AppHelper::upperWords($student->fatherName) }}
 
                             </td>
 
                             <td>
 
-                                {{ \Modules\Core\Http\Helper\AppHelper::ClassName((new Modules\Students\Entities\Student()), $student->id, "section", "name") }} </td>
+                                {{ \Modules\Core\Http\Helper\AppHelper::selectPropertyWithWhere($instanceClass, "name", "id", $student->class_id_students) }}
+
+                            </td>
+
+                            <td>
+
+                                {{ \Modules\Core\Http\Helper\AppHelper::selectPropertyWithWhere($instanceSection, "name", "id", $student->section_id_students) }}
+
+                            </td>
 
                             <td>
 
