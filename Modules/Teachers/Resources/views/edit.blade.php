@@ -7,7 +7,7 @@
 
         <li class="breadcrumb-item">
 
-            <a href="{{ route('dashboard.home') }}">Home</a>
+            <a href="{{ route('home.index') }}">Home</a>
 
         </li>
 
@@ -43,378 +43,252 @@
 
         <input type="hidden" value="{{ $teacher->id }}" name="teacher_id">
 
-        <div class="row">
+        <h3 class="text-info">Teacher Info :- </h3>
 
-            <div class="col-md-6">
+        <div class="container">
 
-                <div class="form-group">
+            <div class="row">
 
-                    <label for="name" class="font-2xl"> Name :- </label>
+                <div class="col-md-6">
 
-                    <input
-                        class="form-control"
-                        type="text"
-                        name="name"
-                        value="{{ $teacher->name }}"
-                        id="name"
-                        placeholder="Write Full Name Ex :- Yousseif Ahmed Mohammed"
-                        autocomplete="off"
-                        autofocus
-                        required
-                    />
-                    @error('name')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
+                    <div class="form-group">
+
+                        <label for="name" class="font-2xl"> Name :- </label>
+
+                        <input
+                            class="form-control"
+                            type="text"
+                            name="name"
+                            value="{{ $teacher->name }}"
+                            id="name"
+                            placeholder="Write Full Name Ex :- Yousseif Ahmed Mohammed"
+                            autocomplete="off"
+                            autofocus
+                            required
+                        />
+                        @error('name')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label for="birthday" class="font-2xl"> Birthday :- </label>
+
+                        <input
+                            class="form-control"
+                            type="date"
+                            name="birthday"
+                            value="{{ $teacher->birthday }}"
+                            id="birthday"
+                            required
+                        />
+
+                        @error('birthday')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
 
                 </div>
 
             </div>
 
-            <div class="col-md-6">
+            <div class="row">
 
-                <div class="form-group">
+                <div class="col-md-6">
 
-                    <label for="birthday" class="font-2xl"> Birthday :- </label>
+                    <div class="form-group">
 
-                    <input
-                        class="form-control"
-                        type="date"
-                        name="birthday"
-                        value="{{ $teacher->birthday }}"
-                        id="birthday"
-                        required
-                    />
+                        <label for="gender" class="font-2xl"> Gender :- </label>
 
-                    @error('birthday')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
+                        <select class="form-control" name="gender" id="gender" >
 
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="row">
-
-            <div class="col-md-6">
-
-                <div class="form-group">
-
-                    <label for="gender" class="font-2xl"> Gender :- </label>
-
-                    <select class="form-control" name="gender" id="gender" required>
-
-                        <option disabled selected> -- Select Your Gender -- </option>
-
-                        <option
-                            value="Male"
-                            @if($teacher->gender == 'Male')
-                            selected
-                            @endif
-                        >Male</option>
-
-                        <option
-                            value="female"
-                            @if($teacher->gender == 'Female')
-                            selected
-                            @endif
-                        >Female</option>
-
-                    </select>
-
-                    @error('gender')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
-
-                </div>
-
-            </div>
-
-            <div class="col-md-6">
-
-                <div class="form-group">
-
-                    <label for="religion" class="font-2xl"> Religion :- </label>
-
-                    <select class="form-control" name="religion" id="religion" required>
-
-                        <option disabled selected> -- Select Your Religion -- </option>
-
-                        <option
-                            value="Muslim"
-                            @if($teacher->religion == 'Muslim')
-                            selected
-                            @endif
-                        >Muslim</option>
-
-                        <option
-                            value="Christian"
-                            @if($teacher->religion == 'Christian')
-                            selected
-                            @endif
-                        >Christian</option>
-
-                        <option
-                            value="Other"
-                            @if($teacher->religion == 'Other')
-                            selected
-                            @endif
-                        >Other</option>
-
-                    </select>
-
-                    @error('religion')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="row">
-
-            <div class="col-md-6">
-
-                <div class="form-group">
-
-                    <label for="address" class="font-2xl"> Address :- </label>
-
-                    <input
-                        class="form-control"
-                        name="address"
-                        value="{{ $teacher->address }}"
-                        id="address"
-                        placeholder="Type Your Address"
-                        autocomplete="off"
-                        required
-                    />
-
-                    @error('address')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
-
-                </div>
-
-            </div>
-
-            <div class="col-md-6">
-
-                <div class="form-group">
-
-                    <label for="email" class="font-2xl"> Email :- </label>
-
-                    <input
-                        type="email"
-                        class="form-control"
-                        name="email"
-                        value="{{ $teacher->email }}"
-                        id="email"
-                        placeholder="Type Your Email"
-                        autocomplete="off"
-                        required
-                    />
-
-                    @error('email')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="form-group">
-
-            <img
-                id="photo-preview"
-                class="rounded"
-                src="{{ asset('images\teachers\\' . $teacher->photo) }}"
-                alt="This Photo For Student"
-                height="400"
-                width="100%"
-            />
-
-        </div>
-
-        <div class="row">
-
-            <div class="col-md-6">
-
-                <div class="form-group">
-
-                    <label for="photo" class="font-2xl"> Photo :- </label>
-
-                    <input
-                        type="file"
-                        class="form-control p-1"
-                        name="photo"
-                        id="photo"
-                    />
-
-                    @error('photo')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
-
-                </div>
-
-            </div>
-
-            <div class="col-md-6">
-
-                <div class="form-group">
-
-                    <label for="phoneNumber" class="font-2xl"> Phone Number :- </label>
-
-                    <input
-                        type="text"
-                        class="form-control"
-                        name="phoneNumber"
-                        value="{{ $teacher->phoneNumber }}"
-                        id="phoneNumber"
-                        placeholder="Type Your Phone Number"
-                        autocomplete="off"
-                        required
-                    />
-
-                    @error('phoneNumber')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="row">
-
-            <div class="col-md-6">
-
-                <div class="form-group">
-
-                    <label for="qualification" class="font-2xl"> Qualification :- </label>
-
-                    <input
-                        type="text"
-                        class="form-control"
-                        name="qualification"
-                        value="{{ $teacher->qualification }}"
-                        id="qualification"
-                        placeholder="Type Your Qualification"
-                        autocomplete="off"
-                        required
-                    />
-
-                    @error('qualification')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
-
-                </div>
-
-            </div>
-
-            <div class="col-md-6">
-
-                <div class="form-group">
-
-                    <label for="designation" class="font-2xl"> Designation :- </label>
-
-                    <input
-                        type="text"
-                        class="form-control"
-                        name="designation"
-                        value="{{ $teacher->designation }}"
-                        id="designation"
-                        placeholder="Type Your Designation"
-                        autocomplete="off"
-                        required
-                    />
-
-                    @error('qualification')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="row">
-
-            <div class="col-md-6">
-
-                <div class="form-group">
-
-                    <label for="class_id_teachers" class="font-2xl"> Class :- </label>
-
-                    <select
-                        class="form-control"
-                        name="class_id_teachers"
-                        id="class_id_teachers"
-                        required
-                    >
-                        <option disabled selected> -- Select Class -- </option>
-
-                        @foreach($classes as $class)
+                            <option disabled selected> -- Select Your Gender -- </option>
 
                             <option
+                                value="Male"
+                                @if($teacher->gender == 'Male')
+                                selected
+                                @endif
+                            >Male</option>
 
-                                value="{{ $class->id }}"
+                            <option
+                                value="female"
+                                @if($teacher->gender == 'Female')
+                                selected
+                                @endif
+                            >Female</option>
 
-                                @if($teacher->class_id_teachers == $class->id) selected @endif
+                        </select>
 
-                            > {{ $class->name }} </option>
+                        @error('gender')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
 
-                        @endforeach
+                    </div>
 
-                    </select>
+                </div>
 
-                    @error('class_id_teachers')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label for="religion" class="font-2xl"> Religion :- </label>
+
+                        <select class="form-control" name="religion" id="religion" >
+
+                            <option disabled selected> -- Select Your Religion -- </option>
+
+                            <option
+                                value="Muslim"
+                                @if($teacher->religion == 'Muslim')
+                                selected
+                                @endif
+                            >Muslim</option>
+
+                            <option
+                                value="Christian"
+                                @if($teacher->religion == 'Christian')
+                                selected
+                                @endif
+                            >Christian</option>
+
+                            <option
+                                value="Other"
+                                @if($teacher->religion == 'Other')
+                                selected
+                                @endif
+                            >Other</option>
+
+                        </select>
+
+                        @error('religion')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
 
                 </div>
 
             </div>
 
-            <div class="col-md-6">
+            <div class="row">
 
-                <div class="form-group">
+                <div class="col-md-6">
 
-                    <label for="section_id_teachers" class="font-2xl"> Section :- </label>
+                    <div class="form-group">
 
-                    <select
-                        class="form-control"
-                        name="section_id_teachers"
-                        id="section_id_teachers"
-                        required
-                    >
-                        <option disabled selected> -- Select Section -- </option>
+                        <label for="address" class="font-2xl"> Address :- </label>
 
-                        @foreach($sections as $section)
+                        <input
+                            class="form-control"
+                            name="address"
+                            value="{{ $teacher->address }}"
+                            id="address"
+                            placeholder="Type Your Address"
+                            autocomplete="off"
+                            required
+                        />
 
-                            <option
+                        @error('address')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
 
-                                value="{{ $section->id }}"
+                    </div>
 
-                                @if($teacher->section_id_teachers == $section->id) selected @endif
+                </div>
 
-                            >
-                                {{ $section->name }}
+                <div class="col-md-6">
 
-                            </option>
+                    <div class="form-group">
 
-                        @endforeach
-                    </select>
+                        <label for="email" class="font-2xl"> Email :- </label>
 
-                    @error('section_id_teachers')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
+                        <input
+                            type="email"
+                            class="form-control"
+                            name="email"
+                            value="{{ $teacher->email }}"
+                            id="email"
+                            placeholder="Type Your Email"
+                            autocomplete="off"
+                            required
+                        />
+
+                        @error('email')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <img
+                    id="photo-preview"
+                    class="rounded"
+                    src="{{ asset('images\teachers\\' . $teacher->photo) }}"
+                    alt="This Photo For Student"
+                    height="400"
+                    width="100%"
+                />
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label for="photo" class="font-2xl"> Photo :- </label>
+
+                        <input
+                            type="file"
+                            class="form-control p-1"
+                            name="photo"
+                            id="photo"
+                        />
+
+                        @error('photo')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label for="phoneNumber" class="font-2xl"> Phone Number :- </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="phoneNumber"
+                            value="{{ $teacher->phoneNumber }}"
+                            id="phoneNumber"
+                            placeholder="Type Your Phone Number"
+                            autocomplete="off"
+                            required
+                        />
+
+                        @error('phoneNumber')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
 
                 </div>
 
@@ -422,63 +296,271 @@
 
         </div>
 
-        <div class="row">
+        <h3 class="text-info">Designation Info :- </h3>
 
-            <div class="col-md-6">
+        <div class="container">
 
-                <div class="form-group">
+            <div class="row">
 
-                    <label for="subject_id_teachers" class="font-2xl"> Subjects :- </label>
+                <div class="col-md-6">
 
-                    <select
-                        class="form-control"
-                        name="subject_id_teachers"
-                        id="subject_id_teachers"
-                        required
-                    >
+                    <div class="form-group">
 
-                        <option disabled selected> -- Select Subject -- </option>
+                        <label for="qualification" class="font-2xl"> Qualification :- </label>
 
-                        @foreach($subjects as $subject)
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="qualification"
+                            value="{{ $teacher->qualification }}"
+                            id="qualification"
+                            placeholder="Type Your Qualification"
+                            autocomplete="off"
+                            required
+                        />
 
-                            <option
+                        @error('qualification')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
 
-                                value="{{ $subject->id }}"
+                    </div>
 
-                                @if($teacher->subject_id_teachers == $subject->id) selected @endif
+                </div>
 
-                            > {{ $subject->name }} </option>
+                <div class="col-md-6">
 
-                        @endforeach
+                    <div class="form-group">
 
-                    </select>
+                        <label for="designation" class="font-2xl"> Designation :- </label>
 
-                    @error('subject_id_teachers')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="designation"
+                            value="{{ $teacher->designation }}"
+                            id="designation"
+                            placeholder="Type Your Designation"
+                            autocomplete="off"
+                            required
+                        />
+
+                        @error('qualification')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
 
                 </div>
 
             </div>
 
-            <div class="col-md-6">
+            <div class="row">
 
-                <div class="form-group">
+                <div class="col-md-6">
 
-                    <label for="joinDate" class="font-2xl"> Join Date :- </label>
+                    <div class="form-group">
 
-                    <input
-                        class="form-control"
-                        type="date"
-                        name="joinDate"
-                        value="{{ $teacher->joinDate }}"
-                        id="joinDate"
-                        required
-                    />
+                        <label for="joinDate" class="font-2xl"> Join Date :- </label>
 
-                    @error('joinDate')
-                    <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-                    @enderror
+                        <input
+                            class="form-control"
+                            type="date"
+                            name="joinDate"
+                            value="{{ $teacher->joinDate }}"
+                            id="joinDate"
+                            required
+                        />
+
+                        @error('joinDate')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <h3 class="text-info">Academic Info :- </h3>
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label for="class_id_teachers" class="font-2xl"> Class :- </label>
+
+                        <select
+                            class="form-control"
+                            name="class_id_teachers"
+                            id="class_id_teachers"
+                            required
+                        >
+                            <option disabled selected> -- Select Class -- </option>
+
+                            @foreach($classes as $class)
+
+                                <option
+
+                                    value="{{ $class->id }}"
+
+                                    @if($teacher->class_id_teachers == $class->id) selected @endif
+
+                                > {{ $class->name }} </option>
+
+                            @endforeach
+
+                        </select>
+
+                        @error('class_id_teachers')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label for="section_id_teachers" class="font-2xl"> Section :- </label>
+
+                        <select
+                            class="form-control"
+                            name="section_id_teachers"
+                            id="section_id_teachers"
+                            required
+                        >
+                            <option disabled selected> -- Select Section -- </option>
+
+                            @foreach($sections as $section)
+
+                                <option
+
+                                    value="{{ $section->id }}"
+
+                                    @if($teacher->section_id_teachers == $section->id) selected @endif
+
+                                >
+                                    {{ $section->name }}
+
+                                </option>
+
+                            @endforeach
+                        </select>
+
+                        @error('section_id_teachers')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label for="subject_id_teachers" class="font-2xl"> Subjects :- </label>
+
+                        <select
+                            class="form-control"
+                            name="subject_id_teachers"
+                            id="subject_id_teachers"
+                            required
+                        >
+
+                            <option disabled selected> -- Select Subject -- </option>
+
+                            @foreach($subjects as $subject)
+
+                                <option
+
+                                    value="{{ $subject->id }}"
+
+                                    @if($teacher->subject_id_teachers == $subject->id) selected @endif
+
+                                > {{ $subject->name }} </option>
+
+                            @endforeach
+
+                        </select>
+
+                        @error('subject_id_teachers')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <h3 class="text-info">Login Info :- </h3>
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label for="username" class="font-2xl"> Username :- </label>
+
+                        <input
+                            class="form-control"
+                            type="text"
+                            name="username"
+                            value="{{ $teacher->username }}"
+                            id="username"
+                            placeholder="Write Your username For Login"
+                            autocomplete="off"
+                            autofocus
+                            required
+                        />
+                        @error('username')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label for="password" class="font-2xl"> Password :- </label>
+
+                        <input
+                            class="form-control"
+                            type="password"
+                            name="password"
+                            id="password"
+                            value="{{ decrypt($teacher->password) }}"
+                            placeholder="Write Your password For Login"
+                            autocomplete="off"
+                            autofocus
+                            required
+                        />
+                        @error('password')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
 
                 </div>
 

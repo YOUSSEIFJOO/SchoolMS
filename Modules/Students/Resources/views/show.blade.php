@@ -12,7 +12,7 @@
 
                     <li class="breadcrumb-item">
 
-                        <a href="{{ route('dashboard.home') }}">Home</a>
+                        <a href="{{ route('home.index') }}">Home</a>
 
                     </li>
 
@@ -501,6 +501,84 @@
                                             <div class="col-sm-7 p-0">
 
                                                 <p class="m-0"> : {{ $student->notificationSms }}</p>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="login-info mt-3">
+
+                            <h4 class="text-info pb-1" style="border-bottom: 1px solid #CCC">Login Info :- </h4>
+
+                            <div class="content mt-3">
+
+                                <div class="row m-0">
+
+                                    <div class="col-sm-6 p-0">
+
+                                        <div class="row m-0">
+
+                                            <div class="col-sm-4 p-0">
+
+                                                <p class="m-0 font-weight-bold">Username</p>
+
+                                            </div>
+
+                                            <div class="col-sm-8 p-0">
+
+                                                <p class="m-0"> : {{ $student->username }} </p>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-sm-6 p-0">
+
+                                        <div class="row m-0">
+
+                                            <div class="col-sm-5 p-0">
+
+                                                <p class="m-0 font-weight-bold">password</p>
+
+                                            </div>
+
+                                            <div class="col-sm-7 p-0">
+
+                                                <p class="m-0"> : ******** </p>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row m-0 mt-1">
+
+                                    <div class="col-sm-6 p-0">
+
+                                        <div class="row m-0">
+
+                                            <div class="col-sm-4 p-0">
+
+                                                <p class="m-0 font-weight-bold">Role</p>
+
+                                            </div>
+
+                                            <div class="col-sm-8 p-0">
+
+                                                <p class="m-0"> : {{ $student->role }}</p>
 
                                             </div>
 

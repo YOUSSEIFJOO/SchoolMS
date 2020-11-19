@@ -11,7 +11,23 @@
 |
 */
 
+Route::prefix("dashboard")->group(function () {
 
-Route::get('dashboard/attendance', 'CoreController@attendance')->name("attendance.index");
+    Route::get('login', 'CoreController@showLoginForm')->name("dashboard.showLoginForm");
 
-Route::get('dashboard/academic', 'CoreController@academic')->name("academic.index");
+    Route::post('login', 'CoreController@login')->name("dashboard.login");
+
+    Route::get('logout', 'CoreController@logout')->name("dashboard.logout");
+
+});
+
+
+Route::group(["prefix" => "dashboard", "middleware" => "assign.guard"], function() {
+
+    Route::get('attendance', 'CoreController@attendance')->name("attendance.index");
+
+    Route::get('academic', 'CoreController@academic')->name("academic.index");
+
+    Route::get('settings', 'CoreController@setting')->name("settings.index");
+
+});

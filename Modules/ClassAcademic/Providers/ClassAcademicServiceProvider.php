@@ -15,7 +15,7 @@ class ClassAcademicServiceProvider extends ServiceProvider
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'classacademic';
+    protected $moduleNameLower = 'classAcademic';
 
     /**
      * Boot the application events.

@@ -29,8 +29,7 @@
 
     use Illuminate\Contracts\View\Factory;
     use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
-use Illuminate\View\View;
+    use Illuminate\View\View;
 
 /** End View Helper Declaration **/
 
@@ -79,10 +78,8 @@ use Illuminate\View\View;
 
             public function __construct()
             {
-
                 /** For Declaring Instance Of Employee Model. **/
                 $this->employee = new Employee;
-
             }
 
         /** End The Construct Method **/
@@ -201,50 +198,50 @@ use Illuminate\View\View;
              * @return RedirectResponse
              */
             public function store(EmployeeRequest $request)
-        {
-            try{
+            {
+                try{
 
-                /** Start $data Variable **/
+                    /** Start $data Variable **/
+
+                        /**
+                         ** Preparation Data Of New Employee To Store In DB.
+                         ** Excepting _token, photo, time.
+                         ** _token By Default Don't Save In DB.
+                         ** photo Except In First For Store It In Server With Hash Name And Add It To $data.
+                         ** Password Except For Encryption It.
+                         ** students Disk For Store Photo That Belongs To Students Only.
+                         **/
+                        $data = AppHelper::StorePhotoIfFound($request, ["_token", "photo", "password"], "employees");
+
+                    /** End $data Variable **/
+
+
+                    /** Start Create The Data Of New Employee **/
+
+                        /** Create Data Of New Employee If $data Ready To Store In DB. **/
+                        Employee::create($data);
+
+                    /** End Create The Data Of New Employee **/
+
+
+                    /** Start Return To Index View **/
+
+                        /** Redirect To Index View If Employee Has Been Created Successfully **/
+                        return AppHelper::IfSuccessfully('Employee Created Successfully', "employees.index");
+
+                    /** End Return To Index View **/
+
+                } catch(Exception $e) {
 
                     /**
-                     ** Preparation Data Of New Employee To Store In DB.
-                     ** Excepting _token, photo, time.
-                     ** _token By Default Don't Save In DB.
-                     ** photo Except In First For Store It In Server With Hash Name And Add It To $data.
-                     ** time Except In First For Creating Unique Folder From Milliseconds Of Time For Storing Photo In Them Then Add To $data.
-                     ** students Disk For Store Photo That Belongs To Students Only.
+                     ** This Function For Handling If Unexpected Error Happened.
+                     ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                     ** This Function Return To View Index Of Employees And Appear The Nice Message.
                      **/
-                    $data = AppHelper::StorePhotoIfFound($request, ["_token", "photo"], "employees");
+                    return AppHelper::IfUnexpectedError("employees.index");
 
-                /** End $data Variable **/
-
-
-                /** Start Create The Data Of New Employee **/
-
-                    /** Create Data Of New Employee If $data Ready To Store In DB. **/
-                    Employee::create($data);
-
-                /** End Create The Data Of New Employee **/
-
-
-                /** Start Return To Index View **/
-
-                    /** Redirect To Index View If Employee Has Been Created Successfully **/
-                    return AppHelper::IfSuccessfully('Employee Created Successfully', "employees.index");
-
-                /** End Return To Index View **/
-
-            } catch(Exception $e) {
-
-                /**
-                 ** This Function For Handling If Unexpected Error Happened.
-                 ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
-                 ** This Function Return To View Index Of Employees And Appear The Nice Message.
-                 **/
-                return AppHelper::IfUnexpectedError("employees.index");
-
+                }
             }
-        }
 
         /** End store Method **/
 
@@ -370,10 +367,10 @@ use Illuminate\View\View;
                      ** Excepting _token, photo, time.
                      ** _token By Default Don't Save In DB.
                      ** photo Except In First For Store It In Server With Hash Name And Add It To $data.
-                     ** time Except In First For Creating Unique Folder From Milliseconds Of Time For Storing Photo In Them Then Add To $data.
+                     ** Password Except For Encryption It.
                      ** Employees Disk For Store Photo That Belongs To Employee Only.
                      **/
-                    $data = AppHelper::DeleteStorePhotoIfFound($this->employee, $id, $request, ["_token", "photo"], "employees", "employees");
+                    $data = AppHelper::DeleteStorePhotoIfFound($this->employee, $id, $request, ["_token", "photo", "password"], "employees", "employees");
 
                 /** End $data Variable **/
 

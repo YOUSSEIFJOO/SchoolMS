@@ -11,7 +11,8 @@
 |
 */
 
-Route::prefix('dashboard/employees')->group(function() {
+Route::group(["prefix" => "dashboard/employees", "middleware" => "assign.guard"], function() {
+
     Route::get('/', 'EmployeesController@index')->name("employees.index");
 
     Route::get('create', 'EmployeesController@create')->name("employees.create");
@@ -25,4 +26,5 @@ Route::prefix('dashboard/employees')->group(function() {
     Route::post('update/{id}', 'EmployeesController@update')->name("employees.update");
 
     Route::delete('delete/{id}', 'EmployeesController@destroy')->name("employees.delete");
+
 });

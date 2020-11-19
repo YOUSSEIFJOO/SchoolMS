@@ -10,5 +10,9 @@
     "EmployeesAttendance": true,
     "ClassAcademic": true,
     "SectionAcademic": true,
-    "SubjectAcademic": true
+    "SubjectAcademic": true,
+    "Home": true,
+    "PermisionsSettings": true,
+    "PermissionsSettings": true,
+    "TableClassAcademicCreate": true
 }

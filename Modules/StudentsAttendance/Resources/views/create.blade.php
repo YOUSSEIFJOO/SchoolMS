@@ -7,7 +7,7 @@
 
         <li class="breadcrumb-item">
 
-            <a href="{{ route('dashboard.home') }}">Home</a>
+            <a href="{{ route('home.index') }}">Home</a>
 
         </li>
 

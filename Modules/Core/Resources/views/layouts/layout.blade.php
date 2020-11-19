@@ -35,13 +35,34 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ route('home.index') }}">
 
                 <img class="navbar-brand-full" src="{{ asset("admin/images/logo.svg") }}" width="89" height="25" alt="CoreUI Logo">
 
                 <img class="navbar-brand-minimized" src="{{ asset("admin/images/sygnet.svg") }}" width="30" height="30" alt="CoreUI Logo">
 
             </a>
+
+            <ul class="c-header-nav" style="list-style: none;padding: 0;padding-right: 25px;margin: 0">
+
+                <li class="c-header-nav-item dropdown d-md-down-none mx-2">
+
+                    <div class="dropdown"  style="width: 40px;height: 40px;margin-right: 140px;">
+
+                        <img
+                            class="dropdown-toggle" id="SettingMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            src="{{ asset(\Modules\Core\Http\Helper\AppHelper::photoOfCurrentAuth()) }}"
+                            style="width: 100%;border-radius: 50%;height: 100%;position: absolute;left: 140px; cursor: pointer"
+                        />
+
+                        <div class="dropdown-menu" aria-labelledby="SettingMenu" style="margin-top: 6px">
+                            <a class="dropdown-item" href="{{ route('dashboard.logout') }}">Log Out</a>
+                        </div>
+                    </div>
+
+                </li>
+
+            </ul>
 
         </header>
 
@@ -111,6 +132,18 @@
 
             /** This If For Select Box Query **/
             $('select').selectpicker();
+
+            $("#selectAll").click(function() {
+
+                $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
+
+            });
+
+            $(".selectRow").click(function() {
+
+                    $(this).parents('tr').find("input[type=checkbox]").prop("checked", $(this).prop("checked"));
+
+            });
 
         </script>
 

@@ -49,11 +49,19 @@ class StudentRequest extends FormRequest
 
             "class_id_students"     => "required",
 
-            "section_id_students"   => "required"
+            "section_id_students"   => "required",
+
+            "username"              => "required | string | min:3 | max:10 | unique:students,username,$id",
+
+            "password"              => "required | string | size:8"
         ];
 
         if($id) {
-            $rules['photo'] = "image";
+
+            $rules['photo']     = "image";
+
+            $rules['password']  = "string | size:8";
+
         }
 
         return $rules;

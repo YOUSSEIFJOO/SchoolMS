@@ -167,7 +167,7 @@
                     /** Start Return To Index View **/
 
                         /** Redirect To Index View Of Class Academic With Variables **/
-                        return view('sectionacademic::index', compact("classes", "sections", "paginationNumber"))->with("instanceClass", $this->classAcademic);
+                        return view('sectionAcademic::index', compact("classes", "sections", "paginationNumber"))->with("instanceClass", $this->classAcademic);
 
                     /** End Return To Index View **/
 
@@ -210,7 +210,7 @@
                     /** Start Return To Create View **/
 
                         /** Redirect To Create View Of Section Academic With Variables **/
-                        return view('sectionacademic::create', compact("classes"));
+                        return view('sectionAcademic::create', compact("classes"));
 
                     /** End Return To Create View **/
 
@@ -346,7 +346,7 @@
                         $id,
                         "This Section Is Not Found",
                         "sectionAcademic.index",
-                        "sectionacademic::edit",
+                        "sectionAcademic::edit",
                         "section",
                         null,
                         null,

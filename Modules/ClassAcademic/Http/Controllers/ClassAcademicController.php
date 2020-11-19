@@ -28,7 +28,6 @@
 /** Start View Helper Declaration **/
 
     use Illuminate\Contracts\View\Factory;
-    use Illuminate\Support\Str;
     use Illuminate\View\View;
 
 /** End View Helper Declaration **/
@@ -55,7 +54,7 @@
 /** End App Helper Class Declaration **/
 
 
-                        /******************************************************************************/
+                /******************************************************************************/
 
 
 /** Start The ClassAcademicController **/
@@ -134,7 +133,7 @@
                     /** Start Return To Index View **/
 
                         /** Redirect To Index View Of Class Academic With Variables **/
-                        return view('classacademic::index', compact("classes", "paginationNumber"));
+                        return view('classAcademic::index', compact("classes", "paginationNumber"));
 
                     /** End Return To Index View **/
 
@@ -153,6 +152,9 @@
         /** End Index Method **/
 
 
+                        /******************************************************************************/
+
+
         /** Start create Method **/
 
             /**
@@ -166,7 +168,7 @@
                     /** Start Return To Create View **/
 
                         /** Redirect To Create View Of Class Academic With Variables **/
-                        return view('classacademic::create');
+                        return view('classAcademic::create');
 
                     /** End Return To Create View **/
 
@@ -186,14 +188,17 @@
         /** End create Method **/
 
 
+                        /******************************************************************************/
+
+
         /** Start store Method **/
 
             /**
              * Store a newly created resource in storage.
-             * @param ClassAcademicRequest $request
+             * @param classAcademicRequest $request
              * @return RedirectResponse
              */
-            public function store(ClassAcademicRequest $request)
+            public function store(classAcademicRequest $request)
             {
                 try{
 
@@ -235,6 +240,9 @@
         /** End store Method **/
 
 
+                        /******************************************************************************/
+
+
         /** Start edit Method **/
 
             /**
@@ -252,7 +260,7 @@
                         $id,
                         "This Class Is Not Found",
                         "classAcademic.index",
-                        "classacademic::edit",
+                        "classAcademic::edit",
                         "class"
                     );
 
@@ -271,15 +279,18 @@
         /** End edit Method **/
 
 
+                        /******************************************************************************/
+
+
         /** Start update Method **/
 
             /**
              * Update the specified resource in storage.
-             * @param ClassAcademicRequest $request
+             * @param classAcademicRequest $request
              * @param $id
              * @return RedirectResponse
              */
-            public function update(ClassAcademicRequest $request, $id)
+            public function update(classAcademicRequest $request, $id)
             {
                 try {
 
@@ -338,6 +349,9 @@
             }
 
         /** End update Method **/
+
+
+                        /******************************************************************************/
 
 
         /** Start destroy Method **/

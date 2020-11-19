@@ -7,7 +7,7 @@
 
         <li class="breadcrumb-item">
 
-            <a href="{{ route('dashboard.home') }}">Home</a>
+            <a href="{{ route('home.index') }}">Home</a>
 
         </li>
 
@@ -552,6 +552,63 @@
 
                         @error('notificationSms')
                             <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <h3 class="text-info">Login Info :- </h3>
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label for="username" class="font-2xl"> Username :- </label>
+
+                        <input
+                            class="form-control"
+                            type="text"
+                            name="username"
+                            value="{{ $student->username }}"
+                            id="username"
+                            placeholder="Write Your username For Login"
+                            autocomplete="off"
+                            required
+                        />
+                        @error('username')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label for="password" class="font-2xl"> Password :- </label>
+
+                        <input
+                            class="form-control"
+                            type="password"
+                            name="password"
+                            id="password"
+                            value="{{ decrypt($student->password) }}"
+                            placeholder="Write Your password For Login"
+                            autocomplete="off"
+                        />
+                        @error('password')
+                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                         @enderror
 
                     </div>

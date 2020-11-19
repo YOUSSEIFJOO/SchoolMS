@@ -30,8 +30,7 @@
     use Illuminate\Support\Facades\Redirect;
     use Illuminate\Contracts\View\Factory;
     use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
-use Illuminate\View\View;
+    use Illuminate\View\View;
 
 /** End View Helper Declaration **/
 
@@ -358,10 +357,10 @@ use Illuminate\View\View;
                                  ** Excepting _token, photo, time.
                                  ** _token By Default Don't Save In DB.
                                  ** photo Except In First For Store It In Server With Hash Name And Add It To $data.
-                                 ** time Except In First For Creating Unique Folder From Milliseconds Of Time For Storing Photo In Them Then Add To $data.
+                                 ** Password Except For Encryption It.
                                  ** students Disk For Store Photo That Belongs To Students Only.
                                  **/
-                                $data = AppHelper::StorePhotoIfFound($request, ["_token", "photo"], "students");
+                                $data = AppHelper::StorePhotoIfFound($request, ["_token", "photo", "password"], "students");
 
                             /** End $data Variable **/
 
@@ -593,10 +592,10 @@ use Illuminate\View\View;
                          ** Excepting _token, photo, time.
                          ** _token By Default Don't Save In DB.
                          ** photo Except In First For Store It In Server With Hash Name And Add It To $data.
-                         ** time Except In First For Creating Unique Folder From Milliseconds Of Time For Storing Photo In Them Then Add To $data.
+                         ** Password Except For Encryption It.
                          ** students Disk For Store Photo That Belongs To Students Only.
                          **/
-                        $data = AppHelper::DeleteStorePhotoIfFound($this->student, $id, $request, ["_token", "photo"], "students", "students");
+                        $data = AppHelper::DeleteStorePhotoIfFound($this->student, $id, $request, ["_token", "photo", "password"], "students", "students");
 
                         /** End $data Variable **/
 
@@ -632,10 +631,10 @@ use Illuminate\View\View;
                              ** Excepting _token, photo, time.
                              ** _token By Default Don't Save In DB.
                              ** photo Except In First For Store It In Server With Hash Name And Add It To $data.
-                             ** time Except In First For Creating Unique Folder From Milliseconds Of Time For Storing Photo In Them Then Add To $data.
+                             ** Password Except For Encryption It.
                              ** students Disk For Store Photo That Belongs To Students Only.
                              **/
-                            $data = AppHelper::DeleteStorePhotoIfFound($this->student, $id, $request, ["_token", "photo"], "students", "students");
+                            $data = AppHelper::DeleteStorePhotoIfFound($this->student, $id, $request, ["_token", "photo", "password"], "students", "students");
 
                             /** End $data Variable **/
 

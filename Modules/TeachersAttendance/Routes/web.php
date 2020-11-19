@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('dashboard/teachersAttendance')->group(function() {
+Route::group(["prefix" => "dashboard/teachersAttendance", "middleware" => "assign.guard"], function() {
 
     Route::get('/', 'TeachersAttendanceController@index')->name("teachersAttendance.index");
 

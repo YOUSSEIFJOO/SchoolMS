@@ -20,7 +20,7 @@ class CreateStudentsTable extends Migration
             $table->date("birthday");
             $table->string("gender", 6);
             $table->string("religion", 9);
-            $table->string("address", 30);
+            $table->string("address", 70);
             $table->string("email", 50);
             $table->string("photo", 100);
             $table->string("phoneNumber", 11);
@@ -31,6 +31,10 @@ class CreateStudentsTable extends Migration
             $table->string("shift", 7);
             $table->string("notificationSms", 25);
             $table->integer('class_id_students');
+
+            $table->string("username", 10)->unique();
+            $table->string("password");
+            $table->string("role", 7)->default("student");
 
             /** Start Relationships **/
                 $table->unsignedBigInteger('section_id_students');

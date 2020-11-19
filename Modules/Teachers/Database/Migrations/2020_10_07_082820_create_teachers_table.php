@@ -20,7 +20,7 @@ class CreateTeachersTable extends Migration
             $table->date("birthday");
             $table->string("gender", 6);
             $table->string("religion", 9);
-            $table->string("address", 30);
+            $table->string("address", 70);
             $table->string("email", 50);
             $table->string("photo", 100);
 
@@ -29,18 +29,14 @@ class CreateTeachersTable extends Migration
             $table->string("designation", 50);
             $table->date("joinDate");
             $table->integer("class_id_teachers");
+            $table->integer("section_id_teachers");
+            $table->integer("subject_id_teachers");
 
-            /** Start Relationships **/
-                $table->unsignedBigInteger('section_id_teachers');
-                $table->unsignedBigInteger("subject_id_teachers");
-            /** End Relationships **/
+            $table->string("username", 10)->unique();
+            $table->string("password");
+            $table->string("role", 7)->default("teacher");
 
             $table->timestamps();
-
-            /** Start Foreign Keys **/
-                $table->foreign('section_id_teachers')->references('id')->on('sectionAcademic')->onUpdate("cascade");
-                $table->foreign('subject_id_teachers')->references('id')->on('subjectAcademic')->onUpdate("cascade");
-            /** End Foreign Keys **/
         });
     }
 
@@ -52,14 +48,7 @@ class CreateTeachersTable extends Migration
     public function down()
     {
 
-        /** For Skip Foreign Key In Update Or Delete For Solve Error (Cannot delete or update a parent row a foreign key constraint fails) **/
-        Schema::disableForeignKeyConstraints();
-        Schema::table('teachers', function(Blueprint $table){
-            $table->dropForeign(['section_id_teachers', 'subject_id_teachers']);
-        });
-
         Schema::dropIfExists('teachers');
-        Schema::enableForeignKeyConstraints();
 
     }
 }

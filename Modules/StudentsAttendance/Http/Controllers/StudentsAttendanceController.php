@@ -190,7 +190,7 @@
                     /** Start Return To Index View **/
 
                         /** Redirect To Index View Of Students Attendance With Variables **/
-                        return view('studentsattendance::index',
+                        return view('studentsAttendance::index',
                             compact("attendance", "paginationNumber", "classes", "sections"))
                             ->with("instanceClass", $this->classAcademic)
                             ->with("instanceSection", $this->sectionAcademic);
@@ -253,7 +253,7 @@
                     /** Start Return To Create View **/
 
                         /** Redirect To Create View Of Students Attendance With Variables **/
-                        return view('studentsattendance::create', compact("students", "checkAttendance", "classes"));
+                        return view('studentsAttendance::create', compact("students", "checkAttendance", "classes"));
 
                     /** End Return To Create View **/
 

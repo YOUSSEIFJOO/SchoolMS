@@ -12,7 +12,7 @@
 
                     <li class="breadcrumb-item">
 
-                        <a href="{{ route('dashboard.home') }}">Home</a>
+                        <a href="{{ route('home.index') }}">Home</a>
 
                     </li>
 
@@ -162,6 +162,8 @@
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
                         <div class="personal-info">
+
+                            <h4 class="text-info pb-1" style="border-bottom: 1px solid #CCC">Personal Info :- </h4>
 
                             <div class="content mt-3">
 
@@ -319,6 +321,20 @@
 
                                     </div>
 
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="designation-info">
+
+                            <h4 class="text-info pb-1" style="border-bottom: 1px solid #CCC">Designation Info :- </h4>
+
+                            <div class="content mt-3">
+
+                                <div class="row m-0 mt-2">
+
                                     <div class="col-sm-6 p-0">
 
                                         <div class="row m-0">
@@ -338,10 +354,6 @@
                                         </div>
 
                                     </div>
-
-                                </div>
-
-                                <div class="row m-0 mt-2">
 
                                     <div class="col-sm-6 p-0">
 
@@ -363,6 +375,10 @@
 
                                     </div>
 
+                                </div>
+
+                                <div class="row m-0 mt-2">
+
                                     <div class="col-sm-6 p-0">
 
                                         <div class="row m-0">
@@ -376,6 +392,68 @@
                                             <div class="col-sm-8 p-0">
 
                                                 <p class="m-0"> : {{ $teacher->joinDate }}</p>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="academic-info">
+
+                            <h4 class="text-info pb-1" style="border-bottom: 1px solid #CCC">Academic Info :- </h4>
+
+                            <div class="content mt-3">
+
+                                <div class="row m-0 mt-2">
+
+                                    <div class="col-sm-6 p-0">
+
+                                        <div class="row m-0">
+
+                                            <div class="col-sm-4 p-0">
+
+                                                <p class="m-0 font-weight-bold">Class</p>
+
+                                            </div>
+
+                                            <div class="col-sm-8 p-0">
+
+                                                <p class="m-0">
+
+                                                    : {{ \Modules\Core\Http\Helper\AppHelper::selectPropertyWithWhere((new \Modules\ClassAcademic\Entities\ClassAcademic()), "name", "id", $teacher->class_id_teachers) }}
+
+                                                </p>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-sm-6 p-0">
+
+                                        <div class="row m-0">
+
+                                            <div class="col-sm-4 p-0">
+
+                                                <p class="m-0 font-weight-bold">Section</p>
+
+                                            </div>
+
+                                            <div class="col-sm-8 p-0">
+
+                                                <p class="m-0">
+
+                                                    : {{ \Modules\Core\Http\Helper\AppHelper::selectPropertyWithWhere($instanceSection, "name", "id", $teacher->section_id_teachers) }}
+
+                                                </p>
 
                                             </div>
 
@@ -411,23 +489,53 @@
 
                                     </div>
 
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="login-info">
+
+                            <h4 class="text-info pb-1" style="border-bottom: 1px solid #CCC">Login Info :- </h4>
+
+                            <div class="content mt-3">
+
+                                <div class="row m-0 mt-2">
+
                                     <div class="col-sm-6 p-0">
 
                                         <div class="row m-0">
 
                                             <div class="col-sm-4 p-0">
 
-                                                <p class="m-0 font-weight-bold">Class</p>
+                                                <p class="m-0 font-weight-bold">Username</p>
 
                                             </div>
 
                                             <div class="col-sm-8 p-0">
 
-                                                <p class="m-0">
+                                                <p class="m-0"> : {{ $teacher->username }} </p>
 
-                                                    : {{ \Modules\Core\Http\Helper\AppHelper::selectPropertyWithWhere((new \Modules\ClassAcademic\Entities\ClassAcademic()), "name", "id", $teacher->class_id_teachers) }}
+                                            </div>
 
-                                                </p>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-sm-6 p-0">
+
+                                        <div class="row m-0">
+
+                                            <div class="col-sm-4 p-0">
+
+                                                <p class="m-0 font-weight-bold">Password</p>
+
+                                            </div>
+
+                                            <div class="col-sm-8 p-0">
+
+                                                <p class="m-0"> : ******** </p>
 
                                             </div>
 
@@ -445,17 +553,13 @@
 
                                             <div class="col-sm-4 p-0">
 
-                                                <p class="m-0 font-weight-bold">Section</p>
+                                                <p class="m-0 font-weight-bold">Role</p>
 
                                             </div>
 
                                             <div class="col-sm-8 p-0">
 
-                                                <p class="m-0">
-
-                                                    : {{ \Modules\Core\Http\Helper\AppHelper::selectPropertyWithWhere($instanceSection, "name", "id", $teacher->section_id_teachers) }}
-
-                                                </p>
+                                                <p class="m-0"> : teacher </p>
 
                                             </div>
 

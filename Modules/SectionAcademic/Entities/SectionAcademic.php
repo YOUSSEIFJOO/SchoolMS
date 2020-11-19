@@ -50,7 +50,7 @@ class SectionAcademic extends Model
             /** Get Teachers That Belong To The Subject. **/
             public function teachers()
             {
-                return $this->hasMany('Modules\Teachers\Entities\Teacher');
+                return $this->belongsToMany('Modules\Teachers\Entities\Teacher');
             }
 
         /** End Relationship With Teachers **/

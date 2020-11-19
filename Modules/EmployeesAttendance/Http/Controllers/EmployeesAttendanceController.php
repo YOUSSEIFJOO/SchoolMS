@@ -139,7 +139,7 @@
                     /** Start Return To Index View **/
 
                         /** Redirect To Index View Of Employees Attendance With Variables **/
-                        return view('employeesattendance::index', compact("attendance", "paginationNumber"));
+                        return view('employeesAttendance::index', compact("attendance", "paginationNumber"));
 
                     /** End Return To Index View **/
 
@@ -196,7 +196,7 @@
                     /** Start Return To Create View **/
 
                         /** Redirect To Create View Of Employees Attendance With Variables **/
-                        return view('employeesattendance::create', compact("employeesNameSearch", "employees", "checkAttendance"));
+                        return view('employeesAttendance::create', compact("employeesNameSearch", "employees", "checkAttendance"));
 
                     /** End Return To Create View **/
 

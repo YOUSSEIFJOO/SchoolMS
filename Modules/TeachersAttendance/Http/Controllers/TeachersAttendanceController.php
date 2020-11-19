@@ -139,7 +139,7 @@
                     /** Start Return To Index View **/
 
                         /** Redirect To Index View Of Teachers Attendance With Variables **/
-                        return view('teachersattendance::index', compact("attendance", "paginationNumber"));
+                        return view('teachersAttendance::index', compact("attendance", "paginationNumber"));
 
                     /** End Return To Index View **/
 
@@ -199,7 +199,7 @@
                     /** Start Return To Create View **/
 
                         /** Redirect To Create View Of Teachers Attendance With Variables **/
-                        return view('teachersattendance::create', compact("teachersNameSearch", "teachers", "checkAttendance"));
+                        return view('teachersAttendance::create', compact("teachersNameSearch", "teachers", "checkAttendance"));
 
                     /** End Return To Create View **/
 

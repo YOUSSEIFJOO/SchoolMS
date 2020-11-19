@@ -2,10 +2,19 @@
 
 namespace Modules\Employees\Entities;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
-class Employee extends Model
+class Employee extends Authenticatable
 {
+
+    /** Start Trait Of Spatie Package **/
+        use HasRoles;
+    /** Start Trait Of Spatie Package **/
+
+
+    /******************************************************************************************************************/
+
 
     /** Start $table Variable **/
 
@@ -23,7 +32,7 @@ class Employee extends Model
         /** The attributes that are mass assignable. **/
         protected $fillable = [
             "id", "time", "name", "birthday", "gender", "religion", "address", "email", "photo", "phoneNumber",
-            "qualification", "designation", "joinDate"
+            "qualification", "designation", "joinDate", "username", "password", "role"
         ];
 
     /** End $fillable Variable **/

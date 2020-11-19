@@ -15,7 +15,7 @@ class TeachersAttendanceServiceProvider extends ServiceProvider
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'teachersattendance';
+    protected $moduleNameLower = 'teachersAttendance';
 
     /**
      * Boot the application events.

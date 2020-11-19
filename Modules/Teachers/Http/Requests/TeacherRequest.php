@@ -43,11 +43,19 @@ class TeacherRequest extends FormRequest
 
             "section_id_teachers"   => "required",
 
-            "subject_id_teachers"   => "required"
+            "subject_id_teachers"   => "required",
+
+            "username"              => "required | string | min:1 | max:10 | unique:teachers,username,$id",
+
+            "password"              => "required | string | size:8"
         ];
 
         if($id) {
+
             $rules['photo'] = "image";
+
+            $rules['password']  = "string | size:8";
+
         }
 
         return $rules;

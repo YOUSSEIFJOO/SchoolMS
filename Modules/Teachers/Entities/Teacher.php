@@ -2,10 +2,19 @@
 
 namespace Modules\Teachers\Entities;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
-class Teacher extends Model
+class Teacher extends Authenticatable
 {
+
+    /** Start Trait Of Spatie Package **/
+        use HasRoles;
+    /** Start Trait Of Spatie Package **/
+
+
+    /******************************************************************************************************************/
+
 
     /** Start $table Variable **/
 
@@ -23,7 +32,8 @@ class Teacher extends Model
         /** The attributes that are mass assignable. **/
         protected $fillable = [
             "id", "name", "birthday", "gender", "religion", "address", "email", "photo", "phoneNumber",
-            "qualification", "designation", "joinDate", "class_id_teachers", "section_id_teachers", "subject_id_teachers"
+            "qualification", "designation", "joinDate", "class_id_teachers", "section_id_teachers",
+            "subject_id_teachers", "username", "password", "role"
         ];
 
     /** End $fillable Variable **/
@@ -39,7 +49,7 @@ class Teacher extends Model
             /** Get Student Attendance That Owns The Teacher. **/
             public function students()
             {
-                return $this->hasMany('Modules\Students\Entities\Student');
+                return $this->belongsToMany('Modules\Students\Entities\Student');
             }
 
         /** End Relationship With Student **/

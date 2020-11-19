@@ -49,7 +49,7 @@ class SubjectAcademic extends Model
             /** Get Teachers That Belong To The Subject. **/
             public function teachers()
             {
-                return $this->belongsTo('Modules\Teachers\Entities\Teacher');
+                return $this->belongsToMany('Modules\Teachers\Entities\Teacher');
             }
 
         /** End Relationship With Teacher **/

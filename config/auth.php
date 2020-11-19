@@ -14,8 +14,10 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+
+        'guard'     => 'web',
         'passwords' => 'users',
+
     ],
 
     /*
@@ -36,16 +38,33 @@ return [
     */
 
     'guards' => [
+
         'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
+            'driver'    => 'session',
+            'provider'  => 'users',
+        ],
+
+        'student' => [
+            'driver'    => 'session',
+            'provider'  => 'students',
+        ],
+
+        'teacher' => [
+            'driver'    => 'session',
+            'provider'  => 'teachers',
+        ],
+
+        'employee' => [
+            'driver'    => 'session',
+            'provider'  => 'employees',
         ],
 
         'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-            'hash' => false,
-        ],
+            'driver'    => 'token',
+            'provider'  => 'users',
+            'hash'      => false,
+        ]
+
     ],
 
     /*
@@ -66,15 +85,32 @@ return [
     */
 
     'providers' => [
+
         'users' => [
-            'driver' => 'eloquent',
-            'model' => App\User::class,
+            'driver'    => 'eloquent',
+            'model'     => App\User::class,
+        ],
+
+        'students' => [
+            'driver'    => 'eloquent',
+            'model'     => Modules\Students\Entities\Student::class,
+        ],
+
+        'teachers' => [
+            'driver'    => 'eloquent',
+            'model'     => Modules\Teachers\Entities\Teacher::class,
+        ],
+
+        'employees' => [
+            'driver'    => 'eloquent',
+            'model'     => Modules\Employees\Entities\Employee::class,
         ],
 
         // 'users' => [
         //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        //     'table'  => 'users',
+        // ]
+
     ],
 
     /*

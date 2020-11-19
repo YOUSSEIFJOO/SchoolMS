@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('dashboard/students')->group(function() {
+Route::group(["prefix" => "dashboard/students", "middleware" => "assign.guard"], function() {
 
     Route::get('/', 'StudentsController@index')->name("students.index");
 

@@ -10,7 +10,7 @@ class ClassAcademic extends Model
     /** Start $table Variable **/
 
         /** Handel The Name Of Table Related With This Model. **/
-        protected $table = "classacademic";
+        protected $table = "classAcademic";
 
     /** End $table Variable **/
 
@@ -42,7 +42,7 @@ class ClassAcademic extends Model
         /** End Relationship With Student Attendance **/
 
 
-                            /***************************************************/
+                        /***************************************************/
 
 
         /** Start Relationship With Student Attendance **/

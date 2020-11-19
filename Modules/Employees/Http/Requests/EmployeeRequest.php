@@ -37,11 +37,21 @@ class EmployeeRequest extends FormRequest
 
             "designation"           => "required | regex:/^[\pL\s\-]+$/u | min:3 | max:50",
 
-            "joinDate"              => "required | date"
+            "joinDate"              => "required | date",
+
+            "username"              => "required | string | min:1 | max:10 | unique:employees,username,$id",
+
+            "password"              => "required | string | size:8",
+
+            "role"                  => "required"
         ];
 
         if($id) {
-            $rules['photo'] = "image";
+
+            $rules['photo']     = "image";
+
+            $rules['password']  = "string | size:8";
+
         }
 
         return $rules;

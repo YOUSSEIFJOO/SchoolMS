@@ -1,0 +1,13 @@
+{
+    "name": "PermissionsSettings",
+    "alias": "permissionssettings",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\PermissionsSettings\\Providers\\PermissionsSettingsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -20,7 +20,7 @@ class CreateEmployeesTable extends Migration
             $table->date("birthday");
             $table->string("gender", 6);
             $table->string("religion", 9);
-            $table->string("address", 30);
+            $table->string("address", 70);
             $table->string("email", 50)->nullable();
             $table->string("photo", 100);
 
@@ -28,6 +28,10 @@ class CreateEmployeesTable extends Migration
             $table->string("qualification", 70);
             $table->string("designation", 50);
             $table->date("joinDate");
+
+            $table->string("username", 10)->unique();
+            $table->string("password");
+            $table->string("role", 10)->default("employee");
 
             $table->timestamps();
         });

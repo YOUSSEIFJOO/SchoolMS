@@ -3,6 +3,7 @@
 namespace Modules\Core\Http\Helper;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Collection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Contracts\View\Factory;
@@ -237,6 +238,9 @@ class AppHelper
                     $data["photo"] = $hashNamePhoto;
 
                 }
+
+                /** Encrypt Password. **/
+                $data["password"] = encrypt($request->password);
 
                 /** Return What Store In DB. **/
                 return $data;
@@ -481,6 +485,9 @@ class AppHelper
 
                 }
 
+                /** Encrypt Password. **/
+                $data["password"] = encrypt($request->password);
+
                 /** $data That Have All Requests And Ready To Update In DB. **/
                 return $data;
 
@@ -561,6 +568,138 @@ class AppHelper
         /** End IfSuccessfully Method **/
 
 
+                        /******************************************************************/
+
+
+        /** Start allGuards Method **/
+
+            /** This Function To Put In It All Guards In System To Use In Any Where Dynamically. **/
+            public static function allGuards() {
+
+                return ["student", "teacher", "employee"];
+
+            }
+
+        /** End allGuards Method **/
+
+
+                        /******************************************************************/
+
+        /** Start allRoles Method **/
+
+            /** This Function To Put In It All Roles In System To Use In Any Where Dynamically. **/
+            public static function allRoles() {
+
+                return ["student", "teacher", "employee", "admin", "superAdmin"];
+
+            }
+
+        /** End allRoles Method **/
+
+
+                    /******************************************************************/
+
+        /** Start allModules Method **/
+
+            /** This Function To Put In It All Modules In System To Use In Any Where Dynamically. **/
+            public static function allModules() {
+
+                return [
+                        "student", "teacher", "employee", "student attendance", "teacher attendance", "employee attendance",
+                        "class academic", "section academic", "subject academic", "permissions"
+                        ];
+
+            }
+
+        /** End allModules Method **/
+
+
+                    /******************************************************************/
+
+        /** Start ReplaceSpaceWithUnderScore Method **/
+
+            /**
+             * Redirect To $routeName If Successfully Store Method.
+             * @param $stringReplace      => Replace Space With Under Score.
+             * @return RedirectResponse|string|string[]
+             */
+            public static function ReplaceSpaceWithUnderScore($stringReplace) {
+
+                return preg_replace('/\s+/', '_', $stringReplace);
+
+            }
+
+        /** End ReplaceSpaceWithUnderScore Method **/
+
+
+                    /******************************************************************/
+
+
+        /** Start currentGuard Method **/
+
+            /**
+             * This Function To Get The Current Guard.
+             * @return string
+             **/
+            public static function currentGuard() {
+
+                $guards = self::allGuards();
+
+                foreach($guards as $guard) {
+
+                    if (Auth::guard($guard)->check()) {
+
+                        return $guard;
+                    }
+
+                }
+
+            }
+
+        /** End currentGuard Method **/
+
+
+                        /******************************************************************/
+
+
+        /** Start CheckAuth Method **/
+
+            /** This Function To Check :-
+             * First    => If Enter User To Dashboard Is Authenticate Or Not.
+             * Second   => If Authenticate Person Try To Go To Login Page.
+             * @param $routeIfAuthenticate  => This Route Will Direct To It If Authenticate.
+             * @return Application|Factory|RedirectResponse|View
+            */
+            public static function CheckAuth($routeIfAuthenticate) {
+
+                $result = array();
+
+                $guards = self::allGuards();
+
+                foreach($guards as $guard) {
+
+                    $result[] = !Auth::guard($guard)->check();
+
+                }
+
+                if(array_search(false, $result)) {
+
+                    return redirect()->route($routeIfAuthenticate);
+
+                } else {
+
+                    return view('core::login.login');
+
+                }
+
+            }
+
+        /** End CheckAuth Method **/
+
+
+    /** Start currentGuard Method **/
+
+
     /** End What Related To Global Method **/
 
 
@@ -585,6 +724,31 @@ class AppHelper
 
         /** End upperWords Method **/
 
+
+                        /******************************************************************/
+
+
+        /** Start photoOfCurrentAuth Method **/
+
+            /** This Function To Get The Image Of Current Who Authenticated By The Its Guard. **/
+            public static function photoOfCurrentAuth() {
+
+                $guards = self::allGuards();
+
+                foreach($guards as $guard) {
+
+                    if (Auth::guard($guard)->check()) {
+
+                        $namePhoto = Auth::guard($guard)->user()->photo;
+
+                        return "images/$guard" . "s/$namePhoto";
+                    }
+
+                }
+
+            }
+
+        /** End photoOfCurrentAuth Method **/
 
     /** End What Related To Views **/
 

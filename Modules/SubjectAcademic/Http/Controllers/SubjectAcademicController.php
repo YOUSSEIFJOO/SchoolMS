@@ -167,7 +167,7 @@
                     /** Start Return To Index View **/
 
                         /** Redirect To Index View Of Subject Academic With Variables **/
-                        return view('subjectacademic::index', compact("subjects", "paginationNumber", "classes"))->with("instanceClass", $this->classAcademic);
+                        return view('subjectAcademic::index', compact("subjects", "paginationNumber", "classes"))->with("instanceClass", $this->classAcademic);
 
                     /** End Return To Index View **/
 
@@ -210,7 +210,7 @@
                     /** Start Return To Create View **/
 
                         /** Redirect To Create View Of Subject Academic With Variables **/
-                        return view('subjectacademic::create', compact("classes"));
+                        return view('subjectAcademic::create', compact("classes"));
 
                     /** End Return To Create View **/
 
@@ -344,7 +344,7 @@
                         $id,
                         "This Subject Is Not Found",
                         "subjectAcademic.index",
-                        "subjectacademic::edit",
+                        "subjectAcademic::edit",
                         "subject",
                         null,
                         null,

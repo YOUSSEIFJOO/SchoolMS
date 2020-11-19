@@ -8,7 +8,6 @@ class ClassAcademicRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
-     *
      * @return array
      */
     public function rules()
@@ -17,7 +16,7 @@ class ClassAcademicRequest extends FormRequest
 
         $rules = [
 
-            "name"              => "required | alpha | min:3 | max:30 | unique:classacademic,name,$id",
+            "name"              => "required | alpha | min:3 | max:30 | unique:classAcademic,name,$id",
 
             "capacity_sections" => "required | numeric | gt:0",
 
@@ -27,7 +26,7 @@ class ClassAcademicRequest extends FormRequest
 
         if($id) {
 
-            $rules['name'] = "alpha | min:3 | max:30 | unique:classacademic,name,$id";
+            $rules['name'] = "alpha | min:3 | max:30 | unique:classAcademic,name,$id";
 
         }
 
@@ -36,7 +35,6 @@ class ClassAcademicRequest extends FormRequest
 
     /**
      * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()

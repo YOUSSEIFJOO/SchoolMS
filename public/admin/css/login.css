@@ -1,0 +1,18 @@
+
+body {
+    background-color: #f8f9fa
+}
+
+.login, .image {
+    min-height: 100vh;
+}
+
+.no-gutter {
+    background: #ff0;
+    width: 70%;
+    margin: 0 auto
+}
+
+.alert-danger {
+    border-radius: 20px;
+}

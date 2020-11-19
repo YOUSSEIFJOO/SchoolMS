@@ -11,7 +11,8 @@
 |
 */
 
-Route::prefix('dashboard/subjectAcademic')->group(function() {
+Route::group(["prefix" => "dashboard/subjectAcademic", "middleware" => "assign.guard"], function() {
+
     Route::get('/', 'SubjectAcademicController@index')->name("subjectAcademic.index");
 
     Route::get('create', 'SubjectAcademicController@create')->name("subjectAcademic.create");
@@ -23,4 +24,5 @@ Route::prefix('dashboard/subjectAcademic')->group(function() {
     Route::post('update/{id}', 'SubjectAcademicController@update')->name("subjectAcademic.update");
 
     Route::delete('delete/{id}', 'SubjectAcademicController@destroy')->name("subjectAcademic.delete");
+    
 });

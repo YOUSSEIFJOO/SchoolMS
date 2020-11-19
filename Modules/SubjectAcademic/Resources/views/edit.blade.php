@@ -7,7 +7,7 @@
 
         <li class="breadcrumb-item">
 
-            <a href="{{ route('dashboard.home') }}">Home</a>
+            <a href="{{ route('home.index') }}">Home</a>
 
         </li>
 
@@ -97,8 +97,6 @@
                     <select id="class_id" name="class_id" class="form-control d-none d-sm-block" required>
 
                         <option disabled selected> -- Select Class -- </option>
-
-                        <option value=""> No Selected </option>
 
                         @foreach($classes as $class)
 
