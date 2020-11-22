@@ -22,8 +22,8 @@
 /** Start View Helper Declaration **/
 
     use Illuminate\Contracts\View\Factory;
-use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
+    use Illuminate\Support\Facades\DB;
+    use Illuminate\View\View;
 
 /** End View Helper Declaration **/
 
@@ -58,40 +58,13 @@ use Illuminate\View\View;
     class PermissionsSettingsController extends Controller
     {
 
-        /** Start Declaration Properties Of This Controller **/
-
-            /** For Declaring Instance Of Role Model. **/
-            private $role;
-
-        /** End Declaration Properties Of This Controller **/
-
-
-                    /******************************************************************************/
-
-
-        /** Start The Construct Method **/
-
-            public function __construct()
-            {
-
-                /** For Declaring Instance Of Student Model. **/
-//                $this->role = new Student;
-
-            }
-
-        /** End The Construct Method **/
-
-
-        /******************************************************************************/
-
         /** Start Index Method **/
 
             /**
              * Display a listing of the resource.
-             * @param Request $request
              * @return Application|Factory|RedirectResponse|View
              */
-            public function index(Request $request)
+            public function index()
             {
                 try {
 
@@ -108,21 +81,10 @@ use Illuminate\View\View;
 
                     /** Start Roles Variable **/
 
-                        /** This Array To Put In It The Properties That You Want To Select It For Index View. **/
-                        $selectProperties = ["id", "name"];
+                        /** Select Properties From Table Roles. **/
+//                        $roles = DB::select("select id, name from roles");
 
-                        /** This Array To Put In It The Properties That Are Use In Check The Value Of Inputs Are Like The Values In DB. **/
-                        $whereProperties = ["name"];
-
-                        /**
-                         ** Select Properties From Model ($selectProperties).
-                         ** Ordering Data By Column You Select It And Type Of Ordering.
-                         ** Search What Values Of Inputs In Index View Like Values In DB.
-                         ** Return With Pagination Number.
-                         **/
-//                        $roles = AppHelper::QuerySearch($this->student, $selectProperties, "name", "desc", $request, $whereProperties);
-
-                    $roles = DB::select("select id, name from roles");
+                        $roles = Role::all();
 
                     /** End Roles Variable **/
 
@@ -135,7 +97,7 @@ use Illuminate\View\View;
                      ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
                      ** This Function Return To View Index Of Permissions And Appear The Nice Message.
                      **/
-                    return AppHelper::IfUnexpectedError("permissionsSettings.index");
+                    return AppHelper::IfUnexpectedError("permissions.index");
 
                 }
             }
@@ -143,23 +105,49 @@ use Illuminate\View\View;
         /** End Index Method **/
 
 
-        public function search(Request $request){
+                        /******************************************************************************/
 
-            $search = $request->name;
 
-            if ($search != " "){
+        /** Start search Method **/
 
-                $roles = DB::table('roles')->where("name","LIKE", "%" . $search . "%")->get();
+            /**
+             * Display a listing of the resource.
+             * @param Request $request
+             * @return Application|Factory|RedirectResponse|View
+             */
+            public function search(Request $request){
 
-                if(count($roles) > 0){
-                    return view('permissionsSettings::index', compact("roles"))->withQuery($search);
+                try {
+
+                    /** Start Pagination Number **/
+
+                        /**
+                         ** Get The Pagination Number.
+                         ** Passing Pagination Number To Index View For Showing This Number Under Showing Data.
+                         **/
+                        $paginationNumber = AppHelper::PAGINATE_NUMBER;
+
+                    /** End Pagination Number **/
+
+                    /** Get Value Or Values From Table Roles If Search Value Is Similar To Value I Table Roles. **/
+                    $roles = DB::table('roles')->where("name","LIKE", "%" . $request->name . "%")->get();
+
+                    return view('permissionsSettings::index', compact("roles", "paginationNumber"));
+
+                } catch (Exception $e) {
+
+                    /**
+                     ** This Function For Handling If Unexpected Error Happened.
+                     ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                     ** This Function Return To View Index Of Permissions And Appear The Nice Message.
+                     **/
+                    return AppHelper::IfUnexpectedError("permissions.index");
+
                 }
 
             }
 
-            return view("permissionsSettings::index")->withMessage("No Found!");
-
-        }
+        /** End search Method **/
 
 
                         /******************************************************************************/
@@ -169,11 +157,24 @@ use Illuminate\View\View;
 
             /**
              * Show the form for creating a new resource.
-             * @return Renderable
+             * @return Application|Factory|RedirectResponse|View
              */
             public function create()
             {
-                return view('permissionsSettings::create');
+                try {
+
+                    return view('permissionsSettings::create');
+
+                } catch (Exception $e) {
+
+                    /**
+                     ** This Function For Handling If Unexpected Error Happened.
+                     ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                     ** This Function Return To View Index Of Permissions And Appear The Nice Message.
+                     **/
+                    return AppHelper::IfUnexpectedError("permissions.index");
+
+                }
             }
 
         /** End create Method **/
@@ -190,17 +191,44 @@ use Illuminate\View\View;
              */
             public function store(Request $request)
             {
-                $role = Role::create(['guard_name' => $request->role, 'name' => $request->role]);
+                try {
 
-                foreach($request->except(["role", "_token"]) as $permission) {
+                    $role_guard = explode("_", $request->role);
 
-                    $permissions = Permission::create(['guard_name' => $request->role, 'name' => $permission]);
+                    $roleName = $role_guard[0];
+
+                    $guardName = $role_guard[1];
+
+                    /** Create New Role. **/
+                    $role = Role::create(['guard_name' => $guardName, 'name' => $roleName]);
+
+                    $permissions = [];
+
+                    /** Create New Permissions. **/
+                    foreach($request->except(["role", "_token"]) as $permission) {
+
+                         Permission::create(['guard_name' => $guardName, 'name' => $permission]);
+
+                        $permissions[] = $permission;
+
+
+                    }
+
+                    /** Give The New Permissions ($permissions) To The New Role ($role). **/
+                    $role->syncPermissions($permissions);
+
+                    return redirect()->route("permissions.index");
+
+                } catch (Exception $e) {
+
+                    /**
+                     ** This Function For Handling If Unexpected Error Happened.
+                     ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                     ** This Function Return To View Index Of Permissions And Appear The Nice Message.
+                     **/
+                    return AppHelper::IfUnexpectedError("permissions.index");
 
                 }
-
-                $role->syncPermissions($permissions);
-
-                return redirect()->route("permissions.index");
             }
 
         /** End Store Method **/
@@ -208,25 +236,63 @@ use Illuminate\View\View;
 
                         /******************************************************************************/
 
-        /**
-         * Show the specified resource.
-         * @param int $id
-         * @return Renderable
-         */
-        public function show($id)
-        {
-            return view('permissionssettings::show');
-        }
+
+        /** Start edit Method **/
 
         /**
          * Show the form for editing the specified resource.
          * @param int $id
-         * @return Renderable
+         * @return Application|Factory|RedirectResponse|View
          */
-        public function edit($id)
+        public function edit(int $id)
         {
-            return view('permissionssettings::edit');
+            try {
+
+                /** Start Roles Variable **/
+
+                    /** Select Properties From Table Roles. **/
+                    $role = DB::select("select id, name, guard_name from roles where id = $id");
+
+                /** End Roles Variable **/
+
+                $guardName = $role[0]->guard_name;
+
+
+                /** Start Permissions Variable **/
+
+                    $permissions = DB::select("select id, name from permissions where guard_name = '$guardName'");
+
+                /** End Permissions Variable **/
+
+
+                $permissionsArray = [];
+
+                foreach($permissions as $permission) {
+                    $permissionsArray[] = $permission->name;
+                }
+
+
+                return view('permissionsSettings::edit', compact("role", "permissionsArray"));
+
+            } catch (Exception $e) {
+
+                /**
+                 ** This Function For Handling If Unexpected Error Happened.
+                 ** For Not Display The Laravel Error. Display Nice Message That Appear That Error Happened.
+                 ** This Function Return To View Index Of Permissions And Appear The Nice Message.
+                 **/
+                return AppHelper::IfUnexpectedError("permissions.index");
+
+            }
         }
+
+        /** End edit Method **/
+
+
+                        /******************************************************************************/
+
+
+        /** Start update Method **/
 
         /**
          * Update the specified resource in storage.
@@ -234,19 +300,101 @@ use Illuminate\View\View;
          * @param int $id
          * @return Renderable
          */
-        public function update(Request $request, $id)
+        public function update(Request $request, int $id)
         {
-            //
+
+            $permissions = $request->permissions;
+
+            $guardName = $request->guard;
+
+            $role = Role::findById($id, $guardName);
+
+//            $permissions = DB::select("select name from permissions where guard_name = '$guardName'");
+
+
+
+            foreach($permissions as $permission) {
+//                dd($permission->name);
+//                $role->revokePermissionTo($permission);
+                $perm = Permission::findByName($permission, $guardName);
+                $perm->delete();
+            }
+
+
+
+//            /** Start Permissions Variable **/
+//
+//            $permission = DB::select("select name from permissions where guard_name = '$guardName'");
+//
+
+//            $role->detach();
+
+//            /** End Permissions Variable **/
+//
+//
+//            $permissionsArray = [];
+//
+//            foreach($permissions as $permission) {
+//                $permissionsArray[] = $permission->name;
+//            }
+
+//            /** Create New Permissions. **/
+//            foreach($request->except("_token") as $permission) {
+//
+////                if(! in_array($permission, $permissionsArray)) {
+//
+//                    Permission::Create(["name" => $permission, "guard_name" => $guardName]);
+//
+////                }
+//
+//            }
+
+            $newPermissions = $request->except(["_token", "guard", "permissions"]);
+            $permissions = [];
+
+            /** Create New Permissions. **/
+            foreach($newPermissions as $permission) {
+
+                Permission::create(['guard_name' => $guardName, 'name' => $permission]);
+
+                $permissions[] = $permission;
+
+
+            }
+
+            /** Give The New Permissions ($permissions) To The New Role ($role). **/
+            $role->syncPermissions($permissions);
+
+            return redirect()->route("permissions.index");
         }
+
+        /** End update Method **/
+
+
+                        /******************************************************************************/
 
         /**
          * Remove the specified resource from storage.
          * @param int $id
          * @return Renderable
          */
-        public function destroy($id)
+        public function destroy(int $id)
         {
-            //
+            $role = DB::select("select guard_name from roles where id = $id");
+
+            $guardName = $role[0]->guard_name;
+
+            $permissions = DB::select("select name from permissions where guard_name = '$guardName'");
+
+            foreach($permissions as $permission) {
+                $perm = Permission::findByName($permission->name, $guardName);
+                $perm->delete();
+            }
+
+            $roleForDelete = Role::findById($id, $guardName);
+            $roleForDelete->delete();
+
+            return redirect()->route("permissions.index");
         }
     }
 

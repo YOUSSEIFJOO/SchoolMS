@@ -15,10 +15,16 @@ Route::group(["prefix" => "dashboard/permissions", "middleware" => "assign.guard
 
     Route::get('/', 'PermissionsSettingsController@index')->name("permissions.index");
 
-    Route::post('/', 'PermissionsSettingsController@search')->name("permissions.search");
+    Route::get('search', 'PermissionsSettingsController@search')->name("permissions.search");
 
     Route::get('create', 'PermissionsSettingsController@create')->name("permissions.create");
 
     Route::post('store', 'PermissionsSettingsController@store')->name("permissions.store");
+
+    Route::get('edit/{id}', 'PermissionsSettingsController@edit')->name("permissions.edit");
+
+    Route::post('update/{id}', 'PermissionsSettingsController@update')->name("permissions.update");
+
+    Route::delete('delete/{id}', 'PermissionsSettingsController@destroy')->name("permissions.delete");
 
 });

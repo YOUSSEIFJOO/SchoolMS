@@ -17,13 +17,19 @@
 
         </li>
 
-        <li class="breadcrumb-item active">Create</li>
+        <li class="breadcrumb-item active">Edit</li>
 
     </ol>
 
-    <form class="mb-5" action="{{ route('permissions.store') }}" method="post">
+    <form class="mb-5" action="{{ route('permissions.update', $role[0]->id) }}" method="post">
 
         @csrf
+
+        <input type="hidden" name="guard" value="{{ $role[0]->guard_name }}" />
+
+        @foreach($permissionsArray as $permission)
+        <input type="hidden" name="permissions[]" value="{{ $permission }}" />
+        @endforeach
 
         <div class="row">
 
@@ -31,25 +37,7 @@
 
                 <div class="form-group">
 
-                    <label for="role" class="font-2xl"> Role :- </label>
-
-                    <select class="form-control mb-3" name="role" id="role" autofocus required>
-
-                        <option selected disabled> -- Select Role -- </option>
-
-                        @foreach(\Modules\Core\Http\Helper\AppHelper::allRoles() as $Role => $guard)
-
-                            <option value="{{ $Role }}_{{ $guard }}"> {{ \Modules\Core\Http\Helper\AppHelper::upperWords($Role) }} </option>
-
-                        @endforeach
-
-                    </select>
-
-                    @error('role')
-
-                        <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
-
-                    @enderror
+                    <label for="role" class="font-2xl"> {{ \Modules\Core\Http\Helper\AppHelper::upperWords($role[0]->name) }} Role :- </label>
 
                 </div>
 
@@ -102,7 +90,11 @@
                                         type="checkbox"
                                         name="create_{{ \Modules\Core\Http\Helper\AppHelper::ReplaceSpaceWithUnderScore($module) }}"
                                         value="create_{{ \Modules\Core\Http\Helper\AppHelper::ReplaceSpaceWithUnderScore($module) }}"
-                                        style="width: 18px;height: 18px" />
+                                        style="width: 18px;height: 18px"
+                                        @if(in_array("create_" . \Modules\Core\Http\Helper\AppHelper::ReplaceSpaceWithUnderScore($module), $permissionsArray))
+                                            checked
+                                        @endif
+                                    />
 
                                 </td>
 
@@ -112,7 +104,11 @@
                                         type="checkbox"
                                         name="view_{{ \Modules\Core\Http\Helper\AppHelper::ReplaceSpaceWithUnderScore($module) }}"
                                         value="view_{{ \Modules\Core\Http\Helper\AppHelper::ReplaceSpaceWithUnderScore($module) }}"
-                                        style="width: 18px;height: 18px" />
+                                        style="width: 18px;height: 18px"
+                                        @if(in_array("view_" . \Modules\Core\Http\Helper\AppHelper::ReplaceSpaceWithUnderScore($module), $permissionsArray))
+                                            checked
+                                        @endif
+                                    />
 
                                 </td>
 
@@ -122,7 +118,11 @@
                                         type="checkbox"
                                         name="edit_{{ \Modules\Core\Http\Helper\AppHelper::ReplaceSpaceWithUnderScore($module) }}"
                                         value="edit_{{ \Modules\Core\Http\Helper\AppHelper::ReplaceSpaceWithUnderScore($module) }}"
-                                        style="width: 18px;height: 18px" />
+                                        style="width: 18px;height: 18px"
+                                        @if(in_array("edit_" . \Modules\Core\Http\Helper\AppHelper::ReplaceSpaceWithUnderScore($module), $permissionsArray))
+                                            checked
+                                        @endif
+                                    />
 
                                 </td>
 
@@ -132,7 +132,11 @@
                                         type="checkbox"
                                         name="delete_{{ \Modules\Core\Http\Helper\AppHelper::ReplaceSpaceWithUnderScore($module) }}"
                                         value="delete_{{ \Modules\Core\Http\Helper\AppHelper::ReplaceSpaceWithUnderScore($module) }}"
-                                        style="width: 18px;height: 18px" />
+                                        style="width: 18px;height: 18px"
+                                        @if(in_array("delete_" . \Modules\Core\Http\Helper\AppHelper::ReplaceSpaceWithUnderScore($module), $permissionsArray))
+                                            checked
+                                        @endif
+                                    />
 
                                 </td>
 
@@ -149,7 +153,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary font-xl mt-3">
-            <i class="fa fa-plus mr-1"></i> Create Permissions
+            <i class="fa fa-edit mr-1"></i> Update Permissions
         </button>
 
     </form>

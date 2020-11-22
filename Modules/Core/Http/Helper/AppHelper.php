@@ -590,7 +590,13 @@ class AppHelper
             /** This Function To Put In It All Roles In System To Use In Any Where Dynamically. **/
             public static function allRoles() {
 
-                return ["student", "teacher", "employee", "admin", "superAdmin"];
+                return [
+                            "student"       => "student",
+                            "teacher"       => "teacher",
+                            "employee"      => "employee",
+                            "admin"         => "employee",
+                            "super_admin"   => "employee"
+                        ];
 
             }
 

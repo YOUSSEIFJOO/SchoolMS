@@ -20,15 +20,13 @@
 
             <div class="col-md-9">
 
-                <form action="{{ route('permissions.search') }}" method="post">
-
-                    @csrf
+                <form action="{{ route('permissions.search') }}" method="get">
 
                     <div class="row">
 
                         <div class="col-md-4 col-sm-6">
 
-                            <input type="text" name="name" class="form-control" placeholder="... Enter The Name Of Role ..." autocomplete="off" />
+                            <input type="text" name="name" class="form-control" placeholder="... Enter The Name Of Role ..." autocomplete="off" value="{{ request()->name }}" />
 
                         </div>
 
@@ -98,7 +96,7 @@
 
                 <tbody class="text-center">
 
-                @if(count($roles) > 0)
+                @if($roles->count() > 0)
 
                     @foreach($roles as $index => $role)
 
@@ -114,7 +112,7 @@
 
                             <td>
 
-                                <a href="{{ route('permissions.index', $role->id) }}">
+                                <a href="{{ route('permissions.edit', $role->id) }}">
 
                                     <button type="button" class="btn btn-info" title="Edit">
                                         <i class="fa fa-edit text-light"></i>
@@ -123,7 +121,8 @@
                                 </a>
 
                                 <form
-                                    action="{{ route('permissions.index', $role->id) }}"
+
+                                    action="{{ route('permissions.delete', $role->id) }}"
                                     method="post"
                                     style="display: inline-block"
                                 >
@@ -180,7 +179,7 @@
 
                     <div class="col-sm-6 p-0 text-right">
 
-                        Showing 1 To {{ $paginationNumber }} Of {{ count($roles) }} Entries
+                        Showing 1 To {{ $paginationNumber }} Of {{ $roles->count() }} Entries
 
                     </div>
 

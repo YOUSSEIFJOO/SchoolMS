@@ -23,113 +23,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3d53ff2-0815-403c-9061-a5cd5fb108c2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Modules/Core/Resources/views/login/login.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Modules/Core/Resources/views/settings/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Modules/PermissionsSettings/Resources/views/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/admin/css/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/admin/css/bootstrap.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/admin/css/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/SafwaSchool.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SafwaSchool.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modules/PermissionsSettings/Resources/views/edit.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/ClassAcademic/Database/Migrations/2020_10_17_225614_create_classAcacemic_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/ClassAcademic/Database/Seeders/ClassAcademicDatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/ClassAcademic/Database/Seeders/ClassAcademicDatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/ClassAcademic/Entities/ClassAcademic.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/ClassAcademic/Entities/ClassAcademic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/ClassAcademic/Http/Controllers/ClassAcademicController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/ClassAcademic/Http/Controllers/ClassAcademicController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/ClassAcademic/Http/Requests/ClassAcademicRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/ClassAcademic/Http/Requests/ClassAcademicRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/ClassAcademic/Providers/ClassAcademicServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/ClassAcademic/Providers/ClassAcademicServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/ClassAcademic/Resources/views/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/ClassAcademic/Resources/views/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/ClassAcademic/Resources/views/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/ClassAcademic/Resources/views/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/ClassAcademic/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/ClassAcademic/Resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/ClassAcademic/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/ClassAcademic/Routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Core/Http/Controllers/CoreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Core/Http/Controllers/CoreController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Core/Http/Helper/AppHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Core/Http/Helper/AppHelper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Core/Resources/views/layouts/layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Core/Resources/views/layouts/layout.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Core/Resources/views/layouts/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Core/Resources/views/layouts/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Core/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Core/Routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Employees/Database/Migrations/2020_10_13_191335_create_employees_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Employees/Database/Migrations/2020_10_13_191335_create_employees_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Employees/Database/Seeders/EmployeesDatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Employees/Database/Seeders/EmployeesDatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Employees/Entities/Employee.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Employees/Entities/Employee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Employees/Http/Controllers/EmployeesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Employees/Http/Controllers/EmployeesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Employees/Http/Requests/EmployeeRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Employees/Http/Requests/EmployeeRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Employees/Resources/views/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Employees/Resources/views/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Employees/Resources/views/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Employees/Resources/views/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Employees/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Employees/Resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Employees/Resources/views/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Employees/Resources/views/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Employees/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Employees/Routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/EmployeesAttendance/Http/Controllers/EmployeesAttendanceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/EmployeesAttendance/Http/Controllers/EmployeesAttendanceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/EmployeesAttendance/Providers/EmployeesAttendanceServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/EmployeesAttendance/Providers/EmployeesAttendanceServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/EmployeesAttendance/Resources/views/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/EmployeesAttendance/Resources/views/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/EmployeesAttendance/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/EmployeesAttendance/Resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/EmployeesAttendance/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/EmployeesAttendance/Routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SectionAcademic/Database/Seeders/SectionAcademicDatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SectionAcademic/Database/Seeders/SectionAcademicDatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SectionAcademic/Entities/SectionAcademic.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SectionAcademic/Entities/SectionAcademic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SectionAcademic/Http/Controllers/SectionAcademicController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SectionAcademic/Http/Controllers/SectionAcademicController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SectionAcademic/Providers/SectionAcademicServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SectionAcademic/Providers/SectionAcademicServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SectionAcademic/Resources/views/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SectionAcademic/Resources/views/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SectionAcademic/Resources/views/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SectionAcademic/Resources/views/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SectionAcademic/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SectionAcademic/Resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SectionAcademic/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SectionAcademic/Routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Students/Database/Migrations/2020_09_16_121949_create_students_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Students/Database/Migrations/2020_09_16_121949_create_students_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Students/Database/Seeders/StudentsDatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Students/Database/Seeders/StudentsDatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Students/Entities/Student.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Students/Entities/Student.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Students/Http/Controllers/StudentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Students/Http/Controllers/StudentsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Students/Http/Requests/StudentRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Students/Http/Requests/StudentRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Students/Resources/views/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Students/Resources/views/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Students/Resources/views/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Students/Resources/views/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Students/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Students/Resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Students/Resources/views/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Students/Resources/views/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Students/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Students/Routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/StudentsAttendance/Http/Controllers/StudentsAttendanceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/StudentsAttendance/Http/Controllers/StudentsAttendanceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/StudentsAttendance/Providers/StudentsAttendanceServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/StudentsAttendance/Providers/StudentsAttendanceServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/StudentsAttendance/Resources/views/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/StudentsAttendance/Resources/views/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/StudentsAttendance/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/StudentsAttendance/Resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/StudentsAttendance/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/StudentsAttendance/Routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SubjectAcademic/Database/Seeders/SubjectAcademicDatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SubjectAcademic/Database/Seeders/SubjectAcademicDatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SubjectAcademic/Entities/SubjectAcademic.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SubjectAcademic/Entities/SubjectAcademic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SubjectAcademic/Http/Controllers/SubjectAcademicController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SubjectAcademic/Http/Controllers/SubjectAcademicController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SubjectAcademic/Providers/SubjectAcademicServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SubjectAcademic/Providers/SubjectAcademicServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SubjectAcademic/Resources/views/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SubjectAcademic/Resources/views/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SubjectAcademic/Resources/views/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SubjectAcademic/Resources/views/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SubjectAcademic/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SubjectAcademic/Resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/SubjectAcademic/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/SubjectAcademic/Routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Teachers/Database/Migrations/2020_10_07_082820_create_teachers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Teachers/Database/Migrations/2020_10_07_082820_create_teachers_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Teachers/Database/Seeders/TeachersDatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Teachers/Database/Seeders/TeachersDatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Teachers/Entities/Teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Teachers/Entities/Teacher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Teachers/Http/Controllers/TeachersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Teachers/Http/Controllers/TeachersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Teachers/Http/Requests/TeacherRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Teachers/Http/Requests/TeacherRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Teachers/Resources/views/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Teachers/Resources/views/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Teachers/Resources/views/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Teachers/Resources/views/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Teachers/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Teachers/Resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Teachers/Resources/views/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Teachers/Resources/views/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Teachers/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Teachers/Routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/TeachersAttendance/Http/Controllers/TeachersAttendanceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/TeachersAttendance/Http/Controllers/TeachersAttendanceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/TeachersAttendance/Providers/TeachersAttendanceServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/TeachersAttendance/Providers/TeachersAttendanceServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/TeachersAttendance/Resources/views/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/TeachersAttendance/Resources/views/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/TeachersAttendance/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/TeachersAttendance/Resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/TeachersAttendance/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/TeachersAttendance/Routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/session.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/session.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules_statuses.json" beforeDir="false" afterPath="$PROJECT_DIR$/modules_statuses.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/home.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/passwords/email.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/passwords/reset.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/verify.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/errors/404.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/errors/500.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/errors/back_401.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/errors/back_404.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/errors/front_404.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/errors/front_500.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/PermissionsSettings/Http/Controllers/PermissionsSettingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/PermissionsSettings/Http/Controllers/PermissionsSettingsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/PermissionsSettings/Resources/views/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/PermissionsSettings/Resources/views/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/PermissionsSettings/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/PermissionsSettings/Resources/views/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/PermissionsSettings/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/PermissionsSettings/Routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -268,19 +168,19 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\School\Modules\Core\Resources\views\login" />
-      <recent name="C:\xampp\htdocs\School\Modules" />
-      <recent name="C:\xampp\htdocs\School\Modules\Attendance" />
-      <recent name="C:\xampp\htdocs\School\Modules\TeachersAttendance\Http\Helpers\CreateMethod" />
-      <recent name="C:\xampp\htdocs\School\Modules\Core\Resources\views\attendance" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\School\Modules\PermissionsSettings\Resources\views" />
       <recent name="C:\xampp\htdocs\School\Modules\ClassAcademic\Resources\views" />
       <recent name="C:\xampp\htdocs\School\Modules\ClassAcademic\Database\Migrations" />
       <recent name="C:\xampp\htdocs\School\Modules\Core\Resources\views\settings" />
       <recent name="C:\xampp\htdocs\School\public\admin\images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\School\Modules\Core\Resources\views\login" />
+      <recent name="C:\xampp\htdocs\School\Modules" />
+      <recent name="C:\xampp\htdocs\School\Modules\Attendance" />
+      <recent name="C:\xampp\htdocs\School\Modules\TeachersAttendance\Http\Helpers\CreateMethod" />
+      <recent name="C:\xampp\htdocs\School\Modules\Core\Resources\views\attendance" />
     </key>
   </component>
   <component name="RunManager">
@@ -346,7 +246,9 @@
       <workItem from="1605087121967" duration="18824000" />
       <workItem from="1605194668303" duration="655000" />
       <workItem from="1605257392587" duration="5738000" />
-      <workItem from="1605474917508" duration="15683000" />
+      <workItem from="1605474917508" duration="16652000" />
+      <workItem from="1605949634287" duration="11720000" />
+      <workItem from="1606058960213" duration="11710000" />
     </task>
     <servers />
   </component>
